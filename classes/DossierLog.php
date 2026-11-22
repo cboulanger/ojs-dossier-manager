@@ -59,6 +59,7 @@ class DossierLog
         'targetChanged' => 0x1F1D11C,
         'editorsChanged' => 0x1F1D11D,
         'reordered' => 0x1F1D11E,
+        'editorsAssigned' => 0x1F1D11F,
     ];
 
     /** Email event types */

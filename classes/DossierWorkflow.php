@@ -20,6 +20,7 @@ use APP\submission\Submission;
 use PKP\core\Core;
 use PKP\security\Role;
 use PKP\security\Validation;
+use PKP\stageAssignment\StageAssignment;
 use PKP\user\User;
 use PKP\userGroup\relationships\UserUserGroup;
 use PKP\userGroup\UserGroup;
@@ -192,10 +193,67 @@ class DossierWorkflow
         $contributor = $c->userId ? Repo::user()->get($c->userId, true) : null;
         $name = $contributor?->getFullName() ?? '';
         DossierLog::event($dossier->id, 'submitted', $contributor, $name, $c->workingTitle);
+        self::assignEditors($plugin, $context, $dossier, $c, $submission->getId(), null);
         Notifier::notify($plugin, $context, $dossier, 'submitted', [
             'name' => $name,
             'title' => (string) $submission->getCurrentPublication()->getLocalizedFullTitle(null, 'html') ?: $c->workingTitle,
         ]);
+    }
+
+    /**
+     * Assign the dossier's responsible editors to a submitted contribution, so that they can
+     * open it in the editorial workflow. OJS's own assignment of the section's editors still
+     * happens (it runs after this, on SubmissionSubmitted). Existing assignments are kept;
+     * editors who are no longer responsible are not removed from the submission.
+     * @return string[] Names of the editors assigned now
+     */
+    public static function assignEditors($plugin, $context, Dossier $dossier, Contribution $c, int $submissionId, ?User $actor): array
+    {
+        $dossierEditorGroupId = (int) $plugin->getSetting($context->getId(), Roles::SETTING_GROUP_ID);
+        $assigned = [];
+        foreach (array_keys($dossier->editors) as $userId) {
+            $editor = Repo::user()->get($userId, true);
+            if (!$editor || $editor->getDisabled()) {
+                continue;
+            }
+            $groups = UserGroup::withContextIds([$context->getId()])
+                ->withRoleIds([Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR])
+                ->whereHas('userUserGroups', fn ($query) => $query->withUserId($userId)->withActive())
+                ->get();
+            if ($groups->isEmpty()) {
+                continue;
+            }
+            // The Dossier editor group if the user has it, else their (sub)editor or manager group
+            $group = $groups->first(fn ($g) => (int) $g->getKey() === $dossierEditorGroupId)
+                ?? $groups->first(fn ($g) => (int) $g->roleId === Role::ROLE_ID_SUB_EDITOR)
+                ?? $groups->first();
+            $alreadyAssigned = StageAssignment::withSubmissionIds([$submissionId])->withUserId($userId)->exists();
+            Repo::stageAssignment()->build($submissionId, (int) $group->getKey(), $userId, (bool) $group->recommendOnly);
+            if (!$alreadyAssigned) {
+                $assigned[] = $editor->getFullName();
+            }
+        }
+        if ($assigned) {
+            DossierLog::event($dossier->id, 'editorsAssigned', $actor, implode(', ', $assigned), $c->workingTitle,
+                $actor ? null : DossierLog::AUTOMATIC);
+        }
+        return $assigned;
+    }
+
+    /**
+     * Assign the responsible editors to all submitted contributions of a dossier (after the editors changed).
+     * @return int Number of new assignments
+     */
+    public static function assignEditorsToSubmitted($plugin, $context, Dossier $dossier, ?User $actor): int
+    {
+        $count = 0;
+        foreach (DossierRepository::getContributions($dossier->id) as $c) {
+            $info = DossierRepository::submissionInfo($c->submissionId);
+            if ($info && $info['progress'] === '') {
+                $count += count(self::assignEditors($plugin, $context, $dossier, $c, $info['id'], $actor));
+            }
+        }
+        return $count;
     }
 
     /**

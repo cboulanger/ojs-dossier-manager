@@ -643,6 +643,9 @@ msgstr "Ziel geändert: {$subject}"
 msgid "plugins.generic.dossierManager.history.event.editorsChanged"
 msgstr "Verantwortliche: {$subject}"
 
+msgid "plugins.generic.dossierManager.history.event.editorsAssigned"
+msgstr "Der Einreichung als Redaktion zugewiesen: {$recipientName} ({$subject})"
+
 msgid "plugins.generic.dossierManager.history.event.reordered"
 msgstr "Reihenfolge der Beiträge geändert"
 

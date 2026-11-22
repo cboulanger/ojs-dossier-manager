@@ -643,6 +643,9 @@ msgstr "Target changed: {$subject}"
 msgid "plugins.generic.dossierManager.history.event.editorsChanged"
 msgstr "Responsible editors: {$subject}"
 
+msgid "plugins.generic.dossierManager.history.event.editorsAssigned"
+msgstr "Assigned to the submission as editors: {$recipientName} ({$subject})"
+
 msgid "plugins.generic.dossierManager.history.event.reordered"
 msgstr "Order of the contributions changed"
 

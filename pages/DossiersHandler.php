@@ -261,6 +261,7 @@ class DossiersHandler extends Handler
         if (array_keys($old->editors) != array_keys($new->editors)) {
             $names = implode(', ', $this->editorNames($new));
             DossierLog::event($new->id, 'editorsChanged', $user, null, $names);
+            DossierWorkflow::assignEditorsToSubmitted($this->plugin, $context, $new, $user);
             Notifier::notify($this->plugin, $context, $new, 'editorsChanged', ['names' => $names], $user);
         }
         $other = ['type', 'title', 'description', 'guidelinesUrl', 'notes', 'showContributors', 'reminderDays', 'overdueInterval', 'overdueMax'];
