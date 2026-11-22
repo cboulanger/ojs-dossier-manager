@@ -50,6 +50,8 @@ tests/run.sh             # PHPUnit unit tests in the container
 tests/run.sh smoke       # end-to-end smoke test against the container's database
 ```
 
+Releases are built by GitHub Actions from an annotated tag (`v<version>`) and can be submitted to the PKP Plugin Gallery; see [dev/README.md](dev/README.md#releases).
+
 | Path | Contents |
 | --- | --- |
 | `DossierManagerPlugin.php` | Hooks: menu, pages, submission lifecycle, submission wizard |

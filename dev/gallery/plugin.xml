@@ -1,0 +1,15 @@
+	<plugin category="generic" product="dossierManager">
+		<name locale="en">Dossier Manager</name>
+		<name locale="en_US">Dossier Manager</name>
+		<homepage>https://github.com/cboulanger/ojs-dossier-manager</homepage>
+		<summary locale="en">Plans special issues, thematic sections and review symposia with commissioned contributions: invitations with personal submission links, tracking of the submissions and reminders.</summary>
+		<summary locale="en_US">Plans special issues, thematic sections and review symposia with commissioned contributions: invitations with personal submission links, tracking of the submissions and reminders.</summary>
+		<description locale="en"><![CDATA[@DESCRIPTION@]]></description>
+		<description locale="en_US"><![CDATA[@DESCRIPTION@]]></description>
+		<maintainer>
+			<name>Christian Boulanger</name>
+			<institution>Max Planck Institute for Legal History and Legal Theory</institution>
+			<email>info@bibliograph.org</email>
+		</maintainer>
+@RELEASES@
+	</plugin>

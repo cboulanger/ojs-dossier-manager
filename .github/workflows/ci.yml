@@ -1,0 +1,44 @@
+# Checks that need no OJS: PHP syntax, the unit tests of the pure classes and the release package.
+# The smoke test runs against the dev container (tests/run.sh smoke).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: phpunit:11.5.46
+
+      - name: PHP syntax
+        run: |
+          if ! git ls-files -z '*.php' | xargs -0 -n1 php -l > lint.txt 2>&1; then
+            grep -v '^No syntax errors' lint.txt
+            exit 1
+          fi
+
+      - name: Unit tests
+        working-directory: tests/unit/php
+        run: phpunit
+
+      - name: Locale files
+        run: |
+          # Same keys in English and German
+          for f in locale.po emails.po; do
+            diff <(grep '^msgid' locale/en/$f) <(grep '^msgid' locale/de/$f) || { echo "::error::locale/*/$f differ"; exit 1; }
+          done
+
+      - name: Release package
+        run: dev/package.sh --out dist
