@@ -1,6 +1,6 @@
 # Dossier Manager: planning special issues, thematic sections and symposia
 
-Status: draft for discussion (2026-11-22). Nothing is implemented yet.
+Status: agreed (2026-11-22), see [Decisions](#decisions). Nothing is implemented yet.
 
 ## Goal
 
@@ -22,7 +22,7 @@ Journals often publish groups of articles that are planned and commissioned in a
 | **Dossier** | A planned group of commissioned articles to be published together | Plugin table `dm_dossiers` |
 | **Dossier type** | What kind of dossier it is: *Special issue*, *Thematic section*, *Review symposium*, *Forum*, … The list is configurable; the label is used in emails | Plugin setting |
 | **Target issue** | The future (unpublished) issue in which the dossier is to appear | `issue_id` |
-| **Target section** | Optional: the journal section the contributions are submitted to (e.g. "Symposium") | `section_id` |
+| **Target section** | The journal section, chosen from the journal's sections, in which the contributions appear in the target issue (e.g. "Symposium", or "Articles" for a special issue) | `section_id` |
 | **Responsible editors** | One or more editors who run the dossier and receive its notifications | Users with the journal editor role or the plugin's *Dossier editor* role |
 | **Planned contribution** (short: *contribution*) | A slot in the dossier: a working title and its contributor | Plugin table `dm_contributions` |
 | **Contributor** | The person who is to write a contribution. Co-authors are added by the contributor in the submission wizard, as usual | OJS user in the Author group |
@@ -67,7 +67,7 @@ flowchart TD
 
 - **Type** (select, from the configured list), **title** and **description** (multilingual, rich text). The description is meant for the invitation email: what the dossier is about, the intended scope and length of the contributions.
 - **Target issue**: a select of the journal's future issues. Optional while planning; required before invitations are sent (the issue is named in the email).
-- **Target section** (optional): if set, submissions started from a submission link are put into this section.
+- **Target section**: a select of the journal's sections. Optional while planning; required before invitations are sent. Submissions attached to the dossier are put into this section.
 - **Submission deadline** (date). Required before invitations are sent.
 - **Responsible editors**: one or more users with the manager role or the *Dossier editor* role. The creator is preselected.
 - **Guidelines link**: defaults to the journal's author guidelines page (`about/submissions`); can be overridden per dossier, e.g. with a style sheet for the symposium.
@@ -110,7 +110,8 @@ The submission link is the core of the plugin.
   - Not logged in: the page asks the contributor to log in. For an account created ad hoc that has never been used, it offers **Set your password**, which sends OJS's password-reset email to the contributor's address.
   - Logged in as another user: the page says which account the link belongs to, and offers to log out. (Editors can reassign the contribution to the other account from the backend if the person uses two accounts.)
 - **Starting the submission:** the button remembers the contribution in the session and leads to OJS's normal submission start page. When the submission is created (`Submission::add` hook), the plugin attaches it to the contribution, and:
-  - sets the section to the dossier's target section, if any (the contributor can change it in the wizard only if the journal allows that section for authors);
+  - sets the publication's section to the dossier's target section. The wizard does not offer a section choice for dossier submissions. The target section may be one that is closed to normal author submissions ("editors only"); the plugin allows it for dossier submissions;
+  - **pre-assigns the submission to the target issue** (the publication's `issueId`). This only places it in the issue's list of scheduled content; publishing still needs the editors' usual *Schedule for publication*. If the dossier's target issue or section changes, the plugin moves the attached submissions that are not yet published, and records this in the history;
   - proposes the working title as the submission title, if the title is empty.
 - **Inside the wizard:** under *For the Editors*, a section **Dossier** shows "This submission is your contribution to *{type} {title}*". A contributor who started a submission without the link can pick one of their open contributions there (fallback; same pattern as the "Reviewed works" section in Book Review Manager). The choice can be removed until the submission is completed.
 - **After submission:** the link page says that the contribution has been submitted and links to the submission. A second submission for the same contribution is not possible through the link.
@@ -210,10 +211,11 @@ Reused from Book Review Manager (`cboulanger/ojs-book-review-manager`), adapted:
 | Decline link | One-click link as in `ActionLink`: hashed, expiring, single use, confirmation page |
 | Linking submissions | Session + `Submission::add` hook; wizard section via `Template::SubmissionWizard::Section` and the `steps` state; completion via the submission-submitted hook/event |
 | Editorial status | Read from the submission (stage, status); `Publication::publish` and issue publication hooks for *Published* |
+| Issue and section | Set on the publication (`issueId`, `sectionId`) when the submission is attached; updated when the dossier's target changes. Needs a check how OJS 3.5 handles an `issueId` on an unscheduled publication in the issue's TOC and in *Schedule for publication*, and whether a section closed to authors can be set through the wizard |
 | Emails | Mailables in `mailables/`, templates in `emailTemplates.xml` and `locale/*/emails.po`; editable before sending where an editor sends them |
 | Scheduled task | `DossierReminder`, daily |
 | Audit trail | OJS event log on the dossier |
-| Locales | English and German from the start |
+| Locales | English and German only |
 | Dev setup | `dev/` container (Podman/Docker, OJS 3.5 test journal with accounts for each role), `tests/run.sh` with PHPUnit and API/E2E suites, release workflow with `.gitattributes export-ignore`, as in Book Review Manager |
 
 Not used: OJS's own Invitation framework, for the reasons recorded in Book Review Manager's `ActionLink` (it deletes other pending invitations of the same type for the same person, acts on GET, and knows only accept/decline).
@@ -226,17 +228,17 @@ Not used: OJS's own Invitation framework, for the reasons recorded in Book Revie
 - A REST API and import of dossiers already under way.
 - Guest editors handling the editorial workflow of the contributions (they can be assigned as editors of the submissions in OJS as usual).
 
-## Open questions
+## Decisions
 
-| # | Question | Proposal |
+| # | Question | Decision |
 | --- | --- | --- |
-| 1 | Name: *Dossier Manager*, or *Special Issue Planner* / *Themed Collections*? | Dossier Manager |
-| 2 | Who may create dossiers: only managers/journal editors, or also the *Dossier editor* role (e.g. guest editors)? | Both |
-| 3 | One contributor per contribution, or several (each with their own link)? | One; co-authors are added in the wizard |
-| 4 | Must the target issue exist when the dossier is created? | No, required only before invitations |
-| 5 | Should the contribution be pre-assigned to the target issue when it is submitted, or only shown as a hint in the workflow? | Hint only; editors schedule as usual |
-| 6 | Decline link in the invitation? | Yes, configurable |
-| 7 | Change notifications: immediate, digest, or per-editor choice? | Per editor, defaults as above |
-| 8 | Maximum number of overdue reminders, or unlimited as in the original request? | Maximum 4, then notify the editors |
-| 9 | Should the list of contributions in the invitation show the other contributors' names? | Yes (common practice), with a per-dossier switch |
-| 10 | Which locales besides English and German? | Finnish, as in Book Review Manager, if translations can be provided |
+| 1 | Name | *Dossier Manager* |
+| 2 | Who may create dossiers | Journal managers/editors and the *Dossier editor* role (e.g. guest editors) |
+| 3 | Contributors per contribution | One; co-authors are added in the submission wizard |
+| 4 | Must the target issue exist when the dossier is created? | No; the target issue and section are required before invitations are sent |
+| 5 | Issue assignment of submitted contributions | **Pre-assigned** to the target issue, in the dossier's target section (chosen from the journal's sections). Publication still needs the editors' *Schedule for publication* |
+| 6 | Decline link in the invitation | Yes, configurable |
+| 7 | Change notifications | Per editor: immediately or daily digest; default immediately for submissions and declines, digest for the rest |
+| 8 | Overdue reminders | At most 4 by default (configurable, 0 = unlimited), then the responsible editors are notified |
+| 9 | Other contributors' names in the invitation | Yes, with a per-dossier switch |
+| 10 | Locales | English and German only |
