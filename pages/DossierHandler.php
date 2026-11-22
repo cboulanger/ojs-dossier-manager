@@ -71,28 +71,29 @@ class DossierHandler extends Handler
             $status = DossierRepository::contributionStatus($c);
             $contributor = Repo::user()->get($c->userId, true);
             $vars['contributorName'] = $contributor?->getFullName();
-            $vars['state'] = match (true) {
+            $vars['linkState'] = match (true) {
                 ContributionStatus::isSubmitted($status) => 'submitted',
                 !$user => 'login',
                 $user->getId() !== $c->userId => 'otherUser',
                 $status === ContributionStatus::IN_PROGRESS => 'continue',
                 default => 'start',
             };
-            if ($vars['state'] === 'login') {
+            if ($vars['linkState'] === 'login') {
                 $vars['loginUrl'] = $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'login', null, null,
                     ['source' => $request->getRequestPath()]);
                 $vars['lostPasswordUrl'] = $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'login', 'lostPassword');
                 $vars['contributorEmail'] = self::maskEmail((string) $contributor?->getEmail());
             }
-            if ($vars['state'] === 'otherUser') {
+            if ($vars['linkState'] === 'otherUser') {
                 $vars['currentUserName'] = $user->getFullName();
+                // signOut prepends the host and a slash to the source
                 $vars['logoutUrl'] = $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'login', 'signOut', null,
-                    ['source' => $request->getRequestPath()]);
+                    ['source' => ltrim($request->getRequestPath(), '/')]);
             }
-            if ($vars['state'] === 'continue') {
+            if ($vars['linkState'] === 'continue') {
                 $vars['continueUrl'] = $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'submission', null, null, ['id' => $c->submissionId]);
             }
-            if ($vars['state'] === 'submitted' && $user && $user->getId() === $c->userId) {
+            if ($vars['linkState'] === 'submitted' && $user && $user->getId() === $c->userId) {
                 $vars['submissionsUrl'] = $request->getDispatcher()->url($request, Application::ROUTE_PAGE, null, 'dashboard', 'mySubmissions');
             }
             $vars['allowDecline'] = (bool) Settings::get($dossier->contextId, Settings::ALLOW_DECLINE) && ContributionStatus::isOpen($status);

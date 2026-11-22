@@ -104,7 +104,7 @@ class DossierReminder extends ScheduledTask
                     Notifier::notify($plugin, $context, $dossier, 'maxReminders', [
                         'name' => $user->getFullName(),
                         'title' => $c->workingTitle ?: '–',
-                        'count' => $c->overdueCount,
+                        'number' => $c->overdueCount,
                     ]);
                 }
             }

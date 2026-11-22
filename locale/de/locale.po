@@ -89,7 +89,7 @@ msgid "plugins.generic.dossierManager.progressCount"
 msgstr "{$submitted} von {$planned} eingereicht"
 
 msgid "plugins.generic.dossierManager.overdueCount"
-msgstr "{$count} überfällig"
+msgstr "{$number} überfällig"
 
 msgid "plugins.generic.dossierManager.reminders"
 msgstr "Erinnerungen"
@@ -353,13 +353,13 @@ msgid "plugins.generic.dossierManager.contribution.reminderSent"
 msgstr "Erinnerung am {$date} verschickt"
 
 msgid "plugins.generic.dossierManager.contribution.overdueSent"
-msgstr "{$count} Mahnung(en) nach Fristablauf verschickt"
+msgstr "{$number} Mahnung(en) nach Fristablauf verschickt"
 
 msgid "plugins.generic.dossierManager.invite.title"
 msgstr "Einladungen verschicken"
 
 msgid "plugins.generic.dossierManager.invite.send"
-msgstr "Einladungen verschicken ({$count})"
+msgstr "Einladungen verschicken ({$number})"
 
 msgid "plugins.generic.dossierManager.invite.recipients"
 msgstr "Empfänger/innen"
@@ -374,7 +374,7 @@ msgid "plugins.generic.dossierManager.invite.submit"
 msgstr "Senden"
 
 msgid "plugins.generic.dossierManager.invite.sent"
-msgstr "{$count} Einladung(en) verschickt."
+msgstr "{$number} Einladung(en) verschickt."
 
 msgid "plugins.generic.dossierManager.invite.nobody"
 msgstr "Es gibt niemanden einzuladen: Jeder Beitrag braucht eine beitragende Person; abgesagte, gestrichene oder eingereichte Beiträge werden nicht eingeladen."
@@ -653,7 +653,7 @@ msgid "plugins.generic.dossierManager.notify.declined"
 msgstr "{$name} kann keinen Beitrag liefern ({$title}). Grund: {$reason}"
 
 msgid "plugins.generic.dossierManager.notify.maxReminders"
-msgstr "{$name} hat die letzte automatische Erinnerung ({$count}) erhalten für: {$title}. Bis Sie die Frist ändern oder die Erinnerungen fortsetzen, werden keine weiteren verschickt."
+msgstr "{$name} hat die letzte automatische Erinnerung ({$number}) erhalten für: {$title}. Bis Sie die Frist ändern oder die Erinnerungen fortsetzen, werden keine weiteren verschickt."
 
 msgid "plugins.generic.dossierManager.notify.notAccepted"
 msgstr "Eine Einreichung des Dossiers wurde im Redaktionsprozess abgelehnt: {$title}"

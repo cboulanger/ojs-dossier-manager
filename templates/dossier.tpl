@@ -8,7 +8,7 @@
 {extends file="layouts/backend.tpl"}
 
 {block name="page"}
-<div class="dmHeading">
+<div class="dmHeading" v-pre>
 	<div class="dmType">{$dossier->type|escape}</div>
 	<h1 class="app__pageHeading">{$pageTitle|escape}</h1>
 	<span class="dmStatus dmStatus--{$status|escape}">{translate key="plugins.generic.dossierManager.status.`$status`"}</span>
@@ -20,7 +20,7 @@
 		{if $canEdit}
 			<a class="pkp_button" href="{url page=$dmPage op="edit" path=$dossier->id}">{translate key="common.edit"}</a>
 			{if !$invitationBlocker && $uninvited}
-				<a class="pkp_button pkp_button_primary" href="{url page=$dmPage op="compose" path=$dossier->id}">{translate key="plugins.generic.dossierManager.invite.send" count=$uninvited}</a>
+				<a class="pkp_button pkp_button_primary" href="{url page=$dmPage op="compose" path=$dossier->id}">{translate key="plugins.generic.dossierManager.invite.send" number=$uninvited}</a>
 			{/if}
 			<form method="post" action="{url page=$dmPage op="dossierAction"}" class="dmInline"{if !$dossier->cancelled} data-dm-confirm="{translate key="plugins.generic.dossierManager.cancelConfirm"}"{/if}>
 				{csrf}
@@ -48,7 +48,7 @@
 		<dt>{translate key="plugins.generic.dossierManager.progress"}</dt>
 		<dd>
 			{translate key="plugins.generic.dossierManager.progressCount" submitted=$progress.submitted planned=$progress.planned}
-			{if $progress.overdue}<span class="dmWarning">· {translate key="plugins.generic.dossierManager.overdueCount" count=$progress.overdue}</span>{/if}
+			{if $progress.overdue}<span class="dmWarning">· {translate key="plugins.generic.dossierManager.overdueCount" number=$progress.overdue}</span>{/if}
 		</dd>
 		<dt>{translate key="plugins.generic.dossierManager.reminders"}</dt>
 		<dd>{translate key="plugins.generic.dossierManager.reminderSummary" days=$reminderSettings[0] interval=$reminderSettings[1] max=$reminderSettings[2]}</dd>
@@ -90,7 +90,7 @@
 						<span class="dmStatus dmStatus--{$row.status|escape}">{translate key="plugins.generic.dossierManager.contributionStatus.`$row.status`"}</span>
 						{if $row.stage}<div class="dmHint">{$row.stage|escape}</div>{/if}
 						{if $row.submissionUrl}<div><a href="{$row.submissionUrl|escape}">{if $row.submissionTitle}{$row.submissionTitle|escape}{else}{translate key="plugins.generic.dossierManager.contribution.submission"}{/if}</a></div>{/if}
-						{if $row.declineReason}<div class="dmHint">„{$row.declineReason|escape}“</div>{/if}
+						{if $row.declineReason}<div class="dmHint"><em>{$row.declineReason|escape}</em></div>{/if}
 					</td>
 					<td class="dmNoWrap">
 						{if $row.deadline}
@@ -103,7 +103,7 @@
 							<span class="dmWarning">{translate key="plugins.generic.dossierManager.contribution.paused"}</span>
 						{elseif $row.open}
 							{if $row.reminderSent}<div class="dmHint">{translate key="plugins.generic.dossierManager.contribution.reminderSent" date=$row.reminderSent|date_format:$dateFormatShort}</div>{/if}
-							{if $row.overdueCount}<div class="dmHint">{translate key="plugins.generic.dossierManager.contribution.overdueSent" count=$row.overdueCount}</div>{/if}
+							{if $row.overdueCount}<div class="dmHint">{translate key="plugins.generic.dossierManager.contribution.overdueSent" number=$row.overdueCount}</div>{/if}
 						{/if}
 					</td>
 				</tr>

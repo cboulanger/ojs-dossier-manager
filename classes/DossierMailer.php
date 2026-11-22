@@ -165,6 +165,8 @@ class DossierMailer
             User $recipient, ?User $sender, string $subject, string $body): bool
     {
         $late = self::lateParams($context, $dossier, $c, $recipient);
+        // Cleaning the edited HTML URL-encodes the braces of placeholders in links (href="%7B$submissionUrl%7D")
+        $body = preg_replace('/%7B\$([A-Za-z]+)%7D/i', '{\$$1}', $body);
         $subject = Mail::compileParams($subject, $late);
         $body = Mail::compileParams($body, $late);
 

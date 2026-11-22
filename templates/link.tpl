@@ -4,7 +4,7 @@
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * The personal submission link of a contribution. Opening it changes nothing.
- * $state: login | otherUser | start | continue | submitted
+ * $linkState: login | otherUser | start | continue | submitted
  *}
 {include file="frontend/components/header.tpl" pageTitle="plugins.generic.dossierManager.link.title"}
 
@@ -15,17 +15,17 @@
 	{else}
 		{include file=$dmIntro}
 
-		{if $state == 'submitted'}
+		{if $linkState == 'submitted'}
 			<p>{translate key="plugins.generic.dossierManager.link.submitted"}</p>
 			{if $submissionsUrl}<p><a class="cmp_button" href="{$submissionsUrl|escape}">{translate key="plugins.generic.dossierManager.myContributions.submissions"}</a></p>{/if}
-		{elseif $state == 'login'}
+		{elseif $linkState == 'login'}
 			<p>{translate key="plugins.generic.dossierManager.link.loginNeeded" name=$contributorName|escape email=$contributorEmail|escape}</p>
 			<p><a class="cmp_button" href="{$loginUrl|escape}">{translate key="user.login"}</a></p>
 			<p>{translate key="plugins.generic.dossierManager.link.setPassword"} <a href="{$lostPasswordUrl|escape}">{translate key="plugins.generic.dossierManager.link.setPasswordLink"}</a></p>
-		{elseif $state == 'otherUser'}
+		{elseif $linkState == 'otherUser'}
 			<p>{translate key="plugins.generic.dossierManager.link.otherUser" name=$contributorName|escape current=$currentUserName|escape}</p>
 			<p><a class="cmp_button" href="{$logoutUrl|escape}">{translate key="user.logOut"}</a></p>
-		{elseif $state == 'continue'}
+		{elseif $linkState == 'continue'}
 			<p>{translate key="plugins.generic.dossierManager.link.inProgress"}</p>
 			<p><a class="cmp_button" href="{$continueUrl|escape}">{translate key="plugins.generic.dossierManager.link.continue"}</a></p>
 		{else}
@@ -37,7 +37,7 @@
 			</form>
 		{/if}
 
-		{if $allowDecline && $state != 'submitted'}
+		{if $allowDecline && $linkState != 'submitted'}
 			<p class="dmDeclineHint"><a href="{url page=$dmPage op="decline" path=$key}">{translate key="plugins.generic.dossierManager.link.declineLink"}</a></p>
 		{/if}
 	{/if}

@@ -577,14 +577,16 @@ class DossiersHandler extends Handler
         }
         $ids = array_map('intval', (array) $request->getUserVar('contributionIds'));
         $contributions = array_filter(DossierRepository::getContributions($dossier->id), fn ($c) => in_array($c->id, $ids, true));
-        $subject = trim((string) $request->getUserVar('subject'));
-        $body = PKPString::stripUnsafeHtml((string) $request->getUserVar('body'));
+        // OJS's output filter protects {{ }} from Vue, also inside the fields of the form: undo it
+        $unprotect = fn (string $text) => str_replace(['<span v-pre>{{</span>', '<span v-pre>}}</span>'], ['{{', '}}'], $text);
+        $subject = trim($unprotect((string) $request->getUserVar('subject')));
+        $body = PKPString::stripUnsafeHtml($unprotect((string) $request->getUserVar('body')));
         if ($subject === '' || trim(strip_tags($body)) === '') {
             $this->flash($request, __('plugins.generic.dossierManager.invite.emptyEmail'), Notification::NOTIFICATION_TYPE_ERROR);
             $request->redirect(null, self::PAGE, 'compose', [$dossier->id]);
         }
         $count = DossierWorkflow::invite($this->plugin, $context, $dossier, $contributions, $subject, $body, $request->getUser());
-        $this->flash($request, __('plugins.generic.dossierManager.invite.sent', ['count' => $count]));
+        $this->flash($request, __('plugins.generic.dossierManager.invite.sent', ['number' => $count]));
         $request->redirect(null, self::PAGE, 'view', [$dossier->id]);
     }
 

@@ -89,7 +89,7 @@ msgid "plugins.generic.dossierManager.progressCount"
 msgstr "{$submitted} of {$planned} submitted"
 
 msgid "plugins.generic.dossierManager.overdueCount"
-msgstr "{$count} overdue"
+msgstr "{$number} overdue"
 
 msgid "plugins.generic.dossierManager.reminders"
 msgstr "Reminders"
@@ -353,13 +353,13 @@ msgid "plugins.generic.dossierManager.contribution.reminderSent"
 msgstr "Reminder sent on {$date}"
 
 msgid "plugins.generic.dossierManager.contribution.overdueSent"
-msgstr "{$count} overdue reminder(s) sent"
+msgstr "{$number} overdue reminder(s) sent"
 
 msgid "plugins.generic.dossierManager.invite.title"
 msgstr "Send invitations"
 
 msgid "plugins.generic.dossierManager.invite.send"
-msgstr "Send invitations ({$count})"
+msgstr "Send invitations ({$number})"
 
 msgid "plugins.generic.dossierManager.invite.recipients"
 msgstr "Recipients"
@@ -374,7 +374,7 @@ msgid "plugins.generic.dossierManager.invite.submit"
 msgstr "Send"
 
 msgid "plugins.generic.dossierManager.invite.sent"
-msgstr "{$count} invitation(s) sent."
+msgstr "{$number} invitation(s) sent."
 
 msgid "plugins.generic.dossierManager.invite.nobody"
 msgstr "There is nobody to invite: each contribution needs a contributor, and declined, dropped or submitted contributions are not invited."
@@ -653,7 +653,7 @@ msgid "plugins.generic.dossierManager.notify.declined"
 msgstr "{$name} cannot contribute ({$title}). Reason: {$reason}"
 
 msgid "plugins.generic.dossierManager.notify.maxReminders"
-msgstr "{$name} has received the last automatic reminder ({$count}) for: {$title}. No further reminders are sent until you change the deadline or resume them."
+msgstr "{$name} has received the last automatic reminder ({$number}) for: {$title}. No further reminders are sent until you change the deadline or resume them."
 
 msgid "plugins.generic.dossierManager.notify.notAccepted"
 msgstr "A submission of the dossier was declined in the editorial workflow: {$title}"

@@ -44,7 +44,7 @@
 						<td class="dmNoWrap">{if $row.deadline}{$row.deadline|date_format:$dateFormatShort}{else}–{/if}</td>
 						<td class="dmNoWrap">
 							{translate key="plugins.generic.dossierManager.progressCount" submitted=$row.progress.submitted planned=$row.progress.planned}
-							{if $row.progress.overdue}<div class="dmWarning">{translate key="plugins.generic.dossierManager.overdueCount" count=$row.progress.overdue}</div>{/if}
+							{if $row.progress.overdue}<div class="dmWarning">{translate key="plugins.generic.dossierManager.overdueCount" number=$row.progress.overdue}</div>{/if}
 						</td>
 						<td>{$row.editors|escape}</td>
 					</tr>
