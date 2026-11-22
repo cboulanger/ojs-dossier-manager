@@ -1,0 +1,696 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+msgid "plugins.generic.dossierManager.displayName"
+msgstr "Dossier Manager"
+
+msgid "plugins.generic.dossierManager.description"
+msgstr "Planung von Dossiers – Sonderhefte, Themenschwerpunkte, Rezensionssymposien – mit eingeladenen Beiträgen: Einladungen mit persönlichen Einreichungslinks, Überblick über die Einreichungen und Erinnerungen."
+
+msgid "plugins.generic.dossierManager.role.dossierEditor"
+msgstr "Dossier-Herausgeber/in"
+
+msgid "plugins.generic.dossierManager.role.dossierEditor.abbrev"
+msgstr "DosHg"
+
+msgid "plugins.generic.dossierManager.type.specialIssue"
+msgstr "Sonderheft"
+
+msgid "plugins.generic.dossierManager.type.thematicSection"
+msgstr "Themenschwerpunkt"
+
+msgid "plugins.generic.dossierManager.type.reviewSymposium"
+msgstr "Rezensionssymposium"
+
+msgid "plugins.generic.dossierManager.type.forum"
+msgstr "Forum"
+
+msgid "plugins.generic.dossierManager.menu.dossiers"
+msgstr "Dossiers"
+
+msgid "plugins.generic.dossierManager.menu.myDossiers"
+msgstr "Meine Dossiers"
+
+msgid "plugins.generic.dossierManager.menu.create"
+msgstr "Neues Dossier anlegen"
+
+msgid "plugins.generic.dossierManager.menu.settings"
+msgstr "Konfiguration"
+
+msgid "plugins.generic.dossierManager.allDossiers"
+msgstr "Alle Dossiers"
+
+msgid "plugins.generic.dossierManager.showAll"
+msgstr "Alle Dossiers der Zeitschrift anzeigen"
+
+msgid "plugins.generic.dossierManager.showMine"
+msgstr "Nur meine Dossiers anzeigen"
+
+msgid "plugins.generic.dossierManager.noDossiers"
+msgstr "Es gibt noch keine Dossiers."
+
+msgid "plugins.generic.dossierManager.noOwnDossiers"
+msgstr "Sie sind für kein Dossier verantwortlich."
+
+msgid "plugins.generic.dossierManager.dossier"
+msgstr "Dossier"
+
+msgid "plugins.generic.dossierManager.edit"
+msgstr "Dossier bearbeiten"
+
+msgid "plugins.generic.dossierManager.type"
+msgstr "Art"
+
+msgid "plugins.generic.dossierManager.title"
+msgstr "Titel"
+
+msgid "plugins.generic.dossierManager.dossierDescription"
+msgstr "Beschreibung"
+
+msgid "plugins.generic.dossierManager.targetIssue"
+msgstr "Zielausgabe"
+
+msgid "plugins.generic.dossierManager.targetSection"
+msgstr "Zielrubrik"
+
+msgid "plugins.generic.dossierManager.deadline"
+msgstr "Einreichungsfrist"
+
+msgid "plugins.generic.dossierManager.editors"
+msgstr "Verantwortliche Herausgeber/innen"
+
+msgid "plugins.generic.dossierManager.progress"
+msgstr "Stand"
+
+msgid "plugins.generic.dossierManager.progressCount"
+msgstr "{$submitted} von {$planned} eingereicht"
+
+msgid "plugins.generic.dossierManager.overdueCount"
+msgstr "{$count} überfällig"
+
+msgid "plugins.generic.dossierManager.reminders"
+msgstr "Erinnerungen"
+
+msgid "plugins.generic.dossierManager.reminderSummary"
+msgstr "{$days} Tage vor der Frist; danach alle {$interval} Tage, höchstens {$max}-mal (0 = unbegrenzt)"
+
+msgid "plugins.generic.dossierManager.guidelinesUrl"
+msgstr "Hinweise für Autor/innen"
+
+msgid "plugins.generic.dossierManager.showContributors"
+msgstr "Die anderen Beitragenden in der Einladung namentlich nennen"
+
+msgid "plugins.generic.dossierManager.notes"
+msgstr "Interne Notizen"
+
+msgid "plugins.generic.dossierManager.contributions"
+msgstr "Geplante Beiträge"
+
+msgid "plugins.generic.dossierManager.contribution"
+msgstr "Beitrag"
+
+msgid "plugins.generic.dossierManager.noContributions"
+msgstr "Noch keine Beiträge geplant."
+
+msgid "plugins.generic.dossierManager.readOnly"
+msgstr "Sie sind keine verantwortliche Herausgeberin / kein verantwortlicher Herausgeber dieses Dossiers und können es nur ansehen."
+
+msgid "plugins.generic.dossierManager.cancelDossier"
+msgstr "Dossier absagen"
+
+msgid "plugins.generic.dossierManager.cancelConfirm"
+msgstr "Dieses Dossier absagen? Die Einreichungslinks funktionieren dann nicht mehr, und es werden keine Erinnerungen verschickt. Sie können es später wieder öffnen."
+
+msgid "plugins.generic.dossierManager.reopen"
+msgstr "Dossier wieder öffnen"
+
+msgid "plugins.generic.dossierManager.notFound"
+msgstr "Das Dossier wurde nicht gefunden."
+
+msgid "plugins.generic.dossierManager.notResponsible"
+msgstr "Nur die verantwortlichen Herausgeber/innen und die Zeitschriftenverwaltung können dieses Dossier ändern."
+
+msgid "plugins.generic.dossierManager.notifyMode"
+msgstr "Meine Benachrichtigungen zu diesem Dossier"
+
+msgid "plugins.generic.dossierManager.notifyMode.default"
+msgstr "Einreichungen und Absagen sofort, andere Änderungen in einer täglichen Zusammenfassung"
+
+msgid "plugins.generic.dossierManager.notifyMode.immediate"
+msgstr "Jede Änderung sofort"
+
+msgid "plugins.generic.dossierManager.notifyMode.digest"
+msgstr "Alles in einer täglichen Zusammenfassung"
+
+msgid "plugins.generic.dossierManager.status.planning"
+msgstr "In Planung"
+
+msgid "plugins.generic.dossierManager.status.invited"
+msgstr "Eingeladen"
+
+msgid "plugins.generic.dossierManager.status.collecting"
+msgstr "Frist abgelaufen"
+
+msgid "plugins.generic.dossierManager.status.complete"
+msgstr "Vollständig"
+
+msgid "plugins.generic.dossierManager.status.published"
+msgstr "Veröffentlicht"
+
+msgid "plugins.generic.dossierManager.status.cancelled"
+msgstr "Abgesagt"
+
+msgid "plugins.generic.dossierManager.contributionStatus.planned"
+msgstr "Geplant"
+
+msgid "plugins.generic.dossierManager.contributionStatus.invited"
+msgstr "Eingeladen"
+
+msgid "plugins.generic.dossierManager.contributionStatus.declined"
+msgstr "Abgesagt"
+
+msgid "plugins.generic.dossierManager.contributionStatus.dropped"
+msgstr "Gestrichen"
+
+msgid "plugins.generic.dossierManager.contributionStatus.inProgress"
+msgstr "Einreichung begonnen"
+
+msgid "plugins.generic.dossierManager.contributionStatus.submitted"
+msgstr "Eingereicht"
+
+msgid "plugins.generic.dossierManager.contributionStatus.notAccepted"
+msgstr "Nicht angenommen"
+
+msgid "plugins.generic.dossierManager.contributionStatus.published"
+msgstr "Veröffentlicht"
+
+msgid "plugins.generic.dossierManager.form.errors"
+msgstr "Bitte korrigieren Sie die markierten Felder."
+
+msgid "plugins.generic.dossierManager.form.titleRequired"
+msgstr "Bitte geben Sie einen Titel in der Hauptsprache der Zeitschrift ein."
+
+msgid "plugins.generic.dossierManager.form.issueInvalid"
+msgstr "Bitte wählen Sie eine noch nicht veröffentlichte Ausgabe."
+
+msgid "plugins.generic.dossierManager.form.sectionInvalid"
+msgstr "Bitte wählen Sie eine Rubrik dieser Zeitschrift."
+
+msgid "plugins.generic.dossierManager.form.dateInvalid"
+msgstr "Bitte geben Sie ein gültiges Datum ein."
+
+msgid "plugins.generic.dossierManager.form.urlInvalid"
+msgstr "Bitte geben Sie eine vollständige Webadresse ein (https://...)."
+
+msgid "plugins.generic.dossierManager.form.numberInvalid"
+msgstr "Bitte geben Sie eine ganze Zahl ein oder lassen Sie das Feld leer."
+
+msgid "plugins.generic.dossierManager.form.editorsRequired"
+msgstr "Bitte wählen Sie mindestens eine verantwortliche Person."
+
+msgid "plugins.generic.dossierManager.form.notYet"
+msgstr "– noch offen –"
+
+msgid "plugins.generic.dossierManager.form.editorsOnly"
+msgstr "nur Redaktion"
+
+msgid "plugins.generic.dossierManager.form.descriptionHint"
+msgstr "Die Beschreibung steht in der Einladungs-E-Mail: worum es im Dossier geht, Umfang und Länge der Beiträge. Einfacher Text; Leerzeilen trennen Absätze."
+
+msgid "plugins.generic.dossierManager.form.targetHint"
+msgstr "Zielausgabe, Zielrubrik und Frist werden benötigt, bevor Einladungen verschickt werden können. Eingereichte Beiträge werden der Zielausgabe und -rubrik zugeordnet; veröffentlicht werden sie erst, wenn die Redaktion sie einplant."
+
+msgid "plugins.generic.dossierManager.form.editorsHint"
+msgstr "Zeitschriftenverwaltung und Mitglieder der Rolle „Dossier-Herausgeber/in“. Die Verantwortlichen erhalten die Benachrichtigungen zu diesem Dossier."
+
+msgid "plugins.generic.dossierManager.form.guidelinesHint"
+msgstr "Leer lassen, um die Einreichungshinweise der Zeitschrift zu verwenden."
+
+msgid "plugins.generic.dossierManager.form.reminders"
+msgstr "Erinnerungen"
+
+msgid "plugins.generic.dossierManager.form.remindersHint"
+msgstr "Leer lassen, um die Einstellungen der Zeitschrift zu verwenden: {$days} Tage vor der Frist; danach alle {$interval} Tage, höchstens {$max}-mal."
+
+msgid "plugins.generic.dossierManager.form.notesHint"
+msgstr "Nur für die Redaktion sichtbar; wird an niemanden verschickt."
+
+msgid "plugins.generic.dossierManager.contribution.add"
+msgstr "Beitrag hinzufügen"
+
+msgid "plugins.generic.dossierManager.contribution.workingTitle"
+msgstr "Arbeitstitel"
+
+msgid "plugins.generic.dossierManager.contribution.individualDeadline"
+msgstr "Individuelle Frist"
+
+msgid "plugins.generic.dossierManager.contribution.ownDeadline"
+msgstr "individuelle Frist"
+
+msgid "plugins.generic.dossierManager.contribution.note"
+msgstr "Interne Notiz"
+
+msgid "plugins.generic.dossierManager.contribution.noTitle"
+msgstr "ohne Arbeitstitel"
+
+msgid "plugins.generic.dossierManager.contribution.noContributor"
+msgstr "Noch keine beitragende Person"
+
+msgid "plugins.generic.dossierManager.contribution.submission"
+msgstr "Einreichung"
+
+msgid "plugins.generic.dossierManager.contribution.searchUser"
+msgstr "Beitragende Person: in den Nutzer/innen der Zeitschrift suchen"
+
+msgid "plugins.generic.dossierManager.contribution.searchPlaceholder"
+msgstr "Name, E-Mail oder Institution"
+
+msgid "plugins.generic.dossierManager.contribution.newPerson"
+msgstr "oder neue Person anlegen"
+
+msgid "plugins.generic.dossierManager.contribution.newPersonHint"
+msgstr "Dadurch wird ein Konto mit der Rolle Autor/in angelegt. Bis zur Einladung wird keine E-Mail verschickt. Gibt es bereits ein Konto mit dieser E-Mail-Adresse, wird es verwendet."
+
+msgid "plugins.generic.dossierManager.contribution.newPersonInvalid"
+msgstr "Für eine neue Person bitte Nachname, Vorname und eine gültige E-Mail-Adresse angeben."
+
+msgid "plugins.generic.dossierManager.contribution.userNotFound"
+msgstr "Die ausgewählte Person wurde nicht gefunden."
+
+msgid "plugins.generic.dossierManager.contribution.changeContributor"
+msgstr "Um die beitragende Person zu wechseln, wählen Sie eine andere Person. Der alte Einreichungslink funktioniert dann nicht mehr, und die neue Person braucht eine Einladung."
+
+msgid "plugins.generic.dossierManager.contribution.cannotChangeSubmitted"
+msgstr "Die beitragende Person kann nicht mehr gewechselt werden, sobald eine Einreichung begonnen wurde."
+
+msgid "plugins.generic.dossierManager.contribution.edit"
+msgstr "Bearbeiten, Person wechseln, Absage eintragen"
+
+msgid "plugins.generic.dossierManager.contribution.up"
+msgstr "Nach oben"
+
+msgid "plugins.generic.dossierManager.contribution.down"
+msgstr "Nach unten"
+
+msgid "plugins.generic.dossierManager.contribution.pause"
+msgstr "Erinnerungen pausieren"
+
+msgid "plugins.generic.dossierManager.contribution.resume"
+msgstr "Erinnerungen fortsetzen"
+
+msgid "plugins.generic.dossierManager.contribution.paused"
+msgstr "Erinnerungen pausiert"
+
+msgid "plugins.generic.dossierManager.contribution.drop"
+msgstr "Streichen"
+
+msgid "plugins.generic.dossierManager.contribution.dropConfirm"
+msgstr "Diesen Beitrag aus dem Dossier streichen? Der Einreichungslink funktioniert dann nicht mehr. Sie können ihn später wiederherstellen."
+
+msgid "plugins.generic.dossierManager.contribution.restore"
+msgstr "Wiederherstellen"
+
+msgid "plugins.generic.dossierManager.contribution.removeConfirm"
+msgstr "Diesen Beitrag aus der Planung entfernen?"
+
+msgid "plugins.generic.dossierManager.contribution.invite"
+msgstr "Einladen"
+
+msgid "plugins.generic.dossierManager.contribution.resend"
+msgstr "Einladung erneut senden"
+
+msgid "plugins.generic.dossierManager.contribution.link"
+msgstr "Einreichungslink"
+
+msgid "plugins.generic.dossierManager.contribution.copy"
+msgstr "Kopieren"
+
+msgid "plugins.generic.dossierManager.contribution.copied"
+msgstr "Kopiert"
+
+msgid "plugins.generic.dossierManager.contribution.renew"
+msgstr "Link erneuern"
+
+msgid "plugins.generic.dossierManager.contribution.renewConfirm"
+msgstr "Einen neuen Einreichungslink erzeugen? Der alte Link funktioniert dann nicht mehr."
+
+msgid "plugins.generic.dossierManager.contribution.linkRenewed"
+msgstr "Ein neuer Einreichungslink wurde erzeugt. Der alte funktioniert nicht mehr."
+
+msgid "plugins.generic.dossierManager.contribution.markDeclined"
+msgstr "Absage eintragen"
+
+msgid "plugins.generic.dossierManager.contribution.markDeclinedReason"
+msgstr "Die Person hat abgesagt (z. B. per E-Mail). Grund (optional):"
+
+msgid "plugins.generic.dossierManager.contribution.markDeclinedConfirm"
+msgstr "Eintragen, dass die Person abgesagt hat? Der Einreichungslink funktioniert dann nicht mehr."
+
+msgid "plugins.generic.dossierManager.contribution.reminderSent"
+msgstr "Erinnerung am {$date} verschickt"
+
+msgid "plugins.generic.dossierManager.contribution.overdueSent"
+msgstr "{$count} Mahnung(en) nach Fristablauf verschickt"
+
+msgid "plugins.generic.dossierManager.invite.title"
+msgstr "Einladungen verschicken"
+
+msgid "plugins.generic.dossierManager.invite.send"
+msgstr "Einladungen verschicken ({$count})"
+
+msgid "plugins.generic.dossierManager.invite.recipients"
+msgstr "Empfänger/innen"
+
+msgid "plugins.generic.dossierManager.invite.again"
+msgstr "bereits eingeladen"
+
+msgid "plugins.generic.dossierManager.invite.variablesHint"
+msgstr "Wird beim Versand für jede Person eingesetzt:"
+
+msgid "plugins.generic.dossierManager.invite.submit"
+msgstr "Senden"
+
+msgid "plugins.generic.dossierManager.invite.sent"
+msgstr "{$count} Einladung(en) verschickt."
+
+msgid "plugins.generic.dossierManager.invite.nobody"
+msgstr "Es gibt niemanden einzuladen: Jeder Beitrag braucht eine beitragende Person; abgesagte, gestrichene oder eingereichte Beiträge werden nicht eingeladen."
+
+msgid "plugins.generic.dossierManager.invite.emptyEmail"
+msgstr "Bitte geben Sie einen Betreff und einen Text ein."
+
+msgid "plugins.generic.dossierManager.invite.missingTarget"
+msgstr "Bevor Einladungen verschickt werden können, braucht das Dossier eine Zielausgabe, eine Zielrubrik und eine Einreichungsfrist."
+
+msgid "plugins.generic.dossierManager.invite.cancelled"
+msgstr "Das Dossier ist abgesagt."
+
+msgid "plugins.generic.dossierManager.invite.suppressed"
+msgstr "Die E-Mails des Plugins sind in der Konfiguration abgeschaltet. Die Einladungen werden in der Historie vermerkt, aber nicht verschickt."
+
+msgid "plugins.generic.dossierManager.email.declineLink"
+msgstr "Falls Sie doch keinen Beitrag liefern können, teilen Sie uns dies bitte mit:"
+
+msgid "plugins.generic.dossierManager.email.inProgress"
+msgstr "Sie haben Ihre Einreichung bereits begonnen; bitte schließen Sie sie ab."
+
+msgid "plugins.generic.dossierManager.email.notSent"
+msgstr "[nicht gesendet]"
+
+msgid "plugins.generic.dossierManager.settings.types"
+msgstr "Arten von Dossiers"
+
+msgid "plugins.generic.dossierManager.settings.typesHint"
+msgstr "Eine pro Zeile. Die Art wird in der Liste der Dossiers angezeigt und in den E-Mails genannt."
+
+msgid "plugins.generic.dossierManager.settings.reminderDays"
+msgstr "Tage vor der Frist für die Erinnerung"
+
+msgid "plugins.generic.dossierManager.settings.overdueInterval"
+msgstr "Abstand der Erinnerungen nach Fristablauf (Tage)"
+
+msgid "plugins.generic.dossierManager.settings.overdueMax"
+msgstr "Höchstzahl der Erinnerungen nach Fristablauf"
+
+msgid "plugins.generic.dossierManager.settings.remindersHint"
+msgstr "0 Tage schaltet die Erinnerung vor der Frist ab; ein Abstand von 0 schaltet die Erinnerungen nach Fristablauf ab; eine Höchstzahl von 0 bedeutet unbegrenzt. Jedes Dossier kann diese Werte überschreiben."
+
+msgid "plugins.generic.dossierManager.settings.allowDecline"
+msgstr "Beitragende können über einen Link in den E-Mails absagen"
+
+msgid "plugins.generic.dossierManager.settings.suppressEmails"
+msgstr "Keine E-Mails verschicken"
+
+msgid "plugins.generic.dossierManager.settings.suppressEmailsHint"
+msgstr "Zum Testen und Einrichten: E-Mails werden in der Historie vermerkt, aber nicht verschickt, und es gehen keine Erinnerungen hinaus."
+
+msgid "plugins.generic.dossierManager.settings.roleHint"
+msgstr "Mitglieder der Rolle „{$group}“ können Dossiers anlegen und die Dossiers betreuen, für die sie verantwortlich sind. Die Rolle wird unter Benutzer/innen & Rollen vergeben."
+
+msgid "plugins.generic.dossierManager.settings.emailsHint"
+msgstr "Die Texte der E-Mails können unter Einstellungen › E-Mails bearbeitet werden."
+
+msgid "plugins.generic.dossierManager.myContributions.title"
+msgstr "Meine Beiträge"
+
+msgid "plugins.generic.dossierManager.myContributions.empty"
+msgstr "Sie haben keine geplanten Beiträge."
+
+msgid "plugins.generic.dossierManager.myContributions.submissions"
+msgstr "Zu meinen Einreichungen"
+
+msgid "plugins.generic.dossierManager.link.title"
+msgstr "Ihr Beitrag"
+
+msgid "plugins.generic.dossierManager.link.invalid"
+msgstr "Dieser Link ist ungültig. Möglicherweise wurde er durch einen neueren ersetzt. Bitte wenden Sie sich an die Redaktion."
+
+msgid "plugins.generic.dossierManager.link.cancelled"
+msgstr "Dieses Dossier wurde abgesagt. Bei Fragen wenden Sie sich bitte an die Redaktion."
+
+msgid "plugins.generic.dossierManager.link.declined"
+msgstr "Sie haben diese Einladung abgesagt. Falls Sie doch einen Beitrag liefern möchten, wenden Sie sich bitte an die Redaktion."
+
+msgid "plugins.generic.dossierManager.link.dropped"
+msgstr "Dieser Beitrag ist nicht mehr geplant. Bei Fragen wenden Sie sich bitte an die Redaktion."
+
+msgid "plugins.generic.dossierManager.link.submitted"
+msgstr "Vielen Dank – Ihr Beitrag wurde eingereicht."
+
+msgid "plugins.generic.dossierManager.link.loginNeeded"
+msgstr "Dieser Link gehört zum Konto von {$name} ({$email}). Bitte melden Sie sich an, um Ihren Beitrag einzureichen."
+
+msgid "plugins.generic.dossierManager.link.setPassword"
+msgstr "Falls Sie sich noch nie bei dieser Zeitschrift angemeldet oder Ihr Passwort vergessen haben:"
+
+msgid "plugins.generic.dossierManager.link.setPasswordLink"
+msgstr "Passwort festlegen"
+
+msgid "plugins.generic.dossierManager.link.otherUser"
+msgstr "Dieser Link gehört zum Konto von {$name}, Sie sind aber als {$current} angemeldet. Bitte melden Sie sich ab und mit dem Konto von {$name} an. Wenn Sie Ihr aktuelles Konto verwenden möchten, bitten Sie die Redaktion, den Beitrag umzustellen."
+
+msgid "plugins.generic.dossierManager.link.inProgress"
+msgstr "Sie haben Ihre Einreichung bereits begonnen."
+
+msgid "plugins.generic.dossierManager.link.continue"
+msgstr "Einreichung fortsetzen"
+
+msgid "plugins.generic.dossierManager.link.startHint"
+msgstr "Die Schaltfläche öffnet das normale Einreichungsformular der Zeitschrift. Ihre Einreichung wird automatisch diesem Dossier zugeordnet."
+
+msgid "plugins.generic.dossierManager.link.start"
+msgstr "Einreichung beginnen"
+
+msgid "plugins.generic.dossierManager.link.declineLink"
+msgstr "Ich kann doch keinen Beitrag liefern"
+
+msgid "plugins.generic.dossierManager.decline.title"
+msgstr "Einladung absagen"
+
+msgid "plugins.generic.dossierManager.decline.question"
+msgstr "Möchten Sie der Redaktion mitteilen, dass Sie keinen Beitrag liefern können? Ihr Einreichungslink funktioniert danach nicht mehr."
+
+msgid "plugins.generic.dossierManager.decline.reason"
+msgstr "Nachricht an die Redaktion (optional)"
+
+msgid "plugins.generic.dossierManager.decline.confirm"
+msgstr "Absagen"
+
+msgid "plugins.generic.dossierManager.decline.done"
+msgstr "Vielen Dank für Ihre Nachricht. Die Redaktion wurde informiert."
+
+msgid "plugins.generic.dossierManager.wizard.name"
+msgstr "Dossier"
+
+msgid "plugins.generic.dossierManager.wizard.attached"
+msgstr "Diese Einreichung ist Ihr Beitrag zum {$type} „{$title}“."
+
+msgid "plugins.generic.dossierManager.wizard.targetHint"
+msgstr "Wenn Sie die Einreichung abschließen, wird sie der für das Dossier geplanten Ausgabe und Rubrik zugeordnet."
+
+msgid "plugins.generic.dossierManager.wizard.detach"
+msgstr "Dies ist nicht mein Beitrag zum Dossier"
+
+msgid "plugins.generic.dossierManager.wizard.choose"
+msgstr "Ist diese Einreichung Ihr geplanter Beitrag zu einem Dossier? Dann wählen Sie ihn hier aus:"
+
+msgid "plugins.generic.dossierManager.wizard.attach"
+msgstr "Dies ist mein Beitrag"
+
+msgid "plugins.generic.dossierManager.reminder.taskName"
+msgstr "Dossier Manager: Erinnerungen und Zusammenfassungen"
+
+msgid "plugins.generic.dossierManager.reminder.sent"
+msgstr "{$context}: {$before} Erinnerung(en) vor der Frist, {$overdue} nach der Frist, {$digests} Zusammenfassung(en)."
+
+msgid "plugins.generic.dossierManager.history"
+msgstr "Historie"
+
+msgid "plugins.generic.dossierManager.history.empty"
+msgstr "Noch keine Einträge."
+
+msgid "plugins.generic.dossierManager.history.viaLink"
+msgstr "über E-Mail-Link"
+
+msgid "plugins.generic.dossierManager.history.automatic"
+msgstr "automatisch"
+
+msgid "plugins.generic.dossierManager.history.email"
+msgstr "E-Mail"
+
+msgid "plugins.generic.dossierManager.history.email.invitation"
+msgstr "Einladung"
+
+msgid "plugins.generic.dossierManager.history.email.reminder"
+msgstr "Erinnerung"
+
+msgid "plugins.generic.dossierManager.history.email.overdue"
+msgstr "Erinnerung nach Fristablauf"
+
+msgid "plugins.generic.dossierManager.history.email.notification"
+msgstr "Benachrichtigung"
+
+msgid "plugins.generic.dossierManager.history.email.digest"
+msgstr "Tägliche Zusammenfassung"
+
+msgid "plugins.generic.dossierManager.history.event.created"
+msgstr "Dossier angelegt: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.edited"
+msgstr "Dossier bearbeitet"
+
+msgid "plugins.generic.dossierManager.history.event.cancelled"
+msgstr "Dossier abgesagt"
+
+msgid "plugins.generic.dossierManager.history.event.reopened"
+msgstr "Dossier wieder geöffnet"
+
+msgid "plugins.generic.dossierManager.history.event.contributionAdded"
+msgstr "Beitrag hinzugefügt: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionEdited"
+msgstr "Beitrag bearbeitet: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionRemoved"
+msgstr "Beitrag entfernt: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionDropped"
+msgstr "Beitrag gestrichen: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionRestored"
+msgstr "Beitrag wiederhergestellt: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributorChanged"
+msgstr "Neue beitragende Person {$recipientName} für: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributorCreated"
+msgstr "Konto angelegt für {$recipientName} ({$subject})"
+
+msgid "plugins.generic.dossierManager.history.event.invited"
+msgstr "Einladung an {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.declined"
+msgstr "{$recipientName} hat abgesagt: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.declinedByEditor"
+msgstr "Absage von {$recipientName} eingetragen: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.linkRenewed"
+msgstr "Einreichungslink erneuert für {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.remindersPaused"
+msgstr "Erinnerungen pausiert für {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.remindersResumed"
+msgstr "Erinnerungen fortgesetzt für {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.submissionStarted"
+msgstr "Einreichung begonnen von {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.submitted"
+msgstr "Eingereicht von {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.detached"
+msgstr "Einreichung vom Beitrag gelöst: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.moved"
+msgstr "Einreichung der Zielausgabe und -rubrik zugeordnet: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.notAccepted"
+msgstr "Einreichung im Redaktionsprozess abgelehnt: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.published"
+msgstr "Veröffentlicht: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.reminderSent"
+msgstr "Erinnerung an {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.overdueSent"
+msgstr "Erinnerung nach Fristablauf an {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.maxReminders"
+msgstr "Letzte automatische Erinnerung an {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.deadlineChanged"
+msgstr "Frist geändert: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.targetChanged"
+msgstr "Ziel geändert: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.editorsChanged"
+msgstr "Verantwortliche: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.reordered"
+msgstr "Reihenfolge der Beiträge geändert"
+
+msgid "plugins.generic.dossierManager.notify.submitted"
+msgstr "{$name} hat den Beitrag eingereicht: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.declined"
+msgstr "{$name} kann keinen Beitrag liefern ({$title}). Grund: {$reason}"
+
+msgid "plugins.generic.dossierManager.notify.maxReminders"
+msgstr "{$name} hat die letzte automatische Erinnerung ({$count}) erhalten für: {$title}. Bis Sie die Frist ändern oder die Erinnerungen fortsetzen, werden keine weiteren verschickt."
+
+msgid "plugins.generic.dossierManager.notify.notAccepted"
+msgstr "Eine Einreichung des Dossiers wurde im Redaktionsprozess abgelehnt: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.dossierPublished"
+msgstr "Alle Beiträge des Dossiers sind veröffentlicht: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.deadlineChanged"
+msgstr "{$actor} hat die Einreichungsfrist auf {$date} geändert."
+
+msgid "plugins.generic.dossierManager.notify.contributionDeadlineChanged"
+msgstr "{$actor} hat die Frist von „{$title}“ auf {$date} geändert."
+
+msgid "plugins.generic.dossierManager.notify.targetChanged"
+msgstr "{$actor} hat das Ziel auf {$target} geändert. Verschobene Einreichungen: {$moved}."
+
+msgid "plugins.generic.dossierManager.notify.editorsChanged"
+msgstr "{$actor} hat die Verantwortlichen geändert: {$names}"
+
+msgid "plugins.generic.dossierManager.notify.edited"
+msgstr "{$actor} hat das Dossier bearbeitet."
+
+msgid "plugins.generic.dossierManager.notify.cancelled"
+msgstr "{$actor} hat das Dossier abgesagt."
+
+msgid "plugins.generic.dossierManager.notify.reopened"
+msgstr "{$actor} hat das Dossier wieder geöffnet."
+
+msgid "plugins.generic.dossierManager.notify.contributionAdded"
+msgstr "{$actor} hat einen Beitrag hinzugefügt: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributionRemoved"
+msgstr "{$actor} hat einen Beitrag entfernt: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributionDropped"
+msgstr "{$actor} hat einen Beitrag gestrichen: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributorChanged"
+msgstr "{$actor} hat die beitragende Person von „{$title}“ auf {$name} geändert."
+

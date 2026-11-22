@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE emails SYSTEM "../../../lib/pkp/dtd/emailTemplates.dtd">
+<!--
+  * plugins/generic/dossierManager/emailTemplates.xml
+  *
+  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+  *
+  * Email templates of the Dossier Manager (texts in locale/*/emails.po).
+  -->
+<emails>
+  <email key="DM_INVITATION" name="emails.dmInvitation.name" subject="emails.dmInvitation.subject" body="emails.dmInvitation.body"/>
+  <email key="DM_REMINDER" name="emails.dmReminder.name" subject="emails.dmReminder.subject" body="emails.dmReminder.body"/>
+  <email key="DM_OVERDUE" name="emails.dmOverdue.name" subject="emails.dmOverdue.subject" body="emails.dmOverdue.body"/>
+  <email key="DM_EDITOR_NOTIFICATION" name="emails.dmEditorNotification.name" subject="emails.dmEditorNotification.subject" body="emails.dmEditorNotification.body"/>
+  <email key="DM_EDITOR_DIGEST" name="emails.dmEditorDigest.name" subject="emails.dmEditorDigest.subject" body="emails.dmEditorDigest.body"/>
+</emails>

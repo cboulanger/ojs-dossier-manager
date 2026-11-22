@@ -1,0 +1,84 @@
+/**
+ * plugins/generic/dossierManager/css/dossierManager.css
+ *
+ * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+ *
+ * Backend pages of the Dossier Manager.
+ */
+.dmPanel { padding: 1rem 1.5rem 2rem; }
+.dmPanel h2 { font-size: 1.15rem; margin: 2rem 0 .75rem; }
+.dmHeading { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.dmHeading .app__pageHeading { margin-right: auto; }
+.dmType { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #555; }
+.dmToolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
+.dmInline { display: inline; margin: 0; }
+.dmHint { color: #555; font-size: .875rem; }
+.dmWarning { color: #b00020; }
+.dmError { color: #b00020; font-size: .875rem; margin-top: .25rem; }
+.dmMuted td { opacity: .6; }
+.dmNoWrap { white-space: nowrap; }
+.dmBlock { display: block; margin-bottom: .35rem; }
+
+.dmNotice { border-left: 4px solid #006798; background: #eef5f9; padding: .75rem 1rem; margin-bottom: 1rem; }
+.dmNotice--error { border-color: #b00020; background: #fdecee; }
+.dmNotice--warning { border-color: #d68a00; background: #fff6e5; }
+
+.dmTable { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+.dmTable th, .dmTable td { text-align: left; vertical-align: top; padding: .55rem .6rem; border-bottom: 1px solid #ddd; }
+.dmTable th { font-weight: 600; font-size: .85rem; border-bottom-width: 2px; }
+.dmContributions .dmActionsRow td { border-bottom: 2px solid #ccc; padding-top: 0; background: #fafafa; }
+.dmWorkingTitle { font-weight: 600; }
+.dmActions { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; padding-top: .5rem; }
+
+.dmStatus { display: inline-block; padding: .1rem .5rem; border-radius: 1rem; font-size: .8rem; background: #e7e7e7; white-space: nowrap; }
+.dmStatus--invited, .dmStatus--collecting, .dmStatus--inProgress { background: #fff1cc; }
+.dmStatus--submitted, .dmStatus--complete { background: #d8f0dc; }
+.dmStatus--published { background: #c7e5f5; }
+.dmStatus--declined, .dmStatus--dropped, .dmStatus--cancelled, .dmStatus--notAccepted { background: #f4d6d9; }
+
+.dmDetails { display: grid; grid-template-columns: max-content 1fr; gap: .35rem 1.25rem; margin: 0 0 1rem; }
+.dmDetails dt { font-weight: 600; }
+.dmDetails dd { margin: 0; }
+.dmDescription, .dmNotes { margin-bottom: 1rem; max-width: 50rem; }
+
+.dmForm .dmField { margin-bottom: 1rem; }
+.dmForm label { display: block; font-weight: 600; margin-bottom: .25rem; }
+.dmForm .dmChecklist label, .dmForm label:has(> input[type=checkbox]), .dmForm label:has(> input[type=radio]) { font-weight: normal; }
+.dmForm input[type=text], .dmForm input[type=email], .dmForm input[type=url], .dmForm input[type=search],
+.dmForm input[type=date], .dmForm input[type=number], .dmForm select, .dmForm textarea {
+	width: 100%; max-width: 40rem; padding: .4rem .5rem; border: 1px solid #bbb; border-radius: 3px; font: inherit; box-sizing: border-box;
+}
+.dmForm input[type=number], .dmForm input[type=date] { max-width: 12rem; }
+.dmFieldRow { display: flex; flex-wrap: wrap; gap: 1rem; }
+.dmFieldRow .dmField { flex: 0 1 16rem; }
+.dmFieldRow .dmField--wide { flex: 1 1 24rem; }
+.dmFieldset { border: 1px solid #ddd; padding: .75rem 1rem; margin: 0 0 1rem; }
+.dmChecklist { display: flex; flex-direction: column; gap: .25rem; }
+.dmButtons { display: flex; gap: 1rem; align-items: center; }
+
+.dmLink { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin: .5rem 0; }
+.dmLink label { font-weight: 600; font-size: .875rem; }
+.dmLink input { flex: 1 1 24rem; max-width: 40rem; padding: .3rem .4rem; font-family: monospace; font-size: .8rem; }
+
+.dmEdit, .dmAdd, .dmNewPerson, .dmHistory { margin: .5rem 0; }
+.dmEdit > summary, .dmNewPerson > summary { cursor: pointer; color: #006798; }
+.dmAdd { margin-top: 1.5rem; }
+.dmAdd > summary { list-style: none; display: inline-block; cursor: pointer; }
+.dmAdd > summary::-webkit-details-marker { display: none; }
+.dmAdd[open] > summary { margin-bottom: 1rem; }
+.dmEdit form, .dmAdd form { margin-top: .75rem; }
+.dmDeclineForm { border-top: 1px dashed #ccc; padding-top: .75rem; }
+.dmInlineHeading { display: inline; font-size: 1.15rem; }
+.dmHistory > summary { cursor: pointer; margin: 2rem 0 .75rem; }
+.dmEmailBody { border-left: 3px solid #ddd; padding: .25rem .75rem; margin: .5rem 0; }
+.dmNotifyMode { margin-top: 2rem; display: flex; gap: .5rem; align-items: end; flex-wrap: wrap; }
+.dmNotifyMode label { flex-basis: 100%; }
+.dmNotifyMode select { max-width: 30rem; }
+
+.dmUserSearch { position: relative; max-width: 40rem; margin-bottom: .5rem; }
+.dmUserSearch__results { list-style: none; margin: 0; padding: 0; position: absolute; z-index: 10; left: 0; right: 0; background: #fff; border: 1px solid #bbb; border-top: 0; max-height: 16rem; overflow-y: auto; }
+.dmUserSearch__results:empty { display: none; }
+.dmUserSearch__results li { padding: .4rem .5rem; cursor: pointer; }
+.dmUserSearch__results li:hover, .dmUserSearch__results li:focus { background: #eef5f9; outline: none; }
+.dmUserSearch__selected:not(:empty) { margin-top: .4rem; padding: .35rem .5rem; background: #eef5f9; border-radius: 3px; }
+.dmUserSearch__selected button { margin-left: .5rem; }

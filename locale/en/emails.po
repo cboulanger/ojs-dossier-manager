@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "emails.dmInvitation.name"
+msgstr "Dossier: invitation"
+
+msgid "emails.dmInvitation.description"
+msgstr "Invitation to contribute to a dossier, with the personal submission link. Sent by a responsible editor, who can edit it first."
+
+msgid "emails.dmInvitation.subject"
+msgstr "Invitation: {$dossierType} \"{$dossierTitle}\""
+
+msgid "emails.dmInvitation.body"
+msgstr "<p>Dear {$recipientName},</p><p>we are pleased to invite you to contribute to the {$dossierType} <strong>{$dossierTitle}</strong> of {$contextName}, planned for {$issueTitle}.</p>{$dossierDescription}<p>The following contributions are planned:</p>{$contributionsList}<p>Your contribution: <em>{$workingTitle}</em></p><p>Please submit your manuscript by <strong>{$deadline}</strong>, following our submission guidelines:<br /><a href=\"{$guidelinesUrl}\">{$guidelinesUrl}</a></p><p>Please use your personal link to submit, so that your article is assigned to the {$dossierType}:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p>{$declineLink}<p>Kind regards,<br />{$senderName}<br />{$contextName}</p>"
+
+msgid "emails.dmReminder.name"
+msgstr "Dossier: reminder before the deadline"
+
+msgid "emails.dmReminder.description"
+msgstr "Sent automatically to contributors who have not submitted, a number of days before the deadline (plugin configuration)."
+
+msgid "emails.dmReminder.subject"
+msgstr "Reminder: your contribution to \"{$dossierTitle}\" is due on {$deadline}"
+
+msgid "emails.dmReminder.body"
+msgstr "<p>Dear {$recipientName},</p><p>this is a friendly reminder that your contribution <em>{$workingTitle}</em> to the {$dossierType} <strong>{$dossierTitle}</strong> is due on <strong>{$deadline}</strong>.</p><p>{$inProgressNote}</p><p>Please submit it with your personal link:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>If you need more time, please contact the editors of the {$dossierType}: {$editorNames}.</p>{$declineLink}<p>Kind regards,<br />{$contextName}</p>"
+
+msgid "emails.dmOverdue.name"
+msgstr "Dossier: reminder after the deadline"
+
+msgid "emails.dmOverdue.description"
+msgstr "Sent automatically after the deadline to contributors who have not submitted, repeated at an interval up to a maximum number (plugin configuration)."
+
+msgid "emails.dmOverdue.subject"
+msgstr "Your contribution to \"{$dossierTitle}\""
+
+msgid "emails.dmOverdue.body"
+msgstr "<p>Dear {$recipientName},</p><p>the deadline for your contribution <em>{$workingTitle}</em> to the {$dossierType} <strong>{$dossierTitle}</strong> was {$deadline}, and we have not received it yet.</p><p>{$inProgressNote}</p><p>Please submit it as soon as possible with your personal link:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>If you need more time, please let the editors of the {$dossierType} know: {$editorNames}.</p>{$declineLink}<p>Kind regards,<br />{$contextName}</p>"
+
+msgid "emails.dmEditorNotification.name"
+msgstr "Dossier: notification of the responsible editors"
+
+msgid "emails.dmEditorNotification.description"
+msgstr "Sent automatically to the responsible editors of a dossier when something changes (immediately, depending on each editor's choice)."
+
+msgid "emails.dmEditorNotification.subject"
+msgstr "Dossier \"{$dossierTitle}\""
+
+msgid "emails.dmEditorNotification.body"
+msgstr "<p>Dear {$recipientName},</p><p>{$eventText}</p><p>Dossier: <a href=\"{$dossierUrl}\">{$dossierTitle}</a></p>"
+
+msgid "emails.dmEditorDigest.name"
+msgstr "Dossier: daily summary for the responsible editors"
+
+msgid "emails.dmEditorDigest.description"
+msgstr "Sent automatically once a day to responsible editors, with the changes of their dossiers that were not sent immediately."
+
+msgid "emails.dmEditorDigest.subject"
+msgstr "Dossiers: summary of changes"
+
+msgid "emails.dmEditorDigest.body"
+msgstr "<p>Dear {$recipientName},</p><p>these changes were made to your dossiers:</p>{$digest}"
+

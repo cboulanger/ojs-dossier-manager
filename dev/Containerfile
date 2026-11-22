@@ -1,0 +1,69 @@
+# Local test environment: Apache + PHP 8.2 + MariaDB with a preinstalled OJS 3.5
+# and a test journal. The dossierManager plugin is bind-mounted at runtime
+# (see dev/ojs-dev.sh), so changes to the plugin are live without rebuilding.
+#
+# For local testing only: default passwords, all hosts allowed, no TLS.
+
+FROM docker.io/library/php:8.2-apache-bookworm
+
+ARG OJS_VERSION=3.5.0-6
+
+ENV OJS_BASE_URL=http://localhost:8081 \
+	OJS_DB_NAME=ojs \
+	OJS_DB_USER=ojs \
+	OJS_DB_PASSWORD=ojs \
+	OJS_FILES_DIR=/var/www/files \
+	OJS_ADMIN_USER=admin \
+	OJS_ADMIN_PASSWORD=ojsadmin \
+	OJS_ADMIN_EMAIL=admin@example.org \
+	OJS_AUTHOR_USER=author \
+	OJS_AUTHOR_PASSWORD=ojsauthor \
+	OJS_AUTHOR_EMAIL=author@example.org \
+	OJS_JOURNAL_PATH=test \
+	OJS_TIMEZONE=Europe/Berlin
+
+COPY --from=ghcr.io/mlocati/php-extension-installer:2.13.2 /usr/bin/install-php-extensions /usr/local/bin/
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends mariadb-server mariadb-client ca-certificates curl \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& install-php-extensions bcmath ftp gd intl mysqli opcache pdo_mysql zip \
+	&& a2enmod rewrite \
+	&& echo 'SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1' > /etc/apache2/conf-enabled/authorization-header.conf
+
+RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" \
+	&& { \
+		echo 'memory_limit = 512M'; \
+		echo 'upload_max_filesize = 64M'; \
+		echo 'post_max_size = 64M'; \
+		echo 'max_execution_time = 120'; \
+		echo 'error_reporting = E_ALL & ~E_DEPRECATED'; \
+		echo 'display_errors = Off'; \
+		echo 'log_errors = On'; \
+		echo 'error_log = /dev/stderr'; \
+		echo 'pdo_mysql.default_socket = /run/mysqld/mysqld.sock'; \
+		echo 'mysqli.default_socket = /run/mysqld/mysqld.sock'; \
+		echo 'opcache.validate_timestamps = 1'; \
+		echo 'opcache.revalidate_freq = 0'; \
+	} > "$PHP_INI_DIR/conf.d/zz-ojs.ini"
+
+RUN curl -fsSL "https://pkp.sfu.ca/ojs/download/ojs-${OJS_VERSION}.tar.gz" \
+		| tar xz --strip-components=1 -C /var/www/html \
+	&& cp /var/www/html/config.TEMPLATE.inc.php /var/www/html/config.inc.php \
+	&& mkdir -p "$OJS_FILES_DIR" \
+	&& chown -R www-data:www-data /var/www/html "$OJS_FILES_DIR"
+
+# PHPUnit for the plugin unit tests (tests/unit/php)
+ARG PHPUNIT_VERSION=11.5.46
+RUN curl -fsSL -o /usr/local/bin/phpunit "https://phar.phpunit.de/phpunit-${PHPUNIT_VERSION}.phar" \
+	&& chmod +x /usr/local/bin/phpunit
+
+COPY devSetup.php /var/www/html/tools/devSetup.php
+COPY build-install.sh /usr/local/bin/ojs-build-install
+COPY entrypoint.sh /usr/local/bin/ojs-entrypoint
+
+RUN chmod +x /usr/local/bin/ojs-build-install /usr/local/bin/ojs-entrypoint \
+	&& ojs-build-install
+
+EXPOSE 80
+CMD ["ojs-entrypoint"]

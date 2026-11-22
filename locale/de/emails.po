@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+msgid "emails.dmInvitation.name"
+msgstr "Dossier: Einladung"
+
+msgid "emails.dmInvitation.description"
+msgstr "Einladung zu einem Beitrag in einem Dossier, mit dem persönlichen Einreichungslink. Wird von einer verantwortlichen Person verschickt, die den Text vorher bearbeiten kann."
+
+msgid "emails.dmInvitation.subject"
+msgstr "Einladung: {$dossierType} „{$dossierTitle}“"
+
+msgid "emails.dmInvitation.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>wir freuen uns, Sie zu einem Beitrag zum {$dossierType} <strong>{$dossierTitle}</strong> der Zeitschrift {$contextName} einzuladen, das für {$issueTitle} geplant ist.</p>{$dossierDescription}<p>Folgende Beiträge sind geplant:</p>{$contributionsList}<p>Ihr Beitrag: <em>{$workingTitle}</em></p><p>Bitte reichen Sie Ihr Manuskript bis zum <strong>{$deadline}</strong> ein und beachten Sie dabei unsere Hinweise für Autor/innen:<br /><a href=\"{$guidelinesUrl}\">{$guidelinesUrl}</a></p><p>Bitte verwenden Sie für die Einreichung Ihren persönlichen Link, damit Ihr Artikel dem {$dossierType} zugeordnet wird:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p>{$declineLink}<p>Mit freundlichen Grüßen<br />{$senderName}<br />{$contextName}</p>"
+
+msgid "emails.dmReminder.name"
+msgstr "Dossier: Erinnerung vor der Frist"
+
+msgid "emails.dmReminder.description"
+msgstr "Wird automatisch an Beitragende geschickt, die noch nicht eingereicht haben, einige Tage vor der Frist (Plugin-Konfiguration)."
+
+msgid "emails.dmReminder.subject"
+msgstr "Erinnerung: Ihr Beitrag zu „{$dossierTitle}“ ist am {$deadline} fällig"
+
+msgid "emails.dmReminder.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>wir möchten Sie freundlich daran erinnern, dass Ihr Beitrag <em>{$workingTitle}</em> zum {$dossierType} <strong>{$dossierTitle}</strong> am <strong>{$deadline}</strong> fällig ist.</p><p>{$inProgressNote}</p><p>Bitte reichen Sie ihn über Ihren persönlichen Link ein:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>Wenn Sie mehr Zeit benötigen, wenden Sie sich bitte an die Herausgeber/innen des {$dossierType}: {$editorNames}.</p>{$declineLink}<p>Mit freundlichen Grüßen<br />{$contextName}</p>"
+
+msgid "emails.dmOverdue.name"
+msgstr "Dossier: Erinnerung nach Fristablauf"
+
+msgid "emails.dmOverdue.description"
+msgstr "Wird nach Fristablauf automatisch an Beitragende geschickt, die noch nicht eingereicht haben, in einem Abstand wiederholt bis zu einer Höchstzahl (Plugin-Konfiguration)."
+
+msgid "emails.dmOverdue.subject"
+msgstr "Ihr Beitrag zu „{$dossierTitle}“"
+
+msgid "emails.dmOverdue.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>die Frist für Ihren Beitrag <em>{$workingTitle}</em> zum {$dossierType} <strong>{$dossierTitle}</strong> war der {$deadline}, und wir haben ihn noch nicht erhalten.</p><p>{$inProgressNote}</p><p>Bitte reichen Sie ihn so bald wie möglich über Ihren persönlichen Link ein:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>Wenn Sie mehr Zeit benötigen, geben Sie bitte den Herausgeber/innen des {$dossierType} Bescheid: {$editorNames}.</p>{$declineLink}<p>Mit freundlichen Grüßen<br />{$contextName}</p>"
+
+msgid "emails.dmEditorNotification.name"
+msgstr "Dossier: Benachrichtigung der Verantwortlichen"
+
+msgid "emails.dmEditorNotification.description"
+msgstr "Wird automatisch an die Verantwortlichen eines Dossiers geschickt, wenn sich etwas ändert (sofort, je nach Wahl der Person)."
+
+msgid "emails.dmEditorNotification.subject"
+msgstr "Dossier „{$dossierTitle}“"
+
+msgid "emails.dmEditorNotification.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>{$eventText}</p><p>Dossier: <a href=\"{$dossierUrl}\">{$dossierTitle}</a></p>"
+
+msgid "emails.dmEditorDigest.name"
+msgstr "Dossier: tägliche Zusammenfassung für die Verantwortlichen"
+
+msgid "emails.dmEditorDigest.description"
+msgstr "Wird einmal täglich automatisch an die Verantwortlichen geschickt, mit den Änderungen ihrer Dossiers, die nicht sofort gemeldet wurden."
+
+msgid "emails.dmEditorDigest.subject"
+msgstr "Dossiers: Zusammenfassung der Änderungen"
+
+msgid "emails.dmEditorDigest.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>an Ihren Dossiers gab es folgende Änderungen:</p>{$digest}"
+

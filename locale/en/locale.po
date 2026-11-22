@@ -1,0 +1,696 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "plugins.generic.dossierManager.displayName"
+msgstr "Dossier Manager"
+
+msgid "plugins.generic.dossierManager.description"
+msgstr "Plan dossiers – special issues, thematic sections, review symposia – with commissioned contributions: invitations with personal submission links, tracking of the submissions and reminders."
+
+msgid "plugins.generic.dossierManager.role.dossierEditor"
+msgstr "Dossier editor"
+
+msgid "plugins.generic.dossierManager.role.dossierEditor.abbrev"
+msgstr "DosEd"
+
+msgid "plugins.generic.dossierManager.type.specialIssue"
+msgstr "Special issue"
+
+msgid "plugins.generic.dossierManager.type.thematicSection"
+msgstr "Thematic section"
+
+msgid "plugins.generic.dossierManager.type.reviewSymposium"
+msgstr "Review symposium"
+
+msgid "plugins.generic.dossierManager.type.forum"
+msgstr "Forum"
+
+msgid "plugins.generic.dossierManager.menu.dossiers"
+msgstr "Dossiers"
+
+msgid "plugins.generic.dossierManager.menu.myDossiers"
+msgstr "My dossiers"
+
+msgid "plugins.generic.dossierManager.menu.create"
+msgstr "Create new dossier"
+
+msgid "plugins.generic.dossierManager.menu.settings"
+msgstr "Configuration"
+
+msgid "plugins.generic.dossierManager.allDossiers"
+msgstr "All dossiers"
+
+msgid "plugins.generic.dossierManager.showAll"
+msgstr "Show all dossiers of the journal"
+
+msgid "plugins.generic.dossierManager.showMine"
+msgstr "Show only my dossiers"
+
+msgid "plugins.generic.dossierManager.noDossiers"
+msgstr "There are no dossiers yet."
+
+msgid "plugins.generic.dossierManager.noOwnDossiers"
+msgstr "You are not responsible for any dossier."
+
+msgid "plugins.generic.dossierManager.dossier"
+msgstr "Dossier"
+
+msgid "plugins.generic.dossierManager.edit"
+msgstr "Edit dossier"
+
+msgid "plugins.generic.dossierManager.type"
+msgstr "Type"
+
+msgid "plugins.generic.dossierManager.title"
+msgstr "Title"
+
+msgid "plugins.generic.dossierManager.dossierDescription"
+msgstr "Description"
+
+msgid "plugins.generic.dossierManager.targetIssue"
+msgstr "Target issue"
+
+msgid "plugins.generic.dossierManager.targetSection"
+msgstr "Target section"
+
+msgid "plugins.generic.dossierManager.deadline"
+msgstr "Submission deadline"
+
+msgid "plugins.generic.dossierManager.editors"
+msgstr "Responsible editors"
+
+msgid "plugins.generic.dossierManager.progress"
+msgstr "Progress"
+
+msgid "plugins.generic.dossierManager.progressCount"
+msgstr "{$submitted} of {$planned} submitted"
+
+msgid "plugins.generic.dossierManager.overdueCount"
+msgstr "{$count} overdue"
+
+msgid "plugins.generic.dossierManager.reminders"
+msgstr "Reminders"
+
+msgid "plugins.generic.dossierManager.reminderSummary"
+msgstr "{$days} days before the deadline; afterwards every {$interval} days, at most {$max} times (0 = unlimited)"
+
+msgid "plugins.generic.dossierManager.guidelinesUrl"
+msgstr "Submission guidelines"
+
+msgid "plugins.generic.dossierManager.showContributors"
+msgstr "List the other contributors by name in the invitation"
+
+msgid "plugins.generic.dossierManager.notes"
+msgstr "Internal notes"
+
+msgid "plugins.generic.dossierManager.contributions"
+msgstr "Planned contributions"
+
+msgid "plugins.generic.dossierManager.contribution"
+msgstr "Contribution"
+
+msgid "plugins.generic.dossierManager.noContributions"
+msgstr "No contributions planned yet."
+
+msgid "plugins.generic.dossierManager.readOnly"
+msgstr "You are not a responsible editor of this dossier, so you can only view it."
+
+msgid "plugins.generic.dossierManager.cancelDossier"
+msgstr "Cancel dossier"
+
+msgid "plugins.generic.dossierManager.cancelConfirm"
+msgstr "Cancel this dossier? Submission links stop working and no reminders are sent. You can reopen it later."
+
+msgid "plugins.generic.dossierManager.reopen"
+msgstr "Reopen dossier"
+
+msgid "plugins.generic.dossierManager.notFound"
+msgstr "The dossier was not found."
+
+msgid "plugins.generic.dossierManager.notResponsible"
+msgstr "Only the responsible editors and journal managers can change this dossier."
+
+msgid "plugins.generic.dossierManager.notifyMode"
+msgstr "My notifications about this dossier"
+
+msgid "plugins.generic.dossierManager.notifyMode.default"
+msgstr "Submissions and declines immediately, other changes in a daily summary"
+
+msgid "plugins.generic.dossierManager.notifyMode.immediate"
+msgstr "Every change immediately"
+
+msgid "plugins.generic.dossierManager.notifyMode.digest"
+msgstr "Everything in a daily summary"
+
+msgid "plugins.generic.dossierManager.status.planning"
+msgstr "Planning"
+
+msgid "plugins.generic.dossierManager.status.invited"
+msgstr "Invitations sent"
+
+msgid "plugins.generic.dossierManager.status.collecting"
+msgstr "Deadline passed"
+
+msgid "plugins.generic.dossierManager.status.complete"
+msgstr "Complete"
+
+msgid "plugins.generic.dossierManager.status.published"
+msgstr "Published"
+
+msgid "plugins.generic.dossierManager.status.cancelled"
+msgstr "Cancelled"
+
+msgid "plugins.generic.dossierManager.contributionStatus.planned"
+msgstr "Planned"
+
+msgid "plugins.generic.dossierManager.contributionStatus.invited"
+msgstr "Invited"
+
+msgid "plugins.generic.dossierManager.contributionStatus.declined"
+msgstr "Declined"
+
+msgid "plugins.generic.dossierManager.contributionStatus.dropped"
+msgstr "Dropped"
+
+msgid "plugins.generic.dossierManager.contributionStatus.inProgress"
+msgstr "Submission in progress"
+
+msgid "plugins.generic.dossierManager.contributionStatus.submitted"
+msgstr "Submitted"
+
+msgid "plugins.generic.dossierManager.contributionStatus.notAccepted"
+msgstr "Not accepted"
+
+msgid "plugins.generic.dossierManager.contributionStatus.published"
+msgstr "Published"
+
+msgid "plugins.generic.dossierManager.form.errors"
+msgstr "Please correct the fields marked below."
+
+msgid "plugins.generic.dossierManager.form.titleRequired"
+msgstr "Please enter a title in the journal's primary language."
+
+msgid "plugins.generic.dossierManager.form.issueInvalid"
+msgstr "Please choose an issue that has not been published."
+
+msgid "plugins.generic.dossierManager.form.sectionInvalid"
+msgstr "Please choose a section of this journal."
+
+msgid "plugins.generic.dossierManager.form.dateInvalid"
+msgstr "Please enter a valid date."
+
+msgid "plugins.generic.dossierManager.form.urlInvalid"
+msgstr "Please enter a complete web address (https://...)."
+
+msgid "plugins.generic.dossierManager.form.numberInvalid"
+msgstr "Please enter a whole number, or leave the field empty."
+
+msgid "plugins.generic.dossierManager.form.editorsRequired"
+msgstr "Please choose at least one responsible editor."
+
+msgid "plugins.generic.dossierManager.form.notYet"
+msgstr "– not decided yet –"
+
+msgid "plugins.generic.dossierManager.form.editorsOnly"
+msgstr "editors only"
+
+msgid "plugins.generic.dossierManager.form.descriptionHint"
+msgstr "The description is part of the invitation email: what the dossier is about, the intended scope and length of the contributions. Plain text; empty lines separate paragraphs."
+
+msgid "plugins.generic.dossierManager.form.targetHint"
+msgstr "The target issue, section and deadline are needed before invitations can be sent. Submitted contributions are assigned to the target issue and section; they are published only when the editors schedule them."
+
+msgid "plugins.generic.dossierManager.form.editorsHint"
+msgstr "Journal managers and members of the role \"Dossier editor\". The responsible editors receive the notifications about this dossier."
+
+msgid "plugins.generic.dossierManager.form.guidelinesHint"
+msgstr "Leave empty to use the journal's submission guidelines."
+
+msgid "plugins.generic.dossierManager.form.reminders"
+msgstr "Reminders"
+
+msgid "plugins.generic.dossierManager.form.remindersHint"
+msgstr "Leave empty to use the journal's settings: {$days} days before the deadline; afterwards every {$interval} days, at most {$max} times."
+
+msgid "plugins.generic.dossierManager.form.notesHint"
+msgstr "Only visible to editors; not sent to anyone."
+
+msgid "plugins.generic.dossierManager.contribution.add"
+msgstr "Add contribution"
+
+msgid "plugins.generic.dossierManager.contribution.workingTitle"
+msgstr "Working title"
+
+msgid "plugins.generic.dossierManager.contribution.individualDeadline"
+msgstr "Individual deadline"
+
+msgid "plugins.generic.dossierManager.contribution.ownDeadline"
+msgstr "individual deadline"
+
+msgid "plugins.generic.dossierManager.contribution.note"
+msgstr "Internal note"
+
+msgid "plugins.generic.dossierManager.contribution.noTitle"
+msgstr "no working title"
+
+msgid "plugins.generic.dossierManager.contribution.noContributor"
+msgstr "No contributor yet"
+
+msgid "plugins.generic.dossierManager.contribution.submission"
+msgstr "Submission"
+
+msgid "plugins.generic.dossierManager.contribution.searchUser"
+msgstr "Contributor: search the journal's users"
+
+msgid "plugins.generic.dossierManager.contribution.searchPlaceholder"
+msgstr "Name, email or affiliation"
+
+msgid "plugins.generic.dossierManager.contribution.newPerson"
+msgstr "or add a new person"
+
+msgid "plugins.generic.dossierManager.contribution.newPersonHint"
+msgstr "This creates an account in the journal's Author role. No email is sent until you send the invitation. If an account with this email address exists, it is used."
+
+msgid "plugins.generic.dossierManager.contribution.newPersonInvalid"
+msgstr "For a new person, please enter last name, first name and a valid email address."
+
+msgid "plugins.generic.dossierManager.contribution.userNotFound"
+msgstr "The selected user was not found."
+
+msgid "plugins.generic.dossierManager.contribution.changeContributor"
+msgstr "To change the contributor, choose another person. The old submission link stops working, and the new contributor needs an invitation."
+
+msgid "plugins.generic.dossierManager.contribution.cannotChangeSubmitted"
+msgstr "The contributor can't be changed once a submission has been started."
+
+msgid "plugins.generic.dossierManager.contribution.edit"
+msgstr "Edit, change contributor, record a decline"
+
+msgid "plugins.generic.dossierManager.contribution.up"
+msgstr "Move up"
+
+msgid "plugins.generic.dossierManager.contribution.down"
+msgstr "Move down"
+
+msgid "plugins.generic.dossierManager.contribution.pause"
+msgstr "Pause reminders"
+
+msgid "plugins.generic.dossierManager.contribution.resume"
+msgstr "Resume reminders"
+
+msgid "plugins.generic.dossierManager.contribution.paused"
+msgstr "Reminders paused"
+
+msgid "plugins.generic.dossierManager.contribution.drop"
+msgstr "Drop"
+
+msgid "plugins.generic.dossierManager.contribution.dropConfirm"
+msgstr "Drop this contribution from the dossier? The submission link stops working. You can restore it later."
+
+msgid "plugins.generic.dossierManager.contribution.restore"
+msgstr "Restore"
+
+msgid "plugins.generic.dossierManager.contribution.removeConfirm"
+msgstr "Remove this contribution from the plan?"
+
+msgid "plugins.generic.dossierManager.contribution.invite"
+msgstr "Invite"
+
+msgid "plugins.generic.dossierManager.contribution.resend"
+msgstr "Resend invitation"
+
+msgid "plugins.generic.dossierManager.contribution.link"
+msgstr "Submission link"
+
+msgid "plugins.generic.dossierManager.contribution.copy"
+msgstr "Copy"
+
+msgid "plugins.generic.dossierManager.contribution.copied"
+msgstr "Copied"
+
+msgid "plugins.generic.dossierManager.contribution.renew"
+msgstr "Renew link"
+
+msgid "plugins.generic.dossierManager.contribution.renewConfirm"
+msgstr "Create a new submission link? The old link stops working."
+
+msgid "plugins.generic.dossierManager.contribution.linkRenewed"
+msgstr "A new submission link was created. The old one no longer works."
+
+msgid "plugins.generic.dossierManager.contribution.markDeclined"
+msgstr "Record decline"
+
+msgid "plugins.generic.dossierManager.contribution.markDeclinedReason"
+msgstr "The contributor declined (e.g. by email). Reason (optional):"
+
+msgid "plugins.generic.dossierManager.contribution.markDeclinedConfirm"
+msgstr "Record that the contributor declined? The submission link stops working."
+
+msgid "plugins.generic.dossierManager.contribution.reminderSent"
+msgstr "Reminder sent on {$date}"
+
+msgid "plugins.generic.dossierManager.contribution.overdueSent"
+msgstr "{$count} overdue reminder(s) sent"
+
+msgid "plugins.generic.dossierManager.invite.title"
+msgstr "Send invitations"
+
+msgid "plugins.generic.dossierManager.invite.send"
+msgstr "Send invitations ({$count})"
+
+msgid "plugins.generic.dossierManager.invite.recipients"
+msgstr "Recipients"
+
+msgid "plugins.generic.dossierManager.invite.again"
+msgstr "invited before"
+
+msgid "plugins.generic.dossierManager.invite.variablesHint"
+msgstr "Filled in for each recipient when the email is sent:"
+
+msgid "plugins.generic.dossierManager.invite.submit"
+msgstr "Send"
+
+msgid "plugins.generic.dossierManager.invite.sent"
+msgstr "{$count} invitation(s) sent."
+
+msgid "plugins.generic.dossierManager.invite.nobody"
+msgstr "There is nobody to invite: each contribution needs a contributor, and declined, dropped or submitted contributions are not invited."
+
+msgid "plugins.generic.dossierManager.invite.emptyEmail"
+msgstr "Please enter a subject and a text."
+
+msgid "plugins.generic.dossierManager.invite.missingTarget"
+msgstr "Before invitations can be sent, the dossier needs a target issue, a target section and a submission deadline."
+
+msgid "plugins.generic.dossierManager.invite.cancelled"
+msgstr "The dossier is cancelled."
+
+msgid "plugins.generic.dossierManager.invite.suppressed"
+msgstr "The plugin's emails are switched off in the configuration. The invitations are recorded in the history but not sent."
+
+msgid "plugins.generic.dossierManager.email.declineLink"
+msgstr "If you cannot contribute after all, please let us know:"
+
+msgid "plugins.generic.dossierManager.email.inProgress"
+msgstr "You have already started your submission; please complete it."
+
+msgid "plugins.generic.dossierManager.email.notSent"
+msgstr "[not sent]"
+
+msgid "plugins.generic.dossierManager.settings.types"
+msgstr "Dossier types"
+
+msgid "plugins.generic.dossierManager.settings.typesHint"
+msgstr "One per line. The type is shown in the dossier list and named in the emails."
+
+msgid "plugins.generic.dossierManager.settings.reminderDays"
+msgstr "Days before the deadline for the reminder"
+
+msgid "plugins.generic.dossierManager.settings.overdueInterval"
+msgstr "Interval of reminders after the deadline (days)"
+
+msgid "plugins.generic.dossierManager.settings.overdueMax"
+msgstr "Maximum number of reminders after the deadline"
+
+msgid "plugins.generic.dossierManager.settings.remindersHint"
+msgstr "0 days switches the reminder before the deadline off; an interval of 0 switches the reminders after the deadline off; a maximum of 0 means no limit. Each dossier can override these values."
+
+msgid "plugins.generic.dossierManager.settings.allowDecline"
+msgstr "Contributors can decline with a link in the emails"
+
+msgid "plugins.generic.dossierManager.settings.suppressEmails"
+msgstr "Do not send emails"
+
+msgid "plugins.generic.dossierManager.settings.suppressEmailsHint"
+msgstr "For testing and setting up: emails are recorded in the history but not sent, and no reminders go out."
+
+msgid "plugins.generic.dossierManager.settings.roleHint"
+msgstr "Members of the role \"{$group}\" can create dossiers and run those they are responsible for. Assign the role under Users & Roles."
+
+msgid "plugins.generic.dossierManager.settings.emailsHint"
+msgstr "The texts of the emails can be edited under Settings › Emails."
+
+msgid "plugins.generic.dossierManager.myContributions.title"
+msgstr "My contributions"
+
+msgid "plugins.generic.dossierManager.myContributions.empty"
+msgstr "You have no planned contributions."
+
+msgid "plugins.generic.dossierManager.myContributions.submissions"
+msgstr "Go to my submissions"
+
+msgid "plugins.generic.dossierManager.link.title"
+msgstr "Your contribution"
+
+msgid "plugins.generic.dossierManager.link.invalid"
+msgstr "This link is not valid. It may have been replaced by a newer one. Please contact the editors."
+
+msgid "plugins.generic.dossierManager.link.cancelled"
+msgstr "This dossier has been cancelled. Please contact the editors if you have questions."
+
+msgid "plugins.generic.dossierManager.link.declined"
+msgstr "You have declined this invitation. If you would like to contribute after all, please contact the editors."
+
+msgid "plugins.generic.dossierManager.link.dropped"
+msgstr "This contribution is no longer planned. Please contact the editors if you have questions."
+
+msgid "plugins.generic.dossierManager.link.submitted"
+msgstr "Thank you – your contribution has been submitted."
+
+msgid "plugins.generic.dossierManager.link.loginNeeded"
+msgstr "This link belongs to the account of {$name} ({$email}). Please log in to submit your contribution."
+
+msgid "plugins.generic.dossierManager.link.setPassword"
+msgstr "If you have never logged in to this journal or have forgotten your password:"
+
+msgid "plugins.generic.dossierManager.link.setPasswordLink"
+msgstr "set a password"
+
+msgid "plugins.generic.dossierManager.link.otherUser"
+msgstr "This link belongs to the account of {$name}, but you are logged in as {$current}. Please log out and log in with the account of {$name}. If you would like to use your current account, please ask the editors to change the contribution."
+
+msgid "plugins.generic.dossierManager.link.inProgress"
+msgstr "You have already started your submission."
+
+msgid "plugins.generic.dossierManager.link.continue"
+msgstr "Continue your submission"
+
+msgid "plugins.generic.dossierManager.link.startHint"
+msgstr "The button opens the journal's normal submission form. Your submission will be assigned to this dossier automatically."
+
+msgid "plugins.generic.dossierManager.link.start"
+msgstr "Start your submission"
+
+msgid "plugins.generic.dossierManager.link.declineLink"
+msgstr "I cannot contribute after all"
+
+msgid "plugins.generic.dossierManager.decline.title"
+msgstr "Decline the invitation"
+
+msgid "plugins.generic.dossierManager.decline.question"
+msgstr "Do you want to tell the editors that you cannot contribute? Your submission link will stop working."
+
+msgid "plugins.generic.dossierManager.decline.reason"
+msgstr "Message to the editors (optional)"
+
+msgid "plugins.generic.dossierManager.decline.confirm"
+msgstr "Decline"
+
+msgid "plugins.generic.dossierManager.decline.done"
+msgstr "Thank you for letting us know. The editors have been informed."
+
+msgid "plugins.generic.dossierManager.wizard.name"
+msgstr "Dossier"
+
+msgid "plugins.generic.dossierManager.wizard.attached"
+msgstr "This submission is your contribution to the {$type} „{$title}“."
+
+msgid "plugins.generic.dossierManager.wizard.targetHint"
+msgstr "When you complete the submission, it is assigned to the issue and section planned for the dossier."
+
+msgid "plugins.generic.dossierManager.wizard.detach"
+msgstr "This is not my contribution to the dossier"
+
+msgid "plugins.generic.dossierManager.wizard.choose"
+msgstr "Is this submission your planned contribution to a dossier? Then choose it here:"
+
+msgid "plugins.generic.dossierManager.wizard.attach"
+msgstr "This is my contribution"
+
+msgid "plugins.generic.dossierManager.reminder.taskName"
+msgstr "Dossier Manager: reminders and summaries"
+
+msgid "plugins.generic.dossierManager.reminder.sent"
+msgstr "{$context}: {$before} reminder(s) before the deadline, {$overdue} after the deadline, {$digests} summary email(s)."
+
+msgid "plugins.generic.dossierManager.history"
+msgstr "History"
+
+msgid "plugins.generic.dossierManager.history.empty"
+msgstr "No entries yet."
+
+msgid "plugins.generic.dossierManager.history.viaLink"
+msgstr "via email link"
+
+msgid "plugins.generic.dossierManager.history.automatic"
+msgstr "automatically"
+
+msgid "plugins.generic.dossierManager.history.email"
+msgstr "Email"
+
+msgid "plugins.generic.dossierManager.history.email.invitation"
+msgstr "Invitation"
+
+msgid "plugins.generic.dossierManager.history.email.reminder"
+msgstr "Reminder"
+
+msgid "plugins.generic.dossierManager.history.email.overdue"
+msgstr "Reminder after the deadline"
+
+msgid "plugins.generic.dossierManager.history.email.notification"
+msgstr "Notification"
+
+msgid "plugins.generic.dossierManager.history.email.digest"
+msgstr "Daily summary"
+
+msgid "plugins.generic.dossierManager.history.event.created"
+msgstr "Dossier created: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.edited"
+msgstr "Dossier edited"
+
+msgid "plugins.generic.dossierManager.history.event.cancelled"
+msgstr "Dossier cancelled"
+
+msgid "plugins.generic.dossierManager.history.event.reopened"
+msgstr "Dossier reopened"
+
+msgid "plugins.generic.dossierManager.history.event.contributionAdded"
+msgstr "Contribution added: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionEdited"
+msgstr "Contribution edited: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionRemoved"
+msgstr "Contribution removed: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionDropped"
+msgstr "Contribution dropped: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributionRestored"
+msgstr "Contribution restored: {$recipientName} – {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributorChanged"
+msgstr "New contributor {$recipientName} for: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.contributorCreated"
+msgstr "Account created for {$recipientName} ({$subject})"
+
+msgid "plugins.generic.dossierManager.history.event.invited"
+msgstr "Invitation sent to {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.declined"
+msgstr "{$recipientName} declined: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.declinedByEditor"
+msgstr "Decline of {$recipientName} recorded: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.linkRenewed"
+msgstr "Submission link renewed for {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.remindersPaused"
+msgstr "Reminders paused for {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.remindersResumed"
+msgstr "Reminders resumed for {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.submissionStarted"
+msgstr "Submission started by {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.submitted"
+msgstr "Submitted by {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.detached"
+msgstr "Submission detached from the contribution: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.moved"
+msgstr "Submission assigned to the target issue and section: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.notAccepted"
+msgstr "Submission declined in the editorial workflow: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.published"
+msgstr "Published: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.reminderSent"
+msgstr "Reminder sent to {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.overdueSent"
+msgstr "Reminder after the deadline sent to {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.maxReminders"
+msgstr "Last automatic reminder sent to {$recipientName}: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.deadlineChanged"
+msgstr "Deadline changed: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.targetChanged"
+msgstr "Target changed: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.editorsChanged"
+msgstr "Responsible editors: {$subject}"
+
+msgid "plugins.generic.dossierManager.history.event.reordered"
+msgstr "Order of the contributions changed"
+
+msgid "plugins.generic.dossierManager.notify.submitted"
+msgstr "{$name} has submitted the contribution: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.declined"
+msgstr "{$name} cannot contribute ({$title}). Reason: {$reason}"
+
+msgid "plugins.generic.dossierManager.notify.maxReminders"
+msgstr "{$name} has received the last automatic reminder ({$count}) for: {$title}. No further reminders are sent until you change the deadline or resume them."
+
+msgid "plugins.generic.dossierManager.notify.notAccepted"
+msgstr "A submission of the dossier was declined in the editorial workflow: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.dossierPublished"
+msgstr "All contributions of the dossier have been published: {$title}"
+
+msgid "plugins.generic.dossierManager.notify.deadlineChanged"
+msgstr "{$actor} changed the submission deadline to {$date}."
+
+msgid "plugins.generic.dossierManager.notify.contributionDeadlineChanged"
+msgstr "{$actor} changed the deadline of \"{$title}\" to {$date}."
+
+msgid "plugins.generic.dossierManager.notify.targetChanged"
+msgstr "{$actor} changed the target to {$target}. Submissions moved: {$moved}."
+
+msgid "plugins.generic.dossierManager.notify.editorsChanged"
+msgstr "{$actor} changed the responsible editors: {$names}"
+
+msgid "plugins.generic.dossierManager.notify.edited"
+msgstr "{$actor} edited the dossier."
+
+msgid "plugins.generic.dossierManager.notify.cancelled"
+msgstr "{$actor} cancelled the dossier."
+
+msgid "plugins.generic.dossierManager.notify.reopened"
+msgstr "{$actor} reopened the dossier."
+
+msgid "plugins.generic.dossierManager.notify.contributionAdded"
+msgstr "{$actor} added a contribution: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributionRemoved"
+msgstr "{$actor} removed a contribution: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributionDropped"
+msgstr "{$actor} dropped a contribution: {$name} – {$title}"
+
+msgid "plugins.generic.dossierManager.notify.contributorChanged"
+msgstr "{$actor} changed the contributor of \"{$title}\" to {$name}."
+
