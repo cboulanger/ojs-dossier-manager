@@ -81,6 +81,23 @@
 			<p class="dmHint">{translate key="plugins.generic.dossierManager.form.editorsHint"}</p>
 		</div>
 
+		<fieldset class="dmFieldset">
+			<legend>{translate key="plugins.generic.dossierManager.guestEditors"}</legend>
+			<p class="dmHint">{translate key="plugins.generic.dossierManager.form.guestEditorsHint"}</p>
+			{if $guestEditors}
+				<div class="dmChecklist">
+					{foreach from=$guestEditors key=guestId item=guestName}
+						<label><input type="checkbox" name="guestEditors[]" value="{$guestId|escape}" checked /> {$guestName|escape}</label>
+					{/foreach}
+				</div>
+				<p class="dmHint">{translate key="plugins.generic.dossierManager.form.guestEditorsRemoveHint"}</p>
+			{/if}
+			<p><strong>{translate key="plugins.generic.dossierManager.form.addGuestEditor"}</strong></p>
+			{include file=$dmContributorFields idPrefix="dmGuest" newPersonHintKey="plugins.generic.dossierManager.form.newGuestHint"}
+			{if $errors.guestEditors}<div class="dmError">{$errors.guestEditors|escape}</div>{/if}
+			<label><input type="checkbox" name="inviteGuests" value="1"{if $inviteGuests} checked{/if} /> {translate key="plugins.generic.dossierManager.form.inviteGuests"}</label>
+		</fieldset>
+
 		<div class="dmField">
 			<label for="dmGuidelines">{translate key="plugins.generic.dossierManager.guidelinesUrl"}</label>
 			<input type="url" id="dmGuidelines" name="guidelinesUrl" value="{$dossier->guidelinesUrl|escape}" placeholder="{$defaultGuidelinesUrl|escape}" />

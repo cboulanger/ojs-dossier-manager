@@ -5,6 +5,7 @@
  *
  * Choose a contributor from the journal's users or enter a new person.
  * $idPrefix: unique prefix for element IDs
+ * $newPersonHintKey: (optional) locale key of the hint below the new person's fields
  *}
 <div class="dmUserSearch" data-url="{$usersUrl|escape}">
 	<label for="{$idPrefix}-search">{translate key="plugins.generic.dossierManager.contribution.searchUser"}</label>
@@ -29,5 +30,5 @@
 			<input type="email" id="{$idPrefix}-email" name="email" />
 		</div>
 	</div>
-	<p class="dmHint">{translate key="plugins.generic.dossierManager.contribution.newPersonHint"}</p>
+	<p class="dmHint">{translate key=$newPersonHintKey|default:"plugins.generic.dossierManager.contribution.newPersonHint"}</p>
 </details>

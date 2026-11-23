@@ -112,7 +112,7 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
     }
 
     /**
-     * Create the Dossier editor group when the plugin is enabled in a journal.
+     * Create the Dossier editor and Guest editor groups when the plugin is enabled in a journal.
      */
     public function setEnabled($enabled)
     {
@@ -120,6 +120,7 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
         $context = Application::get()->getRequest()->getContext();
         if ($enabled && $context) {
             Roles::getGroupId($this, $context->getId());
+            Roles::getGuestGroupId($this, $context->getId());
         }
     }
 
@@ -149,7 +150,7 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
     }
 
     /**
-     * Left menu: "Dossiers" for managers and dossier editors, "My contributions" for contributors.
+     * Left menu: "Dossiers" for managers, dossier editors and guest editors, "My contributions" for contributors.
      */
     public function addBackendMenu(string $hookName, array $args): bool
     {
@@ -178,16 +179,20 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
         }
 
         $userRoles = (array) $router->getHandler()->getAuthorizedContextObject(Application::ASSOC_TYPE_USER_ROLES);
-        if (Roles::canManage($this, $context->getId(), $user->getId(), $userRoles)) {
+        $canManage = Roles::canManage($this, $context->getId(), $user->getId(), $userRoles);
+        // Guest editors only see "My dossiers" (read-only)
+        if ($canManage || DossierRepository::isGuestEditorInContext($context->getId(), $user->getId())) {
             $onPage = $page === DossiersHandler::PAGE;
             $submenu = [
                 'myDossiers' => ['name' => __('plugins.generic.dossierManager.menu.myDossiers'),
                     'url' => $router->url($request, null, DossiersHandler::PAGE),
                     'isCurrent' => $onPage && in_array($op, ['index', 'view', 'compose'], true)],
-                'create' => ['name' => __('plugins.generic.dossierManager.menu.create'),
-                    'url' => $router->url($request, null, DossiersHandler::PAGE, 'create'),
-                    'isCurrent' => $onPage && $op === 'create'],
             ];
+            if ($canManage) {
+                $submenu['create'] = ['name' => __('plugins.generic.dossierManager.menu.create'),
+                    'url' => $router->url($request, null, DossiersHandler::PAGE, 'create'),
+                    'isCurrent' => $onPage && $op === 'create'];
+            }
             if (Roles::isManager($userRoles)) {
                 $submenu['settings'] = ['name' => __('plugins.generic.dossierManager.menu.settings'),
                     'url' => $router->url($request, null, DossiersHandler::PAGE, 'settings'),

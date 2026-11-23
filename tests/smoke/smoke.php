@@ -24,9 +24,13 @@ use APP\plugins\generic\dossierManager\classes\DossierRepository;
 use APP\plugins\generic\dossierManager\classes\DossierStatus;
 use APP\plugins\generic\dossierManager\classes\DossierWorkflow;
 use APP\plugins\generic\dossierManager\classes\Notifier;
+use APP\plugins\generic\dossierManager\classes\Roles;
 use APP\plugins\generic\dossierManager\mailables\DmInvitation;
 use Illuminate\Support\Facades\DB;
 use PKP\plugins\PluginRegistry;
+use PKP\security\Role;
+use PKP\userGroup\UserGroup;
+use PKP\userGroup\relationships\UserUserGroup;
 
 class DossierSmokeTool extends \PKP\cliTool\CommandLineTool
 {
@@ -45,9 +49,12 @@ class DossierSmokeTool extends \PKP\cliTool\CommandLineTool
         $plugin = PluginRegistry::getPlugin('generic', 'DossierManagerPlugin');
         $editor = Repo::user()->getByUsername('dossiereditor', true);
         $author = Repo::user()->getByUsername('author', true);
+        $guest = Repo::user()->getByUsername('contributor2', true);
         $issue = Repo::issue()->getCollector()->filterByContextIds([$context->getId()])->filterByPublished(false)->getMany()->first();
         $section = Repo::section()->getCollector()->filterByContextIds([$context->getId()])->getMany()->first();
-        $this->check($editor && $author && $issue && $section, 'dev data present (dossiereditor, author, future issue, section)');
+        $this->check($editor && $author && $guest && $issue && $section, 'dev data present (dossiereditor, author, contributor2, future issue, section)');
+        $adHocEmail = 'smoke-guest-' . uniqid() . '@example.org';
+        $adHoc = null;
 
         $dossier = new Dossier();
         $dossier->contextId = $context->getId();
@@ -61,6 +68,45 @@ class DossierSmokeTool extends \PKP\cliTool\CommandLineTool
         DossierRepository::saveDossier($dossier);
         try {
             $this->check(DossierRepository::getDossier($dossier->id)?->getLocalizedTitle('en') === $dossier->title['en'], 'dossier stored and read back');
+
+            // Guest editors
+            $dossier->guestEditors = [$guest->getId() => Notifier::MODE_DEFAULT];
+            DossierRepository::saveDossier($dossier);
+            $read = DossierRepository::getDossier($dossier->id);
+            $this->check($read->isGuestEditor($guest->getId()) && !$read->isEditor($guest->getId()) && $read->isEditor($editor->getId()), 'guest editor stored apart from the responsible editors');
+            $this->check(DossierRepository::isGuestEditorInContext($context->getId(), $guest->getId())
+                && !DossierRepository::isGuestEditorInContext($context->getId(), $editor->getId()), 'guest editor found in the journal');
+            $this->check(count(DossierRepository::getDossiers($context->getId(), $guest->getId())) >= 1, '"My dossiers" lists the guest editor\'s dossier');
+            Roles::addToGuestGroup($plugin, $context->getId(), $guest->getId());
+            $groupId = Roles::getGuestGroupId($plugin, $context->getId());
+            $group = UserGroup::find($groupId);
+            $this->check($group && (int) $group->roleId === Role::ROLE_ID_READER, 'Guest editor group has the base role Reader');
+            $this->check(Repo::userGroup()->userInGroup($guest->getId(), $groupId), 'guest editor is in the Guest editor group');
+
+            $before = DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->count();
+            DossierWorkflow::inviteGuestEditor($plugin, $context, $read, $guest, $editor);
+            $mail = DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->orderByDesc('log_id')->first();
+            $this->check($mail && (int) $mail->event_type === DossierLog::EMAIL_GUEST_INVITATION
+                && str_contains($mail->body, 'dossiers/view/' . $dossier->id) && !str_contains($mail->body, '{$'), 'guest invitation sent with the link to the status page');
+
+            [$adHoc, $created] = DossierWorkflow::findOrCreateUser($context, 'Gina', 'Guest', $adHocEmail, false);
+            $authorGroupIds = UserGroup::withContextIds([$context->getId()])->withRoleIds([Role::ROLE_ID_AUTHOR])->get()->modelKeys();
+            $this->check($created && !UserUserGroup::withUserId($adHoc->getId())->withUserGroupIds($authorGroupIds)->exists(), 'ad hoc guest editor created without the Author role');
+            DossierWorkflow::inviteGuestEditor($plugin, $context, $read, $adHoc, $editor);
+            $mail = DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->orderByDesc('log_id')->first();
+            $this->check(str_contains($mail->body, 'lostPassword'), 'new account is told how to set a password');
+
+            // Promoting a guest editor keeps their notification choice
+            DossierRepository::setNotifyMode($dossier->id, $guest->getId(), Notifier::MODE_DIGEST);
+            $read = DossierRepository::getDossier($dossier->id);
+            $read->editors[$guest->getId()] = Notifier::MODE_DEFAULT;
+            DossierRepository::saveDossier($read);
+            $read = DossierRepository::getDossier($dossier->id);
+            $this->check($read->isEditor($guest->getId()) && !$read->isGuestEditor($guest->getId()) && $read->editors[$guest->getId()] === Notifier::MODE_DIGEST, 'guest editor made responsible, notification choice kept');
+            unset($read->editors[$guest->getId()]);
+            $read->guestEditors = [$guest->getId() => Notifier::MODE_DEFAULT];
+            DossierRepository::saveDossier($read);
+            DossierRepository::setNotifyMode($dossier->id, $guest->getId(), Notifier::MODE_DEFAULT);
 
             $c = new Contribution();
             $c->dossierId = $dossier->id;
@@ -105,11 +151,11 @@ class DossierSmokeTool extends \PKP\cliTool\CommandLineTool
             DossierWorkflow::decline($plugin, $context, DossierRepository::getDossier($dossier->id), $c, 'No time', $author, true);
             $after = DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->count();
             $this->check(DossierRepository::contributionStatus(DossierRepository::getContribution($c->id)) === ContributionStatus::DECLINED, 'contribution declined');
-            $this->check($after === $before + 1, 'editor notified of the decline');
+            $this->check($after === $before + 2, 'responsible and guest editor notified of the decline');
 
             // A change by someone else goes to the digest
             Notifier::notify($plugin, $context, DossierRepository::getDossier($dossier->id), 'edited', [], $author);
-            $this->check(DB::table('dm_digest')->where('dossier_id', $dossier->id)->count() === 1, 'other change queued for the digest');
+            $this->check(DB::table('dm_digest')->where('dossier_id', $dossier->id)->count() === 2, 'other change queued for the digests of the editor and the guest editor');
             $this->check(Notifier::sendDigests($plugin, $context) >= 1 && !DB::table('dm_digest')->where('dossier_id', $dossier->id)->exists(), 'digest sent and emptied');
 
             $history = DossierLog::getHistory($dossier->id);
@@ -121,6 +167,9 @@ class DossierSmokeTool extends \PKP\cliTool\CommandLineTool
             DB::table('dm_dossiers')->where('dossier_id', $dossier->id)->delete();
             DB::table('event_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->delete();
             DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossier->id)->delete();
+            if ($adHoc) {
+                Repo::user()->delete($adHoc);
+            }
         }
         echo $this->failures ? "{$this->failures} check(s) failed\n" : "All checks passed\n";
         exit($this->failures ? 1 : 0);

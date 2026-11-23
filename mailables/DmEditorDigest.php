@@ -7,7 +7,7 @@
  *
  * @class DmEditorDigest
  *
- * @brief Daily summary of changes for the responsible editors of a dossier.
+ * @brief Daily summary of changes for the responsible and guest editors of dossiers.
  */
 
 namespace APP\plugins\generic\dossierManager\mailables;
@@ -28,7 +28,7 @@ class DmEditorDigest extends Mailable
     protected static ?string $description = 'emails.dmEditorDigest.description';
     protected static ?string $emailTemplateKey = 'DM_EDITOR_DIGEST';
     protected static array $fromRoleIds = [self::FROM_SYSTEM];
-    protected static array $toRoleIds = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR];
+    protected static array $toRoleIds = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_READER];
 
     public function __construct(Journal $context, array $emailParams = [])
     {

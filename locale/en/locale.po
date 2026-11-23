@@ -16,6 +16,12 @@ msgstr "Dossier editor"
 msgid "plugins.generic.dossierManager.role.dossierEditor.abbrev"
 msgstr "DosEd"
 
+msgid "plugins.generic.dossierManager.role.guestEditor"
+msgstr "Guest editor"
+
+msgid "plugins.generic.dossierManager.role.guestEditor.abbrev"
+msgstr "GuestEd"
+
 msgid "plugins.generic.dossierManager.type.specialIssue"
 msgstr "Special issue"
 
@@ -117,6 +123,21 @@ msgstr "No contributions planned yet."
 
 msgid "plugins.generic.dossierManager.readOnly"
 msgstr "You are not a responsible editor of this dossier, so you can only view it."
+
+msgid "plugins.generic.dossierManager.guestEditors"
+msgstr "Guest editors"
+
+msgid "plugins.generic.dossierManager.guest.badge"
+msgstr "Guest editor"
+
+msgid "plugins.generic.dossierManager.guest.readOnly"
+msgstr "You are a guest editor of this dossier: you can follow it and choose your notifications. Changes are made by the responsible editors."
+
+msgid "plugins.generic.dossierManager.guest.resend"
+msgstr "Send the invitation again"
+
+msgid "plugins.generic.dossierManager.guest.invited"
+msgstr "Invitation sent to {$number} guest editor(s)."
 
 msgid "plugins.generic.dossierManager.cancelDossier"
 msgstr "Cancel dossier"
@@ -225,6 +246,24 @@ msgstr "The target issue, section and deadline are needed before invitations can
 
 msgid "plugins.generic.dossierManager.form.editorsHint"
 msgstr "Journal managers and members of the role \"Dossier editor\". The responsible editors receive the notifications about this dossier."
+
+msgid "plugins.generic.dossierManager.form.guestEditorsHint"
+msgstr "Guest editors see the dossier read-only under \"My dossiers\" and receive the same notifications as the responsible editors. They cannot change the dossier, invite or remove people."
+
+msgid "plugins.generic.dossierManager.form.guestEditorsRemoveHint"
+msgstr "Uncheck a guest editor to remove them from this dossier. They are not notified."
+
+msgid "plugins.generic.dossierManager.form.addGuestEditor"
+msgstr "Add a guest editor"
+
+msgid "plugins.generic.dossierManager.form.newGuestHint"
+msgstr "This creates an account in the journal's role \"Guest editor\". If an account with this email address exists, it is used."
+
+msgid "plugins.generic.dossierManager.form.inviteGuests"
+msgstr "Send an invitation email to new guest editors"
+
+msgid "plugins.generic.dossierManager.form.guestIsEditor"
+msgstr "This person is a responsible editor of the dossier and cannot also be a guest editor."
 
 msgid "plugins.generic.dossierManager.form.guidelinesHint"
 msgstr "Leave empty to use the journal's submission guidelines."
@@ -394,6 +433,12 @@ msgstr "The plugin's emails are switched off in the configuration. The invitatio
 msgid "plugins.generic.dossierManager.email.declineLink"
 msgstr "If you cannot contribute after all, please let us know:"
 
+msgid "plugins.generic.dossierManager.email.guestAccountHint"
+msgstr "If you have not set a password for your account ({$email}) yet, you can do so here:"
+
+msgid "plugins.generic.dossierManager.email.setPassword"
+msgstr "Set a password"
+
 msgid "plugins.generic.dossierManager.email.inProgress"
 msgstr "You have already started your submission; please complete it."
 
@@ -556,6 +601,9 @@ msgstr "Notification"
 msgid "plugins.generic.dossierManager.history.email.digest"
 msgstr "Daily summary"
 
+msgid "plugins.generic.dossierManager.history.email.guestInvitation"
+msgstr "Invitation of a guest editor"
+
 msgid "plugins.generic.dossierManager.history.event.created"
 msgstr "Dossier created: {$subject}"
 
@@ -643,6 +691,9 @@ msgstr "Target changed: {$subject}"
 msgid "plugins.generic.dossierManager.history.event.editorsChanged"
 msgstr "Responsible editors: {$subject}"
 
+msgid "plugins.generic.dossierManager.history.event.guestEditorsChanged"
+msgstr "Guest editors: {$subject}"
+
 msgid "plugins.generic.dossierManager.history.event.editorsAssigned"
 msgstr "Assigned to the submission as editors: {$recipientName} ({$subject})"
 
@@ -675,6 +726,9 @@ msgstr "{$actor} changed the target to {$target}. Submissions moved: {$moved}."
 
 msgid "plugins.generic.dossierManager.notify.editorsChanged"
 msgstr "{$actor} changed the responsible editors: {$names}"
+
+msgid "plugins.generic.dossierManager.notify.guestEditorsChanged"
+msgstr "{$actor} changed the guest editors: {$names}"
 
 msgid "plugins.generic.dossierManager.notify.edited"
 msgstr "{$actor} edited the dossier."

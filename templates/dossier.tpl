@@ -31,6 +31,8 @@
 					<button type="submit" name="action" value="cancel" class="pkp_button pkp_button_offset">{translate key="plugins.generic.dossierManager.cancelDossier"}</button>
 				{/if}
 			</form>
+		{elseif $isGuest}
+			<span class="dmHint">{translate key="plugins.generic.dossierManager.guest.readOnly"}</span>
 		{else}
 			<span class="dmHint">{translate key="plugins.generic.dossierManager.readOnly"}</span>
 		{/if}
@@ -45,6 +47,24 @@
 		<dt>{translate key="plugins.generic.dossierManager.targetSection"}</dt><dd>{$section|escape|default:"–"}</dd>
 		<dt>{translate key="plugins.generic.dossierManager.deadline"}</dt><dd>{if $dossier->deadline}{$dossier->deadline|date_format:$dateFormatLong}{else}–{/if}</dd>
 		<dt>{translate key="plugins.generic.dossierManager.editors"}</dt><dd>{$editors|escape}</dd>
+		{if $guestEditors}
+			<dt>{translate key="plugins.generic.dossierManager.guestEditors"}</dt>
+			<dd>
+				{foreach from=$guestEditors key=guestId item=guestName name=guests}
+					<div>
+						{$guestName|escape}
+						{if $canEdit}
+							<form method="post" action="{url page=$dmPage op="dossierAction"}" class="dmInline">
+								{csrf}
+								<input type="hidden" name="dossierId" value="{$dossier->id|escape}" />
+								<input type="hidden" name="userId" value="{$guestId|escape}" />
+								<button type="submit" name="action" value="inviteGuest" class="pkp_button">{translate key="plugins.generic.dossierManager.guest.resend"}</button>
+							</form>
+						{/if}
+					</div>
+				{/foreach}
+			</dd>
+		{/if}
 		<dt>{translate key="plugins.generic.dossierManager.progress"}</dt>
 		<dd>
 			{translate key="plugins.generic.dossierManager.progressCount" submitted=$progress.submitted planned=$progress.planned}

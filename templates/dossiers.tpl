@@ -10,6 +10,7 @@
 {block name="page"}
 <h1 class="app__pageHeading">{if $all}{translate key="plugins.generic.dossierManager.allDossiers"}{else}{$pageTitle|escape}{/if}</h1>
 <div class="app__contentPanel dmPanel" v-pre>
+	{if $canManage}
 	<div class="dmToolbar">
 		<a class="pkp_button" href="{url page=$dmPage op="create"}">{translate key="plugins.generic.dossierManager.menu.create"}</a>
 		{if $all}
@@ -18,6 +19,7 @@
 			<a href="{url page=$dmPage params=["all" => 1]}">{translate key="plugins.generic.dossierManager.showAll"}</a>
 		{/if}
 	</div>
+	{/if}
 	{if !$rows}
 		<p>{if $all}{translate key="plugins.generic.dossierManager.noDossiers"}{else}{translate key="plugins.generic.dossierManager.noOwnDossiers"}{/if}</p>
 	{else}
@@ -38,6 +40,7 @@
 						<td>
 							<div class="dmType">{$row.type|escape}</div>
 							<a href="{url page=$dmPage op="view" path=$row.id}">{$row.title|escape}</a>
+							{if $row.isGuest}<span class="dmBadge">{translate key="plugins.generic.dossierManager.guest.badge"}</span>{/if}
 						</td>
 						<td><span class="dmStatus dmStatus--{$row.status|escape}">{translate key="plugins.generic.dossierManager.status.`$row.status`"}</span></td>
 						<td>{$row.issue|escape|default:"–"}</td>

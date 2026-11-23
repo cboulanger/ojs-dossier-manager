@@ -37,8 +37,10 @@ class Dossier
     public ?int $createdBy = null;
     public ?string $dateCreated = null;
     public ?string $dateModified = null;
-    /** @var array<int,string> userId => notify mode (see Notifier) */
+    /** @var array<int,string> Responsible editors: userId => notify mode (see Notifier) */
     public array $editors = [];
+    /** @var array<int,string> Guest editors (read-only access, same notices): userId => notify mode */
+    public array $guestEditors = [];
 
     public function getLocalizedTitle(?string $locale = null): string
     {
@@ -53,6 +55,20 @@ class Dossier
     public function isEditor(?int $userId): bool
     {
         return $userId !== null && array_key_exists($userId, $this->editors);
+    }
+
+    public function isGuestEditor(?int $userId): bool
+    {
+        return $userId !== null && array_key_exists($userId, $this->guestEditors);
+    }
+
+    /**
+     * Everyone who receives the notices about the dossier: responsible and guest editors.
+     * @return array<int,string> userId => notify mode
+     */
+    public function getNotifiedEditors(): array
+    {
+        return $this->editors + $this->guestEditors;
     }
 
     /**

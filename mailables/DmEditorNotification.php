@@ -7,7 +7,7 @@
  *
  * @class DmEditorNotification
  *
- * @brief Notice to the responsible editors of a dossier about a change.
+ * @brief Notice to the responsible and guest editors of a dossier about a change.
  */
 
 namespace APP\plugins\generic\dossierManager\mailables;
@@ -28,7 +28,7 @@ class DmEditorNotification extends Mailable
     protected static ?string $description = 'emails.dmEditorNotification.description';
     protected static ?string $emailTemplateKey = 'DM_EDITOR_NOTIFICATION';
     protected static array $fromRoleIds = [self::FROM_SYSTEM];
-    protected static array $toRoleIds = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR];
+    protected static array $toRoleIds = [Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR, Role::ROLE_ID_READER];
 
     public function __construct(Journal $context, array $emailParams = [])
     {

@@ -60,6 +60,7 @@ class DossierLog
         'editorsChanged' => 0x1F1D11D,
         'reordered' => 0x1F1D11E,
         'editorsAssigned' => 0x1F1D11F,
+        'guestEditorsChanged' => 0x1F1D120,
     ];
 
     /** Email event types */
@@ -68,6 +69,7 @@ class DossierLog
     const EMAIL_OVERDUE = 0x1F1D203;
     const EMAIL_NOTIFICATION = 0x1F1D204;
     const EMAIL_DIGEST = 0x1F1D205;
+    const EMAIL_GUEST_INVITATION = 0x1F1D206;
 
     const EMAIL_LABELS = [
         self::EMAIL_INVITATION => 'plugins.generic.dossierManager.history.email.invitation',
@@ -75,6 +77,7 @@ class DossierLog
         self::EMAIL_OVERDUE => 'plugins.generic.dossierManager.history.email.overdue',
         self::EMAIL_NOTIFICATION => 'plugins.generic.dossierManager.history.email.notification',
         self::EMAIL_DIGEST => 'plugins.generic.dossierManager.history.email.digest',
+        self::EMAIL_GUEST_INVITATION => 'plugins.generic.dossierManager.history.email.guestInvitation',
     ];
 
     /** Marks steps taken automatically or through a link */
