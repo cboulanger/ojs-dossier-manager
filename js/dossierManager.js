@@ -8,6 +8,7 @@
  *  - data-dm-confirm on a form: confirm before submitting
  *  - data-dm-copy="inputId" on a button: copy the input's value
  *  - .dmUserSearch: search the journal's users and choose one as contributor
+ *  - textarea.dmRich: HTML editor (the TinyMCE that OJS loads on backend pages)
  */
 (function () {
 	'use strict';
@@ -43,6 +44,79 @@
 			done();
 		}
 	});
+
+	// HTML editor for textarea.dmRich. OJS loads TinyMCE on all backend pages
+	// (plugins/generic/tinymce); without it the textarea stays a plain field.
+	function richParams(textarea) {
+		var $ = window.jQuery;
+		var pkpParams = $ && $.pkp && $.pkp.controllers && $.pkp.controllers.SiteHandler &&
+			$.pkp.controllers.SiteHandler.prototype.tinymceParams_;
+		var pluginData = ($ && $.pkp && $.pkp.plugins && $.pkp.plugins.generic &&
+			$.pkp.plugins.generic.tinymceplugin) || {};
+		var params = {
+			width: '100%',
+			resize: 'both',
+			entity_encoding: 'raw',
+			convert_urls: false,
+			forced_root_block: 'p',
+			browser_spellcheck: true,
+			contextmenu: false,
+			menubar: false,
+			statusbar: false,
+			skin: 'tinymce-5',
+			license_key: 'gpl',
+			sandbox_iframes: false,
+			block_formats: 'Paragraph=p; Heading 2=h2; Heading 3=h3',
+			content_css: (window.pkp && window.pkp.app && window.pkp.app.tinyMceContentCSS) ||
+				($ && $.pkp && $.pkp.app && $.pkp.app.tinyMceContentCSS) || undefined
+		};
+		if (pkpParams) {
+			// Same configuration as OJS's own editors
+			for (var key in pkpParams) {
+				if (Object.prototype.hasOwnProperty.call(pkpParams, key)) {
+					params[key] = pkpParams[key];
+				}
+			}
+		} else if (pluginData.tinymceParams) {
+			params.language = pluginData.tinymceParams.language;
+			params.language_url = pluginData.tinymceParams.language_url;
+		}
+		// The variables are inserted as text, so the pkpTags plugin is not needed
+		params.plugins = 'link lists code fullscreen';
+		params.toolbar = 'bold italic underline | blocks | bullist numlist | link unlink | code fullscreen';
+		params.height = (20 * (parseInt(textarea.getAttribute('rows'), 10) || 10)) + 'px';
+		params.target = textarea;
+		delete params.selector;
+		delete params.init_instance_callback;
+		delete params.setup;
+		delete params.readonly;
+		return params;
+	}
+
+	function initRich() {
+		if (!window.tinymce) {
+			return;
+		}
+		var textareas = document.querySelectorAll('textarea.dmRich:not([data-dm-rich])');
+		Array.prototype.forEach.call(textareas, function (textarea) {
+			textarea.setAttribute('data-dm-rich', '1');
+			window.tinymce.init(richParams(textarea));
+		});
+	}
+
+	// The Vue app replaces the DOM while loading, so initialise once the page is complete
+	if (document.readyState === 'complete') {
+		initRich();
+	} else {
+		window.addEventListener('load', initRich);
+	}
+
+	// Copy the editor's content into the textarea before the form is sent
+	document.addEventListener('submit', function () {
+		if (window.tinymce) {
+			window.tinymce.triggerSave();
+		}
+	}, true);
 
 	// User search
 	var timer = null;

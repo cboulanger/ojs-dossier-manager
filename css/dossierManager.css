@@ -49,6 +49,7 @@
 	width: 100%; max-width: 40rem; padding: .4rem .5rem; border: 1px solid #bbb; border-radius: 3px; font: inherit; box-sizing: border-box;
 }
 .dmForm input[type=number], .dmForm input[type=date] { max-width: 12rem; }
+.dmForm .tox-tinymce { max-width: 50rem; }
 .dmFieldRow { display: flex; flex-wrap: wrap; gap: 1rem; }
 .dmFieldRow .dmField { flex: 0 1 16rem; }
 .dmFieldRow .dmField--wide { flex: 1 1 24rem; }
