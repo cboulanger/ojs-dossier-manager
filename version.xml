@@ -11,8 +11,8 @@
 <version>
 	<application>dossierManager</application>
 	<type>plugins.generic</type>
-	<release>0.1.0.0</release>
-	<date>2026-11-22</date>
+	<release>0.1.1.0</release>
+	<date>2026-11-23</date>
 	<lazy-load>1</lazy-load>
 	<class>DossierManagerPlugin</class>
 </version>
