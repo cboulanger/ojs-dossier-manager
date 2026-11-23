@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Schema;
 class DossierManagerSchemaMigration extends Migration
 {
     /** Increase when tables or data migrations are added */
-    const SCHEMA_VERSION = 1;
+    const SCHEMA_VERSION = 2;
 
     /** Plugin name in plugin_settings */
     const PLUGIN_NAME = 'dossiermanagerplugin';
@@ -63,8 +63,17 @@ class DossierManagerSchemaMigration extends Migration
                 $table->bigInteger('user_id');
                 // default | immediate | digest (see Notifier)
                 $table->string('notify_mode', 16)->default('default');
+                // editor (responsible) | guest (read-only)
+                $table->string('role', 16)->default('editor');
                 $table->unique(['dossier_id', 'user_id'], 'dm_dossier_editors_pkey');
                 $table->index(['user_id'], 'dm_dossier_editors_user_id');
+            });
+        }
+
+        // Version 2: guest editors
+        if (!Schema::hasColumn('dm_dossier_editors', 'role')) {
+            Schema::table('dm_dossier_editors', function (Blueprint $table) {
+                $table->string('role', 16)->default('editor');
             });
         }
 

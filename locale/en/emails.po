@@ -41,10 +41,10 @@ msgid "emails.dmOverdue.body"
 msgstr "<p>Dear {$recipientName},</p><p>the deadline for your contribution <em>{$workingTitle}</em> to the {$dossierType} <strong>{$dossierTitle}</strong> was {$deadline}, and we have not received it yet.</p><p>{$inProgressNote}</p><p>Please submit it as soon as possible with your personal link:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>If you need more time, please let the editors of the {$dossierType} know: {$editorNames}.</p>{$declineLink}<p>Kind regards,<br />{$contextName}</p>"
 
 msgid "emails.dmEditorNotification.name"
-msgstr "Dossier: notification of the responsible editors"
+msgstr "Dossier: notification of the responsible and guest editors"
 
 msgid "emails.dmEditorNotification.description"
-msgstr "Sent automatically to the responsible editors of a dossier when something changes (immediately, depending on each editor's choice)."
+msgstr "Sent automatically to the responsible and guest editors of a dossier when something changes (immediately, depending on each person's choice)."
 
 msgid "emails.dmEditorNotification.subject"
 msgstr "Dossier \"{$dossierTitle}\""
@@ -53,14 +53,26 @@ msgid "emails.dmEditorNotification.body"
 msgstr "<p>Dear {$recipientName},</p><p>{$eventText}</p><p>Dossier: <a href=\"{$dossierUrl}\">{$dossierTitle}</a></p>"
 
 msgid "emails.dmEditorDigest.name"
-msgstr "Dossier: daily summary for the responsible editors"
+msgstr "Dossier: daily summary for the responsible and guest editors"
 
 msgid "emails.dmEditorDigest.description"
-msgstr "Sent automatically once a day to responsible editors, with the changes of their dossiers that were not sent immediately."
+msgstr "Sent automatically once a day to responsible and guest editors, with the changes of their dossiers that were not sent immediately."
 
 msgid "emails.dmEditorDigest.subject"
 msgstr "Dossiers: summary of changes"
 
 msgid "emails.dmEditorDigest.body"
 msgstr "<p>Dear {$recipientName},</p><p>these changes were made to your dossiers:</p>{$digest}"
+
+msgid "emails.dmGuestInvitation.name"
+msgstr "Dossier: invitation of a guest editor"
+
+msgid "emails.dmGuestInvitation.description"
+msgstr "Sent to a guest editor when a responsible editor adds them to a dossier (or sends it again). It links to the dossier's status page."
+
+msgid "emails.dmGuestInvitation.subject"
+msgstr "Guest editor of the {$dossierType} \"{$dossierTitle}\""
+
+msgid "emails.dmGuestInvitation.body"
+msgstr "<p>Dear {$recipientName},</p><p>you have been added as a guest editor of the {$dossierType} <strong>{$dossierTitle}</strong> of {$contextName}. The responsible editors are {$editorNames}.</p>{$dossierDescription}<p>Target issue: {$issueTitle}<br />Submission deadline: {$dossierDeadline}</p><p>Planned contributions:</p>{$contributionsList}<p>You can follow the progress of the dossier on its status page, and you will receive the same notifications as the responsible editors:<br /><a href=\"{$dossierUrl}\">{$dossierUrl}</a></p>{$accountHint}<p>Best regards<br />{$senderName}<br />{$contextName}</p>"
 

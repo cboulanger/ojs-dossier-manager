@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\dossierManager\classes;
 
 use APP\facades\Repo;
+use APP\plugins\generic\dossierManager\mailables\DmGuestInvitation;
 use APP\plugins\generic\dossierManager\mailables\DmInvitation;
 use APP\submission\Submission;
 use PKP\core\Core;
@@ -34,6 +35,16 @@ class DossierWorkflow
      */
     public static function findOrCreateContributor($context, string $givenName, string $familyName, string $email): array
     {
+        return self::findOrCreateUser($context, $givenName, $familyName, $email, true);
+    }
+
+    /**
+     * An existing account with this email, or a new one (random password, must be changed).
+     * @param bool $asAuthor Add the user to the journal's Author group
+     * @return array [User, bool created]
+     */
+    public static function findOrCreateUser($context, string $givenName, string $familyName, string $email, bool $asAuthor): array
+    {
         $locale = $context->getPrimaryLocale();
         $user = Repo::user()->getByEmail($email, true);
         $created = false;
@@ -49,6 +60,9 @@ class DossierWorkflow
             Repo::user()->add($user);
             $user = Repo::user()->get($user->getId(), true);
             $created = true;
+        }
+        if (!$asAuthor) {
+            return [$user, $created];
         }
         $authorGroup = UserGroup::withContextIds([$context->getId()])->withRoleIds([Role::ROLE_ID_AUTHOR])->isDefault(true)->first();
         if ($authorGroup && !UserUserGroup::withUserId($user->getId())->withUserGroupIds([$authorGroup->userGroupId])->exists()) {
@@ -320,5 +334,34 @@ class DossierWorkflow
             $c->lastOverdue = null;
             DossierRepository::saveContribution($c);
         }
+    }
+
+    /**
+     * Tell a guest editor about the dossier, with a link to its status page.
+     * People who have never logged in are told how to set a password.
+     * @return bool Whether it was sent (false: emails are switched off)
+     */
+    public static function inviteGuestEditor($plugin, $context, Dossier $dossier, User $guest, User $sender): bool
+    {
+        $locale = $context->getPrimaryLocale();
+        $accountHint = '';
+        if (!$guest->getDateLastLogin()) {
+            $accountHint = '<p>' . htmlspecialchars(__('plugins.generic.dossierManager.email.guestAccountHint',
+                ['email' => $guest->getEmail()], $locale))
+                . '<br /><a href="' . DossierMailer::pageUrl($context, 'login', 'lostPassword') . '">'
+                . htmlspecialchars(__('plugins.generic.dossierManager.email.setPassword', [], $locale)) . '</a></p>';
+        }
+        // The dossier may still be in planning
+        $params = DossierMailer::getParams($context, $dossier, $sender);
+        $notYet = htmlspecialchars(__('plugins.generic.dossierManager.form.notYet', [], $locale));
+        $extra = ['accountHint' => $accountHint];
+        foreach (['issueTitle', 'dossierDeadline', 'contributionsList'] as $name) {
+            if ($params[$name] === '') {
+                $extra[$name] = $name === 'contributionsList' ? '<p>' . $notYet . '</p>' : $notYet;
+            }
+        }
+        DossierMailer::ensureTemplates($plugin, $context->getId());
+        [$subject, $body] = DossierMailer::compose($context, DmGuestInvitation::class, $dossier, $sender, $extra);
+        return DossierMailer::send($context, DmGuestInvitation::class, DossierLog::EMAIL_GUEST_INVITATION, $dossier, null, $guest, $sender, $subject, $body);
     }
 }

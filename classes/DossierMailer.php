@@ -20,6 +20,7 @@ use APP\core\Application;
 use APP\facades\Repo;
 use APP\plugins\generic\dossierManager\mailables\DmEditorDigest;
 use APP\plugins\generic\dossierManager\mailables\DmEditorNotification;
+use APP\plugins\generic\dossierManager\mailables\DmGuestInvitation;
 use APP\plugins\generic\dossierManager\mailables\DmInvitation;
 use APP\plugins\generic\dossierManager\mailables\DmOverdue;
 use APP\plugins\generic\dossierManager\mailables\DmReminder;
@@ -31,7 +32,8 @@ use PKP\user\User;
 
 class DossierMailer
 {
-    const MAILABLES = [DmInvitation::class, DmReminder::class, DmOverdue::class, DmEditorNotification::class, DmEditorDigest::class];
+    const MAILABLES = [DmInvitation::class, DmReminder::class, DmOverdue::class, DmEditorNotification::class, DmEditorDigest::class,
+        DmGuestInvitation::class];
 
     /** Filled in per recipient by send() */
     const LATE_VARIABLES = ['recipientName', 'workingTitle', 'deadline', 'submissionUrl', 'declineUrl', 'declineLink'];
@@ -80,8 +82,7 @@ class DossierMailer
             'guidelinesUrl' => htmlspecialchars(self::guidelinesUrl($context, $dossier)),
             'dossierUrl' => self::pageUrl($context, DossiersHandler::PAGE, 'view', [$dossier->id]),
             'editorNames' => htmlspecialchars(implode(', ', array_filter(array_map(
-                fn ($userId) => Repo::user()->get($userId, true)?->getFullName(), array_keys($dossier->editors))))),
-        ], $extra);
+                fn ($userId) => Repo::user()->get($userId, true)?->getFullName(), array_keys($dossier->editors))))),        ], $extra);
     }
 
     public static function guidelinesUrl($context, Dossier $dossier): string

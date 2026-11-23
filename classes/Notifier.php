@@ -7,7 +7,7 @@
  *
  * @class Notifier
  *
- * @brief Notices to the responsible editors of a dossier. Each editor chooses
+ * @brief Notices to the responsible and guest editors of a dossier. Each one chooses
  *  per dossier:
  *  - default: submissions, declines and exhausted reminders immediately, the rest in a daily digest;
  *  - immediate: everything immediately;
@@ -44,7 +44,7 @@ class Notifier
         $locale = $context->getPrimaryLocale();
         $message = htmlspecialchars(__('plugins.generic.dossierManager.notify.' . $event,
             $params + ['actor' => $actor ? $actor->getFullName() : __('plugins.generic.dossierManager.history.automatic', [], $locale)], $locale));
-        foreach ($dossier->editors as $userId => $mode) {
+        foreach ($dossier->getNotifiedEditors() as $userId => $mode) {
             if ($actor && $actor->getId() === $userId) {
                 continue;
             }

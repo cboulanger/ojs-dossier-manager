@@ -18,6 +18,10 @@ use PKP\core\Core;
 
 class DossierRepository
 {
+    /** Values of dm_dossier_editors.role */
+    const ROLE_EDITOR = 'editor';
+    const ROLE_GUEST = 'guest';
+
     /* ---------- Dossiers ---------- */
 
     public static function getDossier(int $dossierId, ?int $contextId = null): ?Dossier
@@ -29,7 +33,7 @@ class DossierRepository
     }
 
     /**
-     * Dossiers of a journal, optionally only those a user is responsible for.
+     * Dossiers of a journal, optionally only those a user is a responsible or guest editor of.
      * Open dossiers first (by deadline), cancelled ones last.
      * @return Dossier[]
      */
@@ -45,6 +49,19 @@ class DossierRepository
             ->get();
         $editors = self::editorsByDossier($rows->pluck('dossier_id')->all());
         return $rows->map(fn ($row) => self::fromDossierRow($row, $editors[$row->dossier_id] ?? []))->all();
+    }
+
+    /**
+     * Is the user a guest editor of any dossier of the journal?
+     */
+    public static function isGuestEditorInContext(int $contextId, int $userId): bool
+    {
+        return DB::table('dm_dossier_editors as e')
+            ->join('dm_dossiers as d', 'd.dossier_id', '=', 'e.dossier_id')
+            ->where('d.context_id', $contextId)
+            ->where('e.user_id', $userId)
+            ->where('e.role', self::ROLE_GUEST)
+            ->exists();
     }
 
     /**
@@ -81,17 +98,29 @@ class DossierRepository
         }
         $dossier->dateModified = $now;
 
-        // Keep the notification preference of editors who stay
-        $current = DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)->pluck('notify_mode', 'user_id')->all();
-        DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)
-            ->whereNotIn('user_id', array_keys($dossier->editors))->delete();
+        // Responsible editors win over guest editors. The notification preference
+        // of people who stay is kept, also when their role changes.
+        $roles = array_fill_keys(array_keys($dossier->guestEditors), self::ROLE_GUEST);
+        $modes = $dossier->guestEditors;
         foreach ($dossier->editors as $userId => $mode) {
-            if (!array_key_exists($userId, $current)) {
+            $roles[$userId] = self::ROLE_EDITOR;
+            $modes[$userId] = $mode;
+        }
+        $current = DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)->get()->keyBy('user_id');
+        DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)
+            ->whereNotIn('user_id', array_keys($roles) ?: [0])->delete();
+        foreach ($roles as $userId => $role) {
+            $row = $current->get($userId);
+            if (!$row) {
                 DB::table('dm_dossier_editors')->insert(['dossier_id' => $dossier->id, 'user_id' => $userId,
-                    'notify_mode' => $mode ?: Notifier::MODE_DEFAULT]);
+                    'notify_mode' => $modes[$userId] ?: Notifier::MODE_DEFAULT, 'role' => $role]);
+            } elseif ($row->role !== $role) {
+                DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)->where('user_id', $userId)->update(['role' => $role]);
             }
         }
-        $dossier->editors = DB::table('dm_dossier_editors')->where('dossier_id', $dossier->id)->pluck('notify_mode', 'user_id')->all();
+        $editors = self::editorsByDossier([$dossier->id])[$dossier->id] ?? [];
+        $dossier->editors = $editors[self::ROLE_EDITOR] ?? [];
+        $dossier->guestEditors = $editors[self::ROLE_GUEST] ?? [];
         return $dossier->id;
     }
 
@@ -279,17 +308,20 @@ class DossierRepository
         $d->createdBy = $row->created_by ? (int) $row->created_by : null;
         $d->dateCreated = $row->date_created;
         $d->dateModified = $row->date_modified;
-        $d->editors = $editors ?? (self::editorsByDossier([$d->id])[$d->id] ?? []);
+        $editors ??= self::editorsByDossier([$d->id])[$d->id] ?? [];
+        $d->editors = $editors[self::ROLE_EDITOR] ?? [];
+        $d->guestEditors = $editors[self::ROLE_GUEST] ?? [];
         return $d;
     }
 
-    /** @return array<int,array<int,string>> dossierId => [userId => notify mode] */
+    /** @return array<int,array<string,array<int,string>>> dossierId => role => [userId => notify mode] */
     protected static function editorsByDossier(array $dossierIds): array
     {
         $editors = [];
         if ($dossierIds) {
-            foreach (DB::table('dm_dossier_editors')->whereIn('dossier_id', $dossierIds)->get() as $row) {
-                $editors[(int) $row->dossier_id][(int) $row->user_id] = (string) $row->notify_mode;
+            foreach (DB::table('dm_dossier_editors')->whereIn('dossier_id', $dossierIds)->orderBy('user_id')->get() as $row) {
+                $role = $row->role === self::ROLE_GUEST ? self::ROLE_GUEST : self::ROLE_EDITOR;
+                $editors[(int) $row->dossier_id][$role][(int) $row->user_id] = (string) $row->notify_mode;
             }
         }
         return $editors;

@@ -41,10 +41,10 @@ msgid "emails.dmOverdue.body"
 msgstr "<p>Liebe/r {$recipientName},</p><p>die Frist für Ihren Beitrag <em>{$workingTitle}</em> zum {$dossierType} <strong>{$dossierTitle}</strong> war der {$deadline}, und wir haben ihn noch nicht erhalten.</p><p>{$inProgressNote}</p><p>Bitte reichen Sie ihn so bald wie möglich über Ihren persönlichen Link ein:<br /><a href=\"{$submissionUrl}\">{$submissionUrl}</a></p><p>Wenn Sie mehr Zeit benötigen, geben Sie bitte den Herausgeber/innen des {$dossierType} Bescheid: {$editorNames}.</p>{$declineLink}<p>Mit freundlichen Grüßen<br />{$contextName}</p>"
 
 msgid "emails.dmEditorNotification.name"
-msgstr "Dossier: Benachrichtigung der Verantwortlichen"
+msgstr "Dossier: Benachrichtigung der Verantwortlichen und Gastherausgeber/innen"
 
 msgid "emails.dmEditorNotification.description"
-msgstr "Wird automatisch an die Verantwortlichen eines Dossiers geschickt, wenn sich etwas ändert (sofort, je nach Wahl der Person)."
+msgstr "Wird automatisch an die Verantwortlichen und Gastherausgeber/innen eines Dossiers geschickt, wenn sich etwas ändert (sofort, je nach Wahl der Person)."
 
 msgid "emails.dmEditorNotification.subject"
 msgstr "Dossier „{$dossierTitle}“"
@@ -53,14 +53,26 @@ msgid "emails.dmEditorNotification.body"
 msgstr "<p>Liebe/r {$recipientName},</p><p>{$eventText}</p><p>Dossier: <a href=\"{$dossierUrl}\">{$dossierTitle}</a></p>"
 
 msgid "emails.dmEditorDigest.name"
-msgstr "Dossier: tägliche Zusammenfassung für die Verantwortlichen"
+msgstr "Dossier: tägliche Zusammenfassung für die Verantwortlichen und Gastherausgeber/innen"
 
 msgid "emails.dmEditorDigest.description"
-msgstr "Wird einmal täglich automatisch an die Verantwortlichen geschickt, mit den Änderungen ihrer Dossiers, die nicht sofort gemeldet wurden."
+msgstr "Wird einmal täglich automatisch an die Verantwortlichen und Gastherausgeber/innen geschickt, mit den Änderungen ihrer Dossiers, die nicht sofort gemeldet wurden."
 
 msgid "emails.dmEditorDigest.subject"
 msgstr "Dossiers: Zusammenfassung der Änderungen"
 
 msgid "emails.dmEditorDigest.body"
 msgstr "<p>Liebe/r {$recipientName},</p><p>an Ihren Dossiers gab es folgende Änderungen:</p>{$digest}"
+
+msgid "emails.dmGuestInvitation.name"
+msgstr "Dossier: Einladung als Gastherausgeber/in"
+
+msgid "emails.dmGuestInvitation.description"
+msgstr "Wird an eine/n Gastherausgeber/in geschickt, wenn die Verantwortlichen sie oder ihn zu einem Dossier hinzufügen (oder die Einladung erneut senden). Enthält den Link zur Statusseite des Dossiers."
+
+msgid "emails.dmGuestInvitation.subject"
+msgstr "Gastherausgeber/in: {$dossierType} „{$dossierTitle}“"
+
+msgid "emails.dmGuestInvitation.body"
+msgstr "<p>Liebe/r {$recipientName},</p><p>Sie wurden als Gastherausgeber/in des {$dossierType} <strong>{$dossierTitle}</strong> der Zeitschrift {$contextName} eingetragen. Verantwortlich sind {$editorNames}.</p>{$dossierDescription}<p>Geplante Ausgabe: {$issueTitle}<br />Einreichungsfrist: {$dossierDeadline}</p><p>Geplante Beiträge:</p>{$contributionsList}<p>Auf der Statusseite des Dossiers können Sie den Fortgang verfolgen. Sie erhalten außerdem dieselben Benachrichtigungen wie die Verantwortlichen:<br /><a href=\"{$dossierUrl}\">{$dossierUrl}</a></p>{$accountHint}<p>Mit freundlichen Grüßen<br />{$senderName}<br />{$contextName}</p>"
 

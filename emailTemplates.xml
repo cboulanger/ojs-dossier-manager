@@ -13,4 +13,5 @@
   <email key="DM_OVERDUE" name="emails.dmOverdue.name" subject="emails.dmOverdue.subject" body="emails.dmOverdue.body"/>
   <email key="DM_EDITOR_NOTIFICATION" name="emails.dmEditorNotification.name" subject="emails.dmEditorNotification.subject" body="emails.dmEditorNotification.body"/>
   <email key="DM_EDITOR_DIGEST" name="emails.dmEditorDigest.name" subject="emails.dmEditorDigest.subject" body="emails.dmEditorDigest.body"/>
+  <email key="DM_GUEST_INVITATION" name="emails.dmGuestInvitation.name" subject="emails.dmGuestInvitation.subject" body="emails.dmGuestInvitation.body"/>
 </emails>

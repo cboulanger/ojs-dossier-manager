@@ -10,6 +10,9 @@
  * @brief Backend pages (left menu "Dossiers"): the list of dossiers, the form,
  *  the dossier page with its contributions and history, the invitation email,
  *  and the settings. GET shows, POST changes and redirects.
+ *
+ *  Guest editors only reach the list, the (read-only) dossier page and their
+ *  notification setting; see DossierAccess.
  */
 
 namespace APP\plugins\generic\dossierManager\pages;
@@ -21,6 +24,7 @@ use APP\notification\NotificationManager;
 use APP\plugins\generic\dossierManager\classes\Contribution;
 use APP\plugins\generic\dossierManager\classes\ContributionStatus;
 use APP\plugins\generic\dossierManager\classes\Dossier;
+use APP\plugins\generic\dossierManager\classes\DossierAccess;
 use APP\plugins\generic\dossierManager\classes\DossierLog;
 use APP\plugins\generic\dossierManager\classes\DossierMailer;
 use APP\plugins\generic\dossierManager\classes\DossierRepository;
@@ -52,6 +56,9 @@ class DossiersHandler extends Handler
         parent::__construct();
         $this->plugin = $plugin;
         $this->addRoleAssignment([Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_SUB_EDITOR], self::OPS);
+        // Guest editors have the Guest editor group (base role Reader); access is checked per dossier
+        $this->addRoleAssignment([Role::ROLE_ID_READER, Role::ROLE_ID_AUTHOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER],
+            DossierAccess::GUEST_OPS);
     }
 
     public function authorize($request, &$args, $roleAssignments)
@@ -60,7 +67,11 @@ class DossiersHandler extends Handler
         if (!parent::authorize($request, $args, $roleAssignments)) {
             return false;
         }
-        return Roles::canManage($this->plugin, $request->getContext()->getId(), $request->getUser()?->getId(), $this->userRoles());
+        $userId = $request->getUser()?->getId();
+        $canManage = Roles::canManage($this->plugin, $request->getContext()->getId(), $userId, $this->userRoles());
+        return DossierAccess::mayCallOp($canManage,
+            !$canManage && $userId && DossierRepository::isGuestEditorInContext($request->getContext()->getId(), $userId),
+            (string) ($request->getRequestedOp() ?: 'index'));
     }
 
     protected function userRoles(): array
@@ -73,9 +84,15 @@ class DossiersHandler extends Handler
         return Roles::isManager($this->userRoles());
     }
 
+    /** Manager or Dossier editor (may create dossiers and view all) */
+    protected function canManage($request): bool
+    {
+        return Roles::canManage($this->plugin, $request->getContext()->getId(), $request->getUser()->getId(), $this->userRoles());
+    }
+
     protected function canEdit(Dossier $dossier, $request): bool
     {
-        return $this->isManager() || $dossier->isEditor($request->getUser()->getId());
+        return DossierAccess::canEdit($this->isManager(), $dossier->isEditor($request->getUser()->getId()));
     }
 
     /* ---------- Lists ---------- */
@@ -84,7 +101,8 @@ class DossiersHandler extends Handler
     {
         $context = $request->getContext();
         $user = $request->getUser();
-        $all = (bool) $request->getUserVar('all');
+        $canManage = $this->canManage($request);
+        $all = $canManage && (bool) $request->getUserVar('all');
         $rows = [];
         foreach (DossierRepository::getDossiers($context->getId(), $all ? null : $user->getId()) as $dossier) {
             $contributions = DossierRepository::getContributions($dossier->id);
@@ -98,11 +116,13 @@ class DossiersHandler extends Handler
                 'deadline' => $dossier->deadline,
                 'editors' => implode(', ', $this->editorNames($dossier)),
                 'progress' => $counts,
+                'isGuest' => $dossier->isGuestEditor($user->getId()),
             ];
         }
         return $this->display($request, 'dossiers.tpl', 'plugins.generic.dossierManager.menu.myDossiers', [
             'rows' => $rows,
             'all' => $all,
+            'canManage' => $canManage,
         ]);
     }
 
@@ -162,6 +182,9 @@ class DossiersHandler extends Handler
                 'issues' => $this->futureIssues($context->getId(), $dossier->issueId),
                 'sections' => $this->sections($context->getId()),
                 'editorCandidates' => $this->editorCandidates($context->getId(), $dossier),
+                'guestEditors' => $this->userNames(array_keys($dossier->guestEditors), true),
+                'usersUrl' => $request->getRouter()->url($request, null, self::PAGE, 'users'),
+                'inviteGuests' => !$request->isPost() || (bool) $request->getUserVar('inviteGuests'),
                 'defaultGuidelinesUrl' => DossierMailer::pageUrl($context, 'about', 'submissions'),
                 'journalReminders' => ['days' => $days, 'interval' => $interval, 'max' => $max],
                 'errors' => $errors,
@@ -223,8 +246,34 @@ class DossiersHandler extends Handler
             $dossier->editors[$user->getId()] = $old->editors[$user->getId()] ?? Notifier::MODE_DEFAULT;
         }
 
+        // Guest editors: those kept, and one new one (from the users or a new person).
+        // Someone who becomes responsible is no longer a guest editor.
+        $keep = array_map('intval', (array) $request->getUserVar('guestEditors'));
+        $dossier->guestEditors = [];
+        foreach ($old->guestEditors as $id => $mode) {
+            if (in_array($id, $keep, true) && !$dossier->isEditor($id)) {
+                $dossier->guestEditors[$id] = $mode;
+            }
+        }
+        $newGuest = $this->guestFromRequest($request, $errors);
+        if ($newGuest && $dossier->isEditor($newGuest['id'] ?? null)) {
+            $errors['guestEditors'] = __('plugins.generic.dossierManager.form.guestIsEditor');
+        }
+
         if ($errors) {
             return $this->showForm($request, $dossier, $errors);
+        }
+
+        if ($newGuest && !isset($newGuest['id'])) {
+            [$guestUser, $created] = DossierWorkflow::findOrCreateUser($context, $newGuest['givenName'], $newGuest['familyName'], $newGuest['email'], false);
+            if ($dossier->isEditor($guestUser->getId())) {
+                $errors['guestEditors'] = __('plugins.generic.dossierManager.form.guestIsEditor');
+                return $this->showForm($request, $dossier, $errors);
+            }
+            $newGuest = ['id' => $guestUser->getId(), 'created' => $created];
+        }
+        if ($newGuest) {
+            $dossier->guestEditors[$newGuest['id']] ??= $old->guestEditors[$newGuest['id']] ?? $old->editors[$newGuest['id']] ?? Notifier::MODE_DEFAULT;
         }
 
         if (!$dossier->id) {
@@ -233,7 +282,29 @@ class DossiersHandler extends Handler
             DossierLog::event($dossier->id, 'created', $user, null, $dossier->getLocalizedTitle());
         } else {
             DossierRepository::saveDossier($dossier);
+        }
+        if (!empty($newGuest['created'])) {
+            $guestUser = Repo::user()->get($newGuest['id'], true);
+            DossierLog::event($dossier->id, 'contributorCreated', $user, $guestUser->getFullName(), $guestUser->getEmail());
+        }
+        if ($old->id) {
             $this->logChanges($request, $old, $dossier);
+        } elseif ($dossier->guestEditors) {
+            DossierLog::event($dossier->id, 'guestEditorsChanged', $user, null, implode(', ', $this->userNames(array_keys($dossier->guestEditors))));
+        }
+
+        // New guest editors: the role, and the invitation if wanted
+        $added = array_diff(array_keys($dossier->guestEditors), array_keys($old->guestEditors));
+        $invited = 0;
+        foreach ($added as $guestId) {
+            Roles::addToGuestGroup($this->plugin, $context->getId(), $guestId);
+            $guest = Repo::user()->get($guestId, true);
+            if ($guest && !$guest->getDisabled() && $request->getUserVar('inviteGuests')) {
+                $invited += DossierWorkflow::inviteGuestEditor($this->plugin, $context, $dossier, $guest, $user) ? 1 : 0;
+            }
+        }
+        if ($invited) {
+            $this->flash($request, __('plugins.generic.dossierManager.guest.invited', ['number' => $invited]));
         }
         $this->flash($request, __('common.changesSaved'));
         $request->redirect(null, self::PAGE, 'view', [$dossier->id]);
@@ -264,6 +335,11 @@ class DossiersHandler extends Handler
             DossierWorkflow::assignEditorsToSubmitted($this->plugin, $context, $new, $user);
             Notifier::notify($this->plugin, $context, $new, 'editorsChanged', ['names' => $names], $user);
         }
+        if (array_keys($old->guestEditors) != array_keys($new->guestEditors)) {
+            $names = implode(', ', $this->userNames(array_keys($new->guestEditors))) ?: '–';
+            DossierLog::event($new->id, 'guestEditorsChanged', $user, null, $names);
+            Notifier::notify($this->plugin, $context, $new, 'guestEditorsChanged', ['names' => $names], $user);
+        }
         $other = ['type', 'title', 'description', 'guidelinesUrl', 'notes', 'showContributors', 'reminderDays', 'overdueInterval', 'overdueMax'];
         foreach ($other as $field) {
             if ($old->$field != $new->$field) {
@@ -282,6 +358,9 @@ class DossiersHandler extends Handler
         $user = $request->getUser();
         $dossier = $this->requireDossier($request, (int) ($args[0] ?? 0), false);
         $contributions = DossierRepository::getContributions($dossier->id);
+        $canEdit = $this->canEdit($dossier, $request);
+        $isGuest = $dossier->isGuestEditor($user->getId());
+        $canOpenSubmissions = DossierAccess::canOpenSubmissions($this->isManager(), $isGuest);
         $rows = [];
         $today = date('Y-m-d');
         foreach ($contributions as $c) {
@@ -296,7 +375,7 @@ class DossiersHandler extends Handler
                 'contributor' => $contributor ? ['id' => $contributor->getId(), 'name' => $contributor->getFullName(), 'email' => $contributor->getEmail()] : null,
                 'status' => $status,
                 'stage' => $info && $info['progress'] === '' ? $this->stageName($info['stageId']) : null,
-                'submissionUrl' => $submission ? Repo::submission()->getWorkflowUrlByUserRoles($submission, $user->getId()) : null,
+                'submissionUrl' => $submission && $canOpenSubmissions ? Repo::submission()->getWorkflowUrlByUserRoles($submission, $user->getId()) : null,
                 'submissionTitle' => $submission ? (string) $submission->getCurrentPublication()?->getLocalizedFullTitle() : null,
                 'deadline' => $deadline,
                 'ownDeadline' => $c->deadline,
@@ -306,7 +385,7 @@ class DossiersHandler extends Handler
                 'paused' => $c->remindersPaused,
                 'note' => $c->note,
                 'declineReason' => $c->declineReason,
-                'link' => $c->linkKey ? DossierMailer::pageUrl($context, DossierHandler::PAGE, 'submit', [$c->linkKey]) : null,
+                'link' => $c->linkKey && $canEdit ? DossierMailer::pageUrl($context, DossierHandler::PAGE, 'submit', [$c->linkKey]) : null,
                 'dateInvited' => $c->dateInvited,
                 'canInvite' => DossierWorkflow::canInvite($c) && !$dossier->cancelled,
                 'canRemove' => !$c->submissionId && !$c->dateInvited,
@@ -322,13 +401,15 @@ class DossiersHandler extends Handler
             'issue' => $this->issueTitle($dossier->issueId),
             'section' => $section,
             'editors' => implode(', ', $this->editorNames($dossier)),
+            'guestEditors' => $this->userNames(array_keys($dossier->guestEditors), true),
+            'isGuest' => $isGuest,
             'guidelinesUrl' => DossierMailer::guidelinesUrl($context, $dossier),
             'rows' => $rows,
             'progress' => $this->progress($dossier, $contributions),
-            'canEdit' => $this->canEdit($dossier, $request),
+            'canEdit' => $canEdit,
             'invitationBlocker' => DossierWorkflow::invitationBlocker($dossier),
             'uninvited' => count(array_filter($rows, fn ($r) => $r['canInvite'] && !$r['dateInvited'])),
-            'notifyMode' => $dossier->editors[$user->getId()] ?? null,
+            'notifyMode' => $dossier->getNotifiedEditors()[$user->getId()] ?? null,
             'notifyModes' => Notifier::MODES,
             'history' => DossierLog::getHistory($dossier->id),
             'usersUrl' => $request->getRouter()->url($request, null, self::PAGE, 'users'),
@@ -356,6 +437,14 @@ class DossiersHandler extends Handler
                 DossierRepository::saveDossier($dossier);
                 DossierLog::event($dossier->id, 'reopened', $user);
                 Notifier::notify($this->plugin, $request->getContext(), $dossier, 'reopened', [], $user);
+                break;
+            case 'inviteGuest':
+                $guestId = (int) $request->getUserVar('userId');
+                $guest = $dossier->isGuestEditor($guestId) ? Repo::user()->get($guestId, true) : null;
+                if ($guest && !$guest->getDisabled()) {
+                    $sent = DossierWorkflow::inviteGuestEditor($this->plugin, $request->getContext(), $dossier, $guest, $user);
+                    $this->flash($request, __('plugins.generic.dossierManager.guest.invited', ['number' => $sent ? 1 : 0]));
+                }
                 break;
         }
         $request->redirect(null, self::PAGE, 'view', [$dossier->id]);
@@ -598,7 +687,8 @@ class DossiersHandler extends Handler
         $this->requirePost($request);
         $dossier = $this->requireDossier($request, (int) $request->getUserVar('dossierId'), false);
         $mode = (string) $request->getUserVar('mode');
-        if ($dossier->isEditor($request->getUser()->getId()) && in_array($mode, Notifier::MODES, true)) {
+        $userId = $request->getUser()->getId();
+        if (DossierAccess::canSetNotifyMode($dossier->isEditor($userId), $dossier->isGuestEditor($userId)) && in_array($mode, Notifier::MODES, true)) {
             DossierRepository::setNotifyMode($dossier->id, $request->getUser()->getId(), $mode);
             $this->flash($request, __('common.changesSaved'));
         }
@@ -692,7 +782,8 @@ class DossiersHandler extends Handler
     protected function requireDossier($request, int $dossierId, bool $forEditing): Dossier
     {
         $dossier = $dossierId ? DossierRepository::getDossier($dossierId, $request->getContext()->getId()) : null;
-        if (!$dossier) {
+        $userId = $request->getUser()->getId();
+        if (!$dossier || !DossierAccess::canView($this->canManage($request), $dossier->isEditor($userId), $dossier->isGuestEditor($userId))) {
             $this->flash($request, __('plugins.generic.dossierManager.notFound'), Notification::NOTIFICATION_TYPE_ERROR);
             $request->redirect(null, self::PAGE);
         }
@@ -794,13 +885,55 @@ class DossiersHandler extends Handler
 
     protected function editorNames(Dossier $dossier): array
     {
+        return $this->userNames(array_keys($dossier->editors));
+    }
+
+    /**
+     * @param int[] $userIds
+     * @param bool $withEmail "Name (email)"
+     * @return array userId => name
+     */
+    protected function userNames(array $userIds, bool $withEmail = false): array
+    {
         $names = [];
-        foreach (array_keys($dossier->editors) as $userId) {
+        foreach ($userIds as $userId) {
             if ($user = Repo::user()->get($userId, true)) {
-                $names[$userId] = $user->getFullName();
+                $names[$userId] = $user->getFullName() . ($withEmail ? ' (' . $user->getEmail() . ')' : '');
             }
         }
         return $names;
+    }
+
+    /**
+     * The new guest editor of the dossier form: ['id' => userId] for a user of the journal,
+     * ['givenName', 'familyName', 'email'] for a new person, or null if none was given.
+     */
+    protected function guestFromRequest($request, array &$errors): ?array
+    {
+        $userId = (int) $request->getUserVar('userId');
+        if ($userId) {
+            if (!Repo::user()->get($userId, true)) {
+                $errors['guestEditors'] = __('plugins.generic.dossierManager.contribution.userNotFound');
+                return null;
+            }
+            return ['id' => $userId];
+        }
+        $person = [
+            'givenName' => trim((string) $request->getUserVar('givenName')),
+            'familyName' => trim((string) $request->getUserVar('familyName')),
+            'email' => trim((string) $request->getUserVar('email')),
+        ];
+        if (implode('', $person) === '') {
+            return null;
+        }
+        if (!filter_var($person['email'], FILTER_VALIDATE_EMAIL) || $person['givenName'] === '' || $person['familyName'] === '') {
+            $errors['guestEditors'] = __('plugins.generic.dossierManager.contribution.newPersonInvalid');
+            return null;
+        }
+        if ($existing = Repo::user()->getByEmail($person['email'], true)) {
+            return ['id' => $existing->getId()];
+        }
+        return $person;
     }
 
     protected function stageName(int $stageId): string

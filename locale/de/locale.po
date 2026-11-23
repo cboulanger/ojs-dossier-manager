@@ -16,6 +16,12 @@ msgstr "Dossier-Herausgeber/in"
 msgid "plugins.generic.dossierManager.role.dossierEditor.abbrev"
 msgstr "DosHg"
 
+msgid "plugins.generic.dossierManager.role.guestEditor"
+msgstr "Gastherausgeber/in"
+
+msgid "plugins.generic.dossierManager.role.guestEditor.abbrev"
+msgstr "GastHg"
+
 msgid "plugins.generic.dossierManager.type.specialIssue"
 msgstr "Sonderheft"
 
@@ -117,6 +123,21 @@ msgstr "Noch keine Beiträge geplant."
 
 msgid "plugins.generic.dossierManager.readOnly"
 msgstr "Sie sind keine verantwortliche Herausgeberin / kein verantwortlicher Herausgeber dieses Dossiers und können es nur ansehen."
+
+msgid "plugins.generic.dossierManager.guestEditors"
+msgstr "Gastherausgeber/innen"
+
+msgid "plugins.generic.dossierManager.guest.badge"
+msgstr "Gastherausgeber/in"
+
+msgid "plugins.generic.dossierManager.guest.readOnly"
+msgstr "Sie sind Gastherausgeber/in dieses Dossiers: Sie können es verfolgen und Ihre Benachrichtigungen wählen. Änderungen nehmen die Verantwortlichen vor."
+
+msgid "plugins.generic.dossierManager.guest.resend"
+msgstr "Einladung erneut senden"
+
+msgid "plugins.generic.dossierManager.guest.invited"
+msgstr "Einladung an {$number} Gastherausgeber/in(nen) verschickt."
 
 msgid "plugins.generic.dossierManager.cancelDossier"
 msgstr "Dossier absagen"
@@ -225,6 +246,24 @@ msgstr "Zielausgabe, Zielrubrik und Frist werden benötigt, bevor Einladungen ve
 
 msgid "plugins.generic.dossierManager.form.editorsHint"
 msgstr "Zeitschriftenverwaltung und Mitglieder der Rolle „Dossier-Herausgeber/in“. Die Verantwortlichen erhalten die Benachrichtigungen zu diesem Dossier."
+
+msgid "plugins.generic.dossierManager.form.guestEditorsHint"
+msgstr "Gastherausgeber/innen sehen das Dossier unter „Meine Dossiers“, ohne es ändern zu können, und erhalten dieselben Benachrichtigungen wie die Verantwortlichen. Sie können das Dossier nicht ändern und niemanden einladen oder entfernen."
+
+msgid "plugins.generic.dossierManager.form.guestEditorsRemoveHint"
+msgstr "Entfernen Sie das Häkchen, um eine/n Gastherausgeber/in aus diesem Dossier zu entfernen. Die Person wird nicht benachrichtigt."
+
+msgid "plugins.generic.dossierManager.form.addGuestEditor"
+msgstr "Gastherausgeber/in hinzufügen"
+
+msgid "plugins.generic.dossierManager.form.newGuestHint"
+msgstr "Dadurch wird ein Konto mit der Rolle „Gastherausgeber/in“ angelegt. Gibt es bereits ein Konto mit dieser E-Mail-Adresse, wird es verwendet."
+
+msgid "plugins.generic.dossierManager.form.inviteGuests"
+msgstr "Neuen Gastherausgeber/innen eine Einladung schicken"
+
+msgid "plugins.generic.dossierManager.form.guestIsEditor"
+msgstr "Diese Person ist verantwortlich für das Dossier und kann nicht zugleich Gastherausgeber/in sein."
 
 msgid "plugins.generic.dossierManager.form.guidelinesHint"
 msgstr "Leer lassen, um die Einreichungshinweise der Zeitschrift zu verwenden."
@@ -394,6 +433,12 @@ msgstr "Die E-Mails des Plugins sind in der Konfiguration abgeschaltet. Die Einl
 msgid "plugins.generic.dossierManager.email.declineLink"
 msgstr "Falls Sie doch keinen Beitrag liefern können, teilen Sie uns dies bitte mit:"
 
+msgid "plugins.generic.dossierManager.email.guestAccountHint"
+msgstr "Falls Sie für Ihr Konto ({$email}) noch kein Passwort festgelegt haben, können Sie dies hier tun:"
+
+msgid "plugins.generic.dossierManager.email.setPassword"
+msgstr "Passwort festlegen"
+
 msgid "plugins.generic.dossierManager.email.inProgress"
 msgstr "Sie haben Ihre Einreichung bereits begonnen; bitte schließen Sie sie ab."
 
@@ -556,6 +601,9 @@ msgstr "Benachrichtigung"
 msgid "plugins.generic.dossierManager.history.email.digest"
 msgstr "Tägliche Zusammenfassung"
 
+msgid "plugins.generic.dossierManager.history.email.guestInvitation"
+msgstr "Einladung als Gastherausgeber/in"
+
 msgid "plugins.generic.dossierManager.history.event.created"
 msgstr "Dossier angelegt: {$subject}"
 
@@ -643,6 +691,9 @@ msgstr "Ziel geändert: {$subject}"
 msgid "plugins.generic.dossierManager.history.event.editorsChanged"
 msgstr "Verantwortliche: {$subject}"
 
+msgid "plugins.generic.dossierManager.history.event.guestEditorsChanged"
+msgstr "Gastherausgeber/innen: {$subject}"
+
 msgid "plugins.generic.dossierManager.history.event.editorsAssigned"
 msgstr "Der Einreichung als Redaktion zugewiesen: {$recipientName} ({$subject})"
 
@@ -675,6 +726,9 @@ msgstr "{$actor} hat das Ziel auf {$target} geändert. Verschobene Einreichungen
 
 msgid "plugins.generic.dossierManager.notify.editorsChanged"
 msgstr "{$actor} hat die Verantwortlichen geändert: {$names}"
+
+msgid "plugins.generic.dossierManager.notify.guestEditorsChanged"
+msgstr "{$actor} hat die Gastherausgeber/innen geändert: {$names}"
 
 msgid "plugins.generic.dossierManager.notify.edited"
 msgstr "{$actor} hat das Dossier bearbeitet."

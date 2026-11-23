@@ -31,6 +31,7 @@
 .dmActions { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; padding-top: .5rem; }
 
 .dmStatus { display: inline-block; padding: .1rem .5rem; border-radius: 1rem; font-size: .8rem; background: #e7e7e7; white-space: nowrap; }
+.dmBadge { display: inline-block; margin-left: .4rem; padding: 0 .4rem; border: 1px solid #bbb; border-radius: .25rem; font-size: .75rem; color: #555; }
 .dmStatus--invited, .dmStatus--collecting, .dmStatus--inProgress { background: #fff1cc; }
 .dmStatus--submitted, .dmStatus--complete { background: #d8f0dc; }
 .dmStatus--published { background: #c7e5f5; }
