@@ -415,6 +415,12 @@ msgstr "Empfänger/innen"
 msgid "plugins.generic.dossierManager.invite.again"
 msgstr "bereits eingeladen"
 
+msgid "plugins.generic.dossierManager.invite.language"
+msgstr "Sprache der E-Mail"
+
+msgid "plugins.generic.dossierManager.invite.languageHint"
+msgstr "Beim Wechsel der Sprache wird die Vorlage neu geladen; Änderungen am Text gehen verloren."
+
 msgid "plugins.generic.dossierManager.invite.variablesHint"
 msgstr "Wird beim Versand für jede Person eingesetzt:"
 

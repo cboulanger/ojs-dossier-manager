@@ -57,16 +57,27 @@ class DossierMailer
         if (!$date) {
             return '';
         }
-        $format = PKPString::convertStrftimeFormat($context->getLocalizedDateFormatLong($locale ?? $context->getPrimaryLocale()));
-        return date($format, strtotime($date));
+        $locale ??= $context->getPrimaryLocale();
+        $format = PKPString::convertStrftimeFormat($context->getLocalizedDateFormatLong($locale));
+        // Translated month and day names (date() only knows English), as OJS's date_format modifier does
+        return (new \Carbon\Carbon($date))->locale($locale)->translatedFormat($format);
+    }
+
+    /**
+     * The language of an email: the requested one if the journal supports it, otherwise its primary language.
+     */
+    public static function emailLocale($context, ?string $locale = null): string
+    {
+        return $locale && in_array($locale, $context->getSupportedLocales(), true) ? $locale : $context->getPrimaryLocale();
     }
 
     /**
      * Values for the template variables that are the same for all recipients.
+     * @param ?string $locale Language of the email (default: the journal's primary language)
      */
-    public static function getParams($context, Dossier $dossier, ?User $sender, array $extra = []): array
+    public static function getParams($context, Dossier $dossier, ?User $sender, array $extra = [], ?string $locale = null): array
     {
-        $locale = $context->getPrimaryLocale();
+        $locale = self::emailLocale($context, $locale);
         $issue = $dossier->issueId ? Repo::issue()->get($dossier->issueId) : null;
         $section = $dossier->sectionId ? Repo::section()->get($dossier->sectionId, $context->getId()) : null;
         return array_merge([
@@ -76,7 +87,7 @@ class DossierMailer
             'dossierTitle' => htmlspecialchars($dossier->getLocalizedTitle($locale)),
             'dossierDescription' => PKPString::stripUnsafeHtml($dossier->getLocalizedDescription($locale)),
             'issueTitle' => htmlspecialchars($issue ? $issue->getIssueIdentification([], $locale) : ''),
-            'sectionTitle' => htmlspecialchars($section ? (string) $section->getLocalizedTitle() : ''),
+            'sectionTitle' => htmlspecialchars($section ? (string) $section->getLocalizedTitle($locale) : ''),
             'dossierDeadline' => self::formatDate($context, $dossier->deadline, $locale),
             'contributionsList' => self::contributionsList($dossier),
             'guidelinesUrl' => htmlspecialchars(self::guidelinesUrl($context, $dossier)),
@@ -118,13 +129,15 @@ class DossierMailer
     /**
      * Subject and body of a template, with the common variables filled in and the late ones kept.
      * @param string $mailableClass One of self::MAILABLES
+     * @param ?string $locale Language of the email (default: the journal's primary language)
      * @return array [subject, body]
      */
-    public static function compose($context, string $mailableClass, Dossier $dossier, ?User $sender, array $extra = []): array
+    public static function compose($context, string $mailableClass, Dossier $dossier, ?User $sender, array $extra = [],
+            ?string $locale = null): array
     {
-        $locale = $context->getPrimaryLocale();
+        $locale = self::emailLocale($context, $locale);
         $template = Repo::emailTemplate()->getByKey($context->getId(), $mailableClass::getEmailTemplateKey());
-        $params = self::getParams($context, $dossier, $sender, $extra);
+        $params = self::getParams($context, $dossier, $sender, $extra, $locale);
         foreach (self::LATE_VARIABLES as $late) {
             $params[$late] ??= '{$' . $late . '}';
         }
@@ -136,20 +149,22 @@ class DossierMailer
 
     /**
      * Values of the late variables for a contribution's contributor.
+     * @param ?string $locale Language of the email (default: the journal's primary language)
      */
-    public static function lateParams($context, Dossier $dossier, ?Contribution $c, User $recipient): array
+    public static function lateParams($context, Dossier $dossier, ?Contribution $c, User $recipient, ?string $locale = null): array
     {
+        $locale = self::emailLocale($context, $locale);
         $params = ['recipientName' => htmlspecialchars($recipient->getFullName())];
         if ($c) {
             $declineUrl = $c->linkKey ? self::pageUrl($context, DossierHandler::PAGE, 'decline', [$c->linkKey]) : '';
             $allowDecline = (bool) Settings::get($context->getId(), Settings::ALLOW_DECLINE) && $declineUrl;
             $params += [
                 'workingTitle' => htmlspecialchars($c->workingTitle),
-                'deadline' => self::formatDate($context, $c->getEffectiveDeadline($dossier)),
+                'deadline' => self::formatDate($context, $c->getEffectiveDeadline($dossier), $locale),
                 'submissionUrl' => $c->linkKey ? self::pageUrl($context, DossierHandler::PAGE, 'submit', [$c->linkKey]) : '',
                 'declineUrl' => $allowDecline ? $declineUrl : '',
                 'declineLink' => $allowDecline
-                    ? '<p>' . htmlspecialchars(__('plugins.generic.dossierManager.email.declineLink', [], $context->getPrimaryLocale()))
+                    ? '<p>' . htmlspecialchars(__('plugins.generic.dossierManager.email.declineLink', [], $locale))
                         . '<br /><a href="' . $declineUrl . '">' . $declineUrl . '</a></p>'
                     : '',
             ];
@@ -160,12 +175,13 @@ class DossierMailer
     /**
      * Send an email to one person and record it in the dossier's history.
      * @param ?User $sender null: automatic email from the journal contact
+     * @param ?string $locale Language of the email (default: the journal's primary language)
      * @return bool Whether it was sent (false: emails are switched off)
      */
     public static function send($context, string $mailableClass, int $logType, Dossier $dossier, ?Contribution $c,
-            User $recipient, ?User $sender, string $subject, string $body): bool
+            User $recipient, ?User $sender, string $subject, string $body, ?string $locale = null): bool
     {
-        $late = self::lateParams($context, $dossier, $c, $recipient);
+        $late = self::lateParams($context, $dossier, $c, $recipient, $locale);
         // Cleaning the edited HTML URL-encodes the braces of placeholders in links (href="%7B$submissionUrl%7D")
         $body = preg_replace('/%7B\$([A-Za-z]+)%7D/i', '{\$$1}', $body);
         $subject = Mail::compileParams($subject, $late);

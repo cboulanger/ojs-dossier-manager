@@ -107,9 +107,11 @@ class DossierWorkflow
     /**
      * Send the invitation (edited once) to contributors.
      * @param Contribution[] $contributions
+     * @param ?string $locale Language of the email (default: the journal's primary language)
      * @return int Number of invitations sent or recorded
      */
-    public static function invite($plugin, $context, Dossier $dossier, array $contributions, string $subject, string $body, User $sender): int
+    public static function invite($plugin, $context, Dossier $dossier, array $contributions, string $subject, string $body, User $sender,
+            ?string $locale = null): int
     {
         $count = 0;
         foreach ($contributions as $c) {
@@ -126,7 +128,7 @@ class DossierWorkflow
             }
             $c->dateInvited = Core::getCurrentDate();
             DossierRepository::saveContribution($c);
-            DossierMailer::send($context, DmInvitation::class, DossierLog::EMAIL_INVITATION, $dossier, $c, $user, $sender, $subject, $body);
+            DossierMailer::send($context, DmInvitation::class, DossierLog::EMAIL_INVITATION, $dossier, $c, $user, $sender, $subject, $body, $locale);
             DossierLog::event($dossier->id, 'invited', $sender, $user->getFullName(), $c->workingTitle);
             $count++;
         }

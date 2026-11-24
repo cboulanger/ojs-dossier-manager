@@ -35,6 +35,7 @@ use APP\plugins\generic\dossierManager\classes\Settings;
 use APP\plugins\generic\dossierManager\mailables\DmInvitation;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
+use PKP\facades\Locale;
 use PKP\notification\Notification;
 use PKP\security\authorization\ContextAccessPolicy;
 use PKP\security\Role;
@@ -649,9 +650,14 @@ class DossiersHandler extends Handler
             $request->redirect(null, self::PAGE, 'view', [$dossier->id]);
         }
         DossierMailer::ensureTemplates($this->plugin, $context->getId());
-        [$subject, $body] = DossierMailer::compose($context, DmInvitation::class, $dossier, $request->getUser());
+        // The template's language: chosen in the form, otherwise the language of the interface
+        $locale = DossierMailer::emailLocale($context, (string) $request->getUserVar('locale') ?: Locale::getLocale());
+        [$subject, $body] = DossierMailer::compose($context, DmInvitation::class, $dossier, $request->getUser(), [], $locale);
         return $this->display($request, 'compose.tpl', 'plugins.generic.dossierManager.invite.title', [
             'dossier' => $dossier,
+            'emailLocale' => $locale,
+            'emailLocales' => $context->getSupportedLocaleNames(),
+            'onlyContributionId' => $only ?: null,
             'dossierTitle' => $dossier->getLocalizedTitle(),
             'recipients' => $recipients,
             'subject' => $subject,
@@ -680,7 +686,8 @@ class DossiersHandler extends Handler
             $this->flash($request, __('plugins.generic.dossierManager.invite.emptyEmail'), Notification::NOTIFICATION_TYPE_ERROR);
             $request->redirect(null, self::PAGE, 'compose', [$dossier->id]);
         }
-        $count = DossierWorkflow::invite($this->plugin, $context, $dossier, $contributions, $subject, $body, $request->getUser());
+        $locale = DossierMailer::emailLocale($context, (string) $request->getUserVar('locale'));
+        $count = DossierWorkflow::invite($this->plugin, $context, $dossier, $contributions, $subject, $body, $request->getUser(), $locale);
         $this->flash($request, __('plugins.generic.dossierManager.invite.sent', ['number' => $count]));
         $request->redirect(null, self::PAGE, 'view', [$dossier->id]);
     }

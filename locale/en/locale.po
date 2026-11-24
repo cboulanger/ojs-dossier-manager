@@ -415,6 +415,12 @@ msgstr "Recipients"
 msgid "plugins.generic.dossierManager.invite.again"
 msgstr "invited before"
 
+msgid "plugins.generic.dossierManager.invite.language"
+msgstr "Language of the email"
+
+msgid "plugins.generic.dossierManager.invite.languageHint"
+msgstr "Switching the language reloads the template; changes to the text are lost."
+
 msgid "plugins.generic.dossierManager.invite.variablesHint"
 msgstr "Filled in for each recipient when the email is sent:"
 

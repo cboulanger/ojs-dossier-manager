@@ -13,6 +13,7 @@
 .dmToolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: 1.25rem; }
 .dmInline { display: inline; margin: 0; }
 .dmHint { color: #555; font-size: .875rem; }
+.dmLabel { display: block; font-weight: 600; margin-bottom: .25rem; }
 .dmWarning { color: #b00020; }
 .dmError { color: #b00020; font-size: .875rem; margin-top: .25rem; }
 .dmMuted td { opacity: .6; }

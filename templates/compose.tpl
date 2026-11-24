@@ -17,6 +17,7 @@
 	<form method="post" action="{url page=$dmPage op="sendInvitations"}" class="dmForm">
 		{csrf}
 		<input type="hidden" name="dossierId" value="{$dossier->id|escape}" />
+		<input type="hidden" name="locale" value="{$emailLocale|escape}" />
 		<fieldset class="dmFieldset">
 			<legend>{translate key="plugins.generic.dossierManager.invite.recipients"}</legend>
 			{foreach from=$recipients item=recipient}
@@ -27,6 +28,22 @@
 				</label>
 			{/foreach}
 		</fieldset>
+		{if $emailLocales|@count > 1}
+			<div class="dmField dmLanguage">
+				<span class="dmLabel">{translate key="plugins.generic.dossierManager.invite.language"}</span>
+				{foreach from=$emailLocales key=localeKey item=localeName name=locales}
+					{if $localeKey === $emailLocale}
+						<strong aria-current="true">{$localeName|escape}</strong>
+					{elseif $onlyContributionId}
+						<a href="{url page=$dmPage op="compose" path=$dossier->id locale=$localeKey contributionId=$onlyContributionId}" class="dmLanguageLink">{$localeName|escape}</a>
+					{else}
+						<a href="{url page=$dmPage op="compose" path=$dossier->id locale=$localeKey}" class="dmLanguageLink">{$localeName|escape}</a>
+					{/if}
+					{if !$smarty.foreach.locales.last} | {/if}
+				{/foreach}
+				<p class="dmHint">{translate key="plugins.generic.dossierManager.invite.languageHint"}</p>
+			</div>
+		{/if}
 		<div class="dmField">
 			<label for="dmSubject">{translate key="email.subject"}</label>
 			<input type="text" id="dmSubject" name="subject" value="{$subject|escape}" />
