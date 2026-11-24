@@ -145,6 +145,15 @@ msgstr "Dossier absagen"
 msgid "plugins.generic.dossierManager.cancelConfirm"
 msgstr "Dieses Dossier absagen? Die Einreichungslinks funktionieren dann nicht mehr, und es werden keine Erinnerungen verschickt. Sie können es später wieder öffnen."
 
+msgid "plugins.generic.dossierManager.deleteDossier"
+msgstr "Dossier löschen"
+
+msgid "plugins.generic.dossierManager.deleteConfirm"
+msgstr "Dieses Dossier endgültig löschen? Die geplanten Beiträge, Einreichungslinks und der Verlauf werden entfernt. Dies kann nicht rückgängig gemacht werden. Bereits eingereichte Beiträge bleiben in der Zeitschrift."
+
+msgid "plugins.generic.dossierManager.deleted"
+msgstr "Das Dossier {$title} wurde gelöscht."
+
 msgid "plugins.generic.dossierManager.reopen"
 msgstr "Dossier wieder öffnen"
 

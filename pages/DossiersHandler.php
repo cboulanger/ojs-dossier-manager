@@ -418,7 +418,7 @@ class DossiersHandler extends Handler
     }
 
     /**
-     * Cancel or reopen a dossier.
+     * Cancel, reopen or delete a dossier.
      */
     public function dossierAction($args, $request)
     {
@@ -437,6 +437,11 @@ class DossiersHandler extends Handler
                 DossierRepository::saveDossier($dossier);
                 DossierLog::event($dossier->id, 'reopened', $user);
                 Notifier::notify($this->plugin, $request->getContext(), $dossier, 'reopened', [], $user);
+                break;
+            case 'delete':
+                DossierRepository::deleteDossier($dossier->id);
+                $this->flash($request, __('plugins.generic.dossierManager.deleted', ['title' => $dossier->getLocalizedTitle()]));
+                $request->redirect(null, self::PAGE);
                 break;
             case 'inviteGuest':
                 $guestId = (int) $request->getUserVar('userId');

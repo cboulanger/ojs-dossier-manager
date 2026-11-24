@@ -145,6 +145,15 @@ msgstr "Cancel dossier"
 msgid "plugins.generic.dossierManager.cancelConfirm"
 msgstr "Cancel this dossier? Submission links stop working and no reminders are sent. You can reopen it later."
 
+msgid "plugins.generic.dossierManager.deleteDossier"
+msgstr "Delete dossier"
+
+msgid "plugins.generic.dossierManager.deleteConfirm"
+msgstr "Delete this dossier permanently? Its planned contributions, submission links and history are removed. This cannot be undone. Submissions already made for it stay in the journal."
+
+msgid "plugins.generic.dossierManager.deleted"
+msgstr "The dossier {$title} was deleted."
+
 msgid "plugins.generic.dossierManager.reopen"
 msgstr "Reopen dossier"
 
