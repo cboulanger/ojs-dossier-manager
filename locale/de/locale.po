@@ -248,7 +248,7 @@ msgid "plugins.generic.dossierManager.form.editorsOnly"
 msgstr "nur Redaktion"
 
 msgid "plugins.generic.dossierManager.form.descriptionHint"
-msgstr "Die Beschreibung steht in der Einladungs-E-Mail: worum es im Dossier geht, Umfang und Länge der Beiträge. Einfacher Text; Leerzeilen trennen Absätze."
+msgstr "Die Beschreibung steht in der Einladungs-E-Mail: worum es im Dossier geht, Umfang und Länge der Beiträge."
 
 msgid "plugins.generic.dossierManager.form.targetHint"
 msgstr "Zielausgabe, Zielrubrik und Frist werden benötigt, bevor Einladungen verschickt werden können. Eingereichte Beiträge werden der Zielausgabe und -rubrik zugeordnet; veröffentlicht werden sie erst, wenn die Redaktion sie einplant."

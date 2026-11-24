@@ -41,6 +41,12 @@
 .dmDetails dt { font-weight: 600; }
 .dmDetails dd { margin: 0; }
 .dmDescription, .dmNotes { margin-bottom: 1rem; max-width: 50rem; }
+/* The OJS backend resets list styles; restore them for the HTML description */
+.dmDescription ul, .dmDescription ol { margin: .5rem 0; padding-left: 1.5rem; }
+.dmDescription ul { list-style: disc; }
+.dmDescription ol { list-style: decimal; }
+.dmDescription li { display: list-item; margin: .15rem 0; }
+.dmDescription p { margin: 0 0 .75rem; }
 
 .dmForm .dmField { margin-bottom: 1rem; }
 .dmForm label { display: block; font-weight: 600; margin-bottom: .25rem; }

@@ -248,7 +248,7 @@ msgid "plugins.generic.dossierManager.form.editorsOnly"
 msgstr "editors only"
 
 msgid "plugins.generic.dossierManager.form.descriptionHint"
-msgstr "The description is part of the invitation email: what the dossier is about, the intended scope and length of the contributions. Plain text; empty lines separate paragraphs."
+msgstr "The description is part of the invitation email: what the dossier is about, the intended scope and length of the contributions."
 
 msgid "plugins.generic.dossierManager.form.targetHint"
 msgstr "The target issue, section and deadline are needed before invitations can be sent. Submitted contributions are assigned to the target issue and section; they are published only when the editors schedule them."
