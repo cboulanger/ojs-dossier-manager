@@ -124,6 +124,23 @@ class DossierRepository
         return $dossier->id;
     }
 
+    /**
+     * Delete a dossier with its contributions, editors, queued digest entries
+     * and history. Submissions made for it stay in the journal.
+     */
+    public static function deleteDossier(int $dossierId): void
+    {
+        DB::transaction(function () use ($dossierId) {
+            DB::table('dm_contributions')->where('dossier_id', $dossierId)->delete();
+            DB::table('dm_dossier_editors')->where('dossier_id', $dossierId)->delete();
+            DB::table('dm_digest')->where('dossier_id', $dossierId)->delete();
+            // Settings and recipients of the log entries go by cascading foreign keys
+            DB::table('event_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossierId)->delete();
+            DB::table('email_log')->where('assoc_type', DossierLog::ASSOC_TYPE)->where('assoc_id', $dossierId)->delete();
+            DB::table('dm_dossiers')->where('dossier_id', $dossierId)->delete();
+        });
+    }
+
     public static function setNotifyMode(int $dossierId, int $userId, string $mode): void
     {
         DB::table('dm_dossier_editors')->where('dossier_id', $dossierId)->where('user_id', $userId)->update(['notify_mode' => $mode]);

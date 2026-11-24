@@ -145,6 +145,15 @@ msgstr "Cancel dossier"
 msgid "plugins.generic.dossierManager.cancelConfirm"
 msgstr "Cancel this dossier? Submission links stop working and no reminders are sent. You can reopen it later."
 
+msgid "plugins.generic.dossierManager.deleteDossier"
+msgstr "Delete dossier"
+
+msgid "plugins.generic.dossierManager.deleteConfirm"
+msgstr "Delete this dossier permanently? Its planned contributions, submission links and history are removed. This cannot be undone. Submissions already made for it stay in the journal."
+
+msgid "plugins.generic.dossierManager.deleted"
+msgstr "The dossier {$title} was deleted."
+
 msgid "plugins.generic.dossierManager.reopen"
 msgstr "Reopen dossier"
 
@@ -239,7 +248,7 @@ msgid "plugins.generic.dossierManager.form.editorsOnly"
 msgstr "editors only"
 
 msgid "plugins.generic.dossierManager.form.descriptionHint"
-msgstr "The description is part of the invitation email: what the dossier is about, the intended scope and length of the contributions. Plain text; empty lines separate paragraphs."
+msgstr "The description is part of the invitation email: what the dossier is about, the intended scope and length of the contributions."
 
 msgid "plugins.generic.dossierManager.form.targetHint"
 msgstr "The target issue, section and deadline are needed before invitations can be sent. Submitted contributions are assigned to the target issue and section; they are published only when the editors schedule them."

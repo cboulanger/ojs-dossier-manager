@@ -36,7 +36,7 @@
 		{foreach from=$formLocales key=locale item=localeName}
 			<div class="dmField">
 				<label for="dmDescription-{$locale|escape}">{translate key="plugins.generic.dossierManager.dossierDescription"} ({$localeName|escape})</label>
-				<textarea id="dmDescription-{$locale|escape}" name="description[{$locale|escape}]" rows="6">{$dossier->description[$locale]|default:''|escape}</textarea>
+				<textarea id="dmDescription-{$locale|escape}" name="description[{$locale|escape}]" rows="12" class="dmRich">{$dossier->description[$locale]|default:''|escape}</textarea>
 			</div>
 		{/foreach}
 		<p class="dmHint">{translate key="plugins.generic.dossierManager.form.descriptionHint"}</p>

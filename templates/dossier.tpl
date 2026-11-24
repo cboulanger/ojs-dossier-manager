@@ -30,6 +30,7 @@
 				{else}
 					<button type="submit" name="action" value="cancel" class="pkp_button pkp_button_offset">{translate key="plugins.generic.dossierManager.cancelDossier"}</button>
 				{/if}
+				<button type="submit" name="action" value="delete" class="pkp_button pkp_button_offset" data-dm-confirm="{translate key="plugins.generic.dossierManager.deleteConfirm"}">{translate key="plugins.generic.dossierManager.deleteDossier"}</button>
 			</form>
 		{elseif $isGuest}
 			<span class="dmHint">{translate key="plugins.generic.dossierManager.guest.readOnly"}</span>
