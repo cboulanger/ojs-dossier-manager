@@ -37,6 +37,9 @@ msgstr "Forum"
 msgid "plugins.generic.dossierManager.menu.dossiers"
 msgstr "Dossiers"
 
+msgid "plugins.generic.dossierManager.menu.plannedDossiers"
+msgstr "Geplante Dossiers"
+
 msgid "plugins.generic.dossierManager.menu.myDossiers"
 msgstr "Meine Dossiers"
 
@@ -46,20 +49,11 @@ msgstr "Neues Dossier anlegen"
 msgid "plugins.generic.dossierManager.menu.settings"
 msgstr "Konfiguration"
 
-msgid "plugins.generic.dossierManager.allDossiers"
-msgstr "Alle Dossiers"
-
-msgid "plugins.generic.dossierManager.showAll"
-msgstr "Alle Dossiers der Zeitschrift anzeigen"
-
-msgid "plugins.generic.dossierManager.showMine"
-msgstr "Nur meine Dossiers anzeigen"
-
 msgid "plugins.generic.dossierManager.noDossiers"
 msgstr "Es gibt noch keine Dossiers."
 
 msgid "plugins.generic.dossierManager.noOwnDossiers"
-msgstr "Sie sind für kein Dossier verantwortlich."
+msgstr "Sie sind bei keinem Dossier Herausgeber/in oder Gastherausgeber/in."
 
 msgid "plugins.generic.dossierManager.dossier"
 msgstr "Dossier"
@@ -494,7 +488,7 @@ msgid "plugins.generic.dossierManager.settings.emailsHint"
 msgstr "Die Texte der E-Mails können unter Einstellungen › E-Mails bearbeitet werden."
 
 msgid "plugins.generic.dossierManager.myContributions.title"
-msgstr "Meine Beiträge"
+msgstr "Meine Dossier-Beiträge"
 
 msgid "plugins.generic.dossierManager.myContributions.empty"
 msgstr "Sie haben keine geplanten Beiträge."

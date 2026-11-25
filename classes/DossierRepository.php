@@ -52,6 +52,17 @@ class DossierRepository
     }
 
     /**
+     * Number of dossiers the user is a responsible or guest editor of that are
+     * still in progress (neither published nor cancelled).
+     * @param Dossier[] $dossiers The user's dossiers (getDossiers with the user ID)
+     */
+    public static function countActiveDossiers(array $dossiers): int
+    {
+        return count(array_filter($dossiers, fn (Dossier $d) => !$d->cancelled
+            && !in_array(self::dossierStatus($d), [DossierStatus::PUBLISHED, DossierStatus::CANCELLED], true)));
+    }
+
+    /**
      * Is the user a guest editor of any dossier of the journal?
      */
     public static function isGuestEditorInContext(int $contextId, int $userId): bool

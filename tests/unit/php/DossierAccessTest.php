@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 
 class DossierAccessTest extends TestCase
 {
-    public function testGuestEditorsOnlyReachTheReadOnlyOperations(): void
+    public function testJournalAndGuestEditorsOnlyReachTheReadOnlyOperations(): void
     {
-        foreach (['index', 'view', 'notifyMode'] as $op) {
+        foreach (['index', 'mine', 'view', 'notifyMode'] as $op) {
             $this->assertTrue(DossierAccess::mayCallOp(false, true, $op), $op);
         }
         foreach (['create', 'edit', 'save', 'dossierAction', 'addContribution', 'updateContribution',
@@ -23,6 +23,14 @@ class DossierAccessTest extends TestCase
         $this->assertFalse(DossierAccess::mayCallOp(false, false, 'view'));
     }
 
+    public function testJournalEditorsOnlyReadAllDossiers(): void
+    {
+        $this->assertTrue(DossierAccess::mayCallOp(false, true, 'index'));
+        $this->assertTrue(DossierAccess::mayCallOp(false, true, 'view'));
+        $this->assertFalse(DossierAccess::mayCallOp(false, true, 'create'));
+        $this->assertFalse(DossierAccess::mayCallOp(false, true, 'settings'));
+    }
+
     public function testManagersAndDossierEditorsReachEverything(): void
     {
         $this->assertTrue(DossierAccess::mayCallOp(true, false, 'save'));
@@ -31,7 +39,7 @@ class DossierAccessTest extends TestCase
 
     public function testView(): void
     {
-        $this->assertTrue(DossierAccess::canView(true, false, false), 'manager or dossier editor');
+        $this->assertTrue(DossierAccess::canView(true, false, false), 'journal editor or dossier editor');
         $this->assertTrue(DossierAccess::canView(false, false, true), 'guest editor');
         $this->assertTrue(DossierAccess::canView(false, true, false), 'responsible editor');
         $this->assertFalse(DossierAccess::canView(false, false, false), 'guest editor of another dossier');

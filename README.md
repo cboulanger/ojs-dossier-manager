@@ -15,12 +15,12 @@ The specification is in [issue #1](https://github.com/cboulanger/ojs-dossier-man
 - **Editor assignment**: when a contribution is submitted, the responsible editors are assigned to it as editors (in their Dossier editor, section editor or manager role), so they can open it in the editorial workflow. Editors who become responsible later are assigned to the contributions already submitted. OJS's own assignment of the section's editors happens as usual.
 - **Target issue and section**: when the submission is completed, it is put into the dossier's section (also an editors-only section) and assigned to the target issue. It is published only when the editors schedule it. If the target changes, unscheduled submissions move with it.
 - **Reminders** (daily task): N days before the deadline (default 7), then every M days after it (default 7), at most a maximum number of times (default 4). Then the editors are notified. Reminders can be paused per contribution; a changed deadline starts them again.
-- **Guest editors** follow a dossier without running it. The responsible editors add them in the dossier form, from the journal's users or as a new person (name and email). They get the role "Guest editor" and an invitation email with a link to the dossier's page. Under *Dossiers › My dossiers* they see their dossiers read-only (including the contributors and the internal notes) and receive the same notifications as the responsible editors. They can't change the dossier, invite or remove anyone, or open the submissions.
+- **Guest editors** follow a dossier without running it. The responsible editors add them in the dossier form, from the journal's users or as a new person (name and email). They get the role "Guest editor" and an invitation email with a link to the dossier's page. Under *My dossiers* they see their dossiers read-only (including the contributors and the internal notes) and receive the same notifications as the responsible editors. They can't change the dossier, invite or remove anyone, or open the submissions.
 - **Notifications** to the responsible and guest editors: submissions, declines and exhausted reminders immediately; other changes in a daily summary. Each of them can change this per dossier.
 - **Declining**: contributors can decline with a link (can be switched off); editors can record a decline.
 - **Status tracking**: the dossier status (planning, invited, deadline passed, complete, published, cancelled) and each contribution's status, including the editorial stage of its submission.
 - **History** of every step and every email.
-- **Backend menu** "Dossiers" (*My dossiers*, *Create new dossier*, *Configuration*; guest editors only see *My dossiers*) and, for contributors, "My contributions".
+- **Backend menu** "Dossiers" for all journal editors (managers, section editors, dossier editors): *Planned dossiers* lists all dossiers of the journal, so that the planning is transparent to the editorial board; *Create new dossier* (managers and dossier editors) and *Configuration* (managers). Section editors without the Dossier editor role see the dossiers read-only. "My dossiers (x)" for responsible and guest editors (x = dossiers in progress); and, for contributors, "My dossier contributions".
 - **Roles**: "Dossier editor" (base role Section editor) for people who run dossiers: they can create dossiers and run the ones they are responsible for. "Guest editor" (base role Reader, so no editorial rights): what a guest editor sees is decided per dossier.
 - **Editable emails** under *Settings › Emails*, in English and German.
 
@@ -64,7 +64,7 @@ Releases are built by GitHub Actions from an annotated tag (`v<version>`) and ca
 | `classes/DossierMailer.php`, `Notifier.php`, `mailables/` | Emails and notifications |
 | `classes/DossierReminder.php` | Daily task |
 | `classes/DossierLog.php` | History (OJS event and email logs) |
-| `pages/` | Backend pages, the public link pages, "My contributions" |
+| `pages/` | Backend pages, the public link pages, "My dossier contributions" |
 
 ## License
 

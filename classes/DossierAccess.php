@@ -12,6 +12,7 @@
  *  - Managers: everything.
  *  - Dossier editors (the plugin's role): create dossiers, run the ones they
  *    are responsible for, view all others.
+ *  - Journal editors (section editors): view all dossiers, read-only.
  *  - Guest editors: view the dossiers they are a guest editor of and choose
  *    their notifications. Nothing else, unless they also have one of the roles above.
  */
@@ -20,25 +21,26 @@ namespace APP\plugins\generic\dossierManager\classes;
 
 class DossierAccess
 {
-    /** Operations of DossiersHandler open to guest editors */
-    const GUEST_OPS = ['index', 'view', 'notifyMode'];
+    /** Read-only operations of DossiersHandler, open to journal editors and guest editors */
+    const READ_OPS = ['index', 'mine', 'view', 'notifyMode'];
 
     /**
      * May the user call an operation of the backend pages at all?
      * @param bool $canManage Manager or Dossier editor
-     * @param bool $isGuestAnywhere Guest editor of a dossier of the journal
+     * @param bool $canRead Journal editor, or guest editor of a dossier of the journal
      */
-    public static function mayCallOp(bool $canManage, bool $isGuestAnywhere, string $op): bool
+    public static function mayCallOp(bool $canManage, bool $canRead, string $op): bool
     {
-        return $canManage || ($isGuestAnywhere && in_array($op, self::GUEST_OPS, true));
+        return $canManage || ($canRead && in_array($op, self::READ_OPS, true));
     }
 
     /**
      * May the user view a dossier?
+     * @param bool $canSeeAll Journal editor or Dossier editor (Roles::canSeeAll)
      */
-    public static function canView(bool $canManage, bool $isResponsible, bool $isGuest): bool
+    public static function canView(bool $canSeeAll, bool $isResponsible, bool $isGuest): bool
     {
-        return $canManage || $isResponsible || $isGuest;
+        return $canSeeAll || $isResponsible || $isGuest;
     }
 
     /**

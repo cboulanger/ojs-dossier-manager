@@ -3,25 +3,20 @@
  *
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * List of dossiers ("My dossiers", or all of the journal).
+ * List of dossiers: all of the journal ("Planned dossiers") or the user's ("My dossiers").
  *}
 {extends file="layouts/backend.tpl"}
 
 {block name="page"}
-<h1 class="app__pageHeading">{if $all}{translate key="plugins.generic.dossierManager.allDossiers"}{else}{$pageTitle|escape}{/if}</h1>
+<h1 class="app__pageHeading">{$pageTitle|escape}</h1>
 <div class="app__contentPanel dmPanel" v-pre>
 	{if $canManage}
 	<div class="dmToolbar">
 		<a class="pkp_button" href="{url page=$dmPage op="create"}">{translate key="plugins.generic.dossierManager.menu.create"}</a>
-		{if $all}
-			<a href="{url page=$dmPage}">{translate key="plugins.generic.dossierManager.showMine"}</a>
-		{else}
-			<a href="{url page=$dmPage params=["all" => 1]}">{translate key="plugins.generic.dossierManager.showAll"}</a>
-		{/if}
 	</div>
 	{/if}
 	{if !$rows}
-		<p>{if $all}{translate key="plugins.generic.dossierManager.noDossiers"}{else}{translate key="plugins.generic.dossierManager.noOwnDossiers"}{/if}</p>
+		<p>{if $mine}{translate key="plugins.generic.dossierManager.noOwnDossiers"}{else}{translate key="plugins.generic.dossierManager.noDossiers"}{/if}</p>
 	{else}
 		<table class="dmTable">
 			<thead>

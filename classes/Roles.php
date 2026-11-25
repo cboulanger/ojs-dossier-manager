@@ -10,6 +10,8 @@
  * @brief The plugin's user groups and who may use the backend pages.
  *
  *  - Journal managers (incl. journal editors) and site admins: everything.
+ *  - Section editors (the editorial board): see all dossiers read-only, so that
+ *    the planning is transparent to the board.
  *  - Dossier editors: a user group created by the plugin, base role Section
  *    editor (e.g. for section editors). They create dossiers, run the ones
  *    they are responsible for and see all others read-only.
@@ -117,8 +119,24 @@ class Roles
         return (bool) array_intersect([Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN], $userRoles);
     }
 
+    /** @param int[] $userRoles Roles of the user in the journal */
+    public static function isJournalEditor(array $userRoles): bool
+    {
+        return self::isManager($userRoles) || in_array(Role::ROLE_ID_SUB_EDITOR, $userRoles);
+    }
+
     /**
-     * May the user use the plugin's backend pages (managers and dossier editors)?
+     * May the user see all dossiers of the journal (read-only unless canManage)?
+     * Journal editors (managers, section editors) and dossier editors.
+     * @param int[] $userRoles Roles of the user in the journal
+     */
+    public static function canSeeAll($plugin, int $contextId, ?int $userId, array $userRoles): bool
+    {
+        return self::isJournalEditor($userRoles) || self::canManage($plugin, $contextId, $userId, $userRoles);
+    }
+
+    /**
+     * May the user create dossiers and use all of the plugin's backend pages (managers and dossier editors)?
      * @param int[] $userRoles Roles of the user in the journal
      */
     public static function canManage($plugin, int $contextId, ?int $userId, array $userRoles): bool

@@ -7,7 +7,7 @@
  *
  * @class MyContributionsHandler
  *
- * @brief Backend page "My contributions" (left menu): the current user's
+ * @brief Backend page "My dossier contributions" (left menu): the current user's
  *  planned contributions to dossiers, with their deadlines and submission links.
  */
 

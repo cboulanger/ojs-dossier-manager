@@ -7,11 +7,11 @@
  *
  * @class DossiersHandler
  *
- * @brief Backend pages (left menu "Dossiers"): the list of dossiers, the form,
+ * @brief Backend pages (left menu "Dossiers" and "My dossiers"): the lists of dossiers, the form,
  *  the dossier page with its contributions and history, the invitation email,
  *  and the settings. GET shows, POST changes and redirects.
  *
- *  Guest editors only reach the list, the (read-only) dossier page and their
+ *  Journal editors see all dossiers read-only; guest editors only reach their list, the (read-only) dossier page and their
  *  notification setting; see DossierAccess.
  */
 
@@ -44,7 +44,7 @@ class DossiersHandler extends Handler
 {
     const PAGE = 'dossiers';
 
-    const OPS = ['index', 'create', 'edit', 'save', 'view', 'dossierAction', 'addContribution', 'updateContribution',
+    const OPS = ['index', 'mine', 'create', 'edit', 'save', 'view', 'dossierAction', 'addContribution', 'updateContribution',
         'contributionAction', 'compose', 'sendInvitations', 'notifyMode', 'users', 'settings', 'saveSettings'];
 
     public $_isBackendPage = true;
@@ -59,7 +59,7 @@ class DossiersHandler extends Handler
         $this->addRoleAssignment([Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_SUB_EDITOR], self::OPS);
         // Guest editors have the Guest editor group (base role Reader); access is checked per dossier
         $this->addRoleAssignment([Role::ROLE_ID_READER, Role::ROLE_ID_AUTHOR, Role::ROLE_ID_ASSISTANT, Role::ROLE_ID_REVIEWER],
-            DossierAccess::GUEST_OPS);
+            DossierAccess::READ_OPS);
     }
 
     public function authorize($request, &$args, $roleAssignments)
@@ -69,9 +69,11 @@ class DossiersHandler extends Handler
             return false;
         }
         $userId = $request->getUser()?->getId();
-        $canManage = Roles::canManage($this->plugin, $request->getContext()->getId(), $userId, $this->userRoles());
+        $contextId = $request->getContext()->getId();
+        $canManage = Roles::canManage($this->plugin, $contextId, $userId, $this->userRoles());
         return DossierAccess::mayCallOp($canManage,
-            !$canManage && $userId && DossierRepository::isGuestEditorInContext($request->getContext()->getId(), $userId),
+            Roles::canSeeAll($this->plugin, $contextId, $userId, $this->userRoles())
+                || ($userId && DossierRepository::isGuestEditorInContext($contextId, $userId)),
             (string) ($request->getRequestedOp() ?: 'index'));
     }
 
@@ -91,6 +93,12 @@ class DossiersHandler extends Handler
         return Roles::canManage($this->plugin, $request->getContext()->getId(), $request->getUser()->getId(), $this->userRoles());
     }
 
+    /** Journal editor or Dossier editor (may view all dossiers) */
+    protected function canSeeAll($request): bool
+    {
+        return Roles::canSeeAll($this->plugin, $request->getContext()->getId(), $request->getUser()->getId(), $this->userRoles());
+    }
+
     protected function canEdit(Dossier $dossier, $request): bool
     {
         return DossierAccess::canEdit($this->isManager(), $dossier->isEditor($request->getUser()->getId()));
@@ -98,14 +106,32 @@ class DossiersHandler extends Handler
 
     /* ---------- Lists ---------- */
 
+    /**
+     * "Planned dossiers": all dossiers of the journal (journal editors and dossier editors).
+     * Guest editors are sent to their own dossiers.
+     */
     public function index($args, $request)
+    {
+        if (!$this->canSeeAll($request)) {
+            $request->redirect(null, self::PAGE, 'mine');
+        }
+        return $this->showList($request, false);
+    }
+
+    /**
+     * "My dossiers": the dossiers the user is a responsible or guest editor of.
+     */
+    public function mine($args, $request)
+    {
+        return $this->showList($request, true);
+    }
+
+    protected function showList($request, bool $mine)
     {
         $context = $request->getContext();
         $user = $request->getUser();
-        $canManage = $this->canManage($request);
-        $all = $canManage && (bool) $request->getUserVar('all');
         $rows = [];
-        foreach (DossierRepository::getDossiers($context->getId(), $all ? null : $user->getId()) as $dossier) {
+        foreach (DossierRepository::getDossiers($context->getId(), $mine ? $user->getId() : null) as $dossier) {
             $contributions = DossierRepository::getContributions($dossier->id);
             $counts = $this->progress($dossier, $contributions);
             $rows[] = [
@@ -120,10 +146,11 @@ class DossiersHandler extends Handler
                 'isGuest' => $dossier->isGuestEditor($user->getId()),
             ];
         }
-        return $this->display($request, 'dossiers.tpl', 'plugins.generic.dossierManager.menu.myDossiers', [
+        return $this->display($request, 'dossiers.tpl',
+            $mine ? 'plugins.generic.dossierManager.menu.myDossiers' : 'plugins.generic.dossierManager.menu.plannedDossiers', [
             'rows' => $rows,
-            'all' => $all,
-            'canManage' => $canManage,
+            'mine' => $mine,
+            'canManage' => $this->canManage($request),
         ]);
     }
 
@@ -404,6 +431,7 @@ class DossiersHandler extends Handler
             'editors' => implode(', ', $this->editorNames($dossier)),
             'guestEditors' => $this->userNames(array_keys($dossier->guestEditors), true),
             'isGuest' => $isGuest,
+            'isMine' => $isGuest || $dossier->isEditor($user->getId()),
             'guidelinesUrl' => DossierMailer::guidelinesUrl($context, $dossier),
             'rows' => $rows,
             'progress' => $this->progress($dossier, $contributions),
@@ -795,7 +823,7 @@ class DossiersHandler extends Handler
     {
         $dossier = $dossierId ? DossierRepository::getDossier($dossierId, $request->getContext()->getId()) : null;
         $userId = $request->getUser()->getId();
-        if (!$dossier || !DossierAccess::canView($this->canManage($request), $dossier->isEditor($userId), $dossier->isGuestEditor($userId))) {
+        if (!$dossier || !DossierAccess::canView($this->canSeeAll($request), $dossier->isEditor($userId), $dossier->isGuestEditor($userId))) {
             $this->flash($request, __('plugins.generic.dossierManager.notFound'), Notification::NOTIFICATION_TYPE_ERROR);
             $request->redirect(null, self::PAGE);
         }

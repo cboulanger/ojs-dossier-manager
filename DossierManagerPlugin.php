@@ -150,7 +150,8 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
     }
 
     /**
-     * Left menu: "Dossiers" for managers, dossier editors and guest editors, "My contributions" for contributors.
+     * Left menu: "Dossiers" for journal editors and dossier editors, "My dossiers" for
+     * responsible and guest editors, "My dossier contributions" for contributors.
      */
     public function addBackendMenu(string $hookName, array $args): bool
     {
@@ -173,20 +174,41 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
                 'name' => __('plugins.generic.dossierManager.myContributions.title') . ($openContributions ? ' (' . $openContributions . ')' : ''),
                 'url' => $router->url($request, null, MyContributionsHandler::PAGE),
                 'isCurrent' => $page === MyContributionsHandler::PAGE,
-                'icon' => 'Submissions',
+                'icon' => 'FileText',
             ];
             $menu = self::insertMenuEntry($menu, 'dossierManagerMyContributions', $entry, 'mySubmissions', true);
         }
 
+        $onPage = $page === DossiersHandler::PAGE;
+        // A dossier page belongs to "My dossiers" if the user is one of its (guest) editors, otherwise to "Planned dossiers"
+        $myDossiers = DossierRepository::getDossiers($context->getId(), $user->getId());
+        $dossierOps = ['view', 'compose', 'edit'];
+        $requestedId = (int) ($request->getRequestedArgs()[0] ?? 0);
+        $onMyDossier = $onPage && in_array($op, $dossierOps, true)
+            && in_array($requestedId, array_map(fn ($d) => $d->id, $myDossiers), true);
+
+        // "My dossiers (x)": for responsible and guest editors, x = dossiers in progress
+        $onMine = $onPage && $op === 'mine';
+        if ($myDossiers || $onMine) {
+            $active = DossierRepository::countActiveDossiers($myDossiers);
+            $entry = [
+                'name' => __('plugins.generic.dossierManager.menu.myDossiers') . ($active ? ' (' . $active . ')' : ''),
+                'url' => $router->url($request, null, DossiersHandler::PAGE, 'mine'),
+                'isCurrent' => $onMine || $onMyDossier,
+                'icon' => 'Catalog',
+            ];
+            $menu = self::insertMenuEntry($menu, 'dossierManagerMyDossiers', $entry,
+                ['dossierManagerMyContributions', 'mySubmissions', 'dashboards'], true);
+        }
+
         $userRoles = (array) $router->getHandler()->getAuthorizedContextObject(Application::ASSOC_TYPE_USER_ROLES);
         $canManage = Roles::canManage($this, $context->getId(), $user->getId(), $userRoles);
-        // Guest editors only see "My dossiers" (read-only)
-        if ($canManage || DossierRepository::isGuestEditorInContext($context->getId(), $user->getId())) {
-            $onPage = $page === DossiersHandler::PAGE;
+        // Journal editors see all dossiers (read-only unless they can manage); guest editors only have "My dossiers" (above)
+        if (Roles::canSeeAll($this, $context->getId(), $user->getId(), $userRoles)) {
             $submenu = [
-                'myDossiers' => ['name' => __('plugins.generic.dossierManager.menu.myDossiers'),
+                'plannedDossiers' => ['name' => __('plugins.generic.dossierManager.menu.plannedDossiers'),
                     'url' => $router->url($request, null, DossiersHandler::PAGE),
-                    'isCurrent' => $onPage && in_array($op, ['index', 'view', 'compose'], true)],
+                    'isCurrent' => $onPage && ($op === 'index' || (in_array($op, $dossierOps, true) && !$onMyDossier))],
             ];
             if ($canManage) {
                 $submenu['create'] = ['name' => __('plugins.generic.dossierManager.menu.create'),
@@ -206,11 +228,17 @@ class DossierManagerPlugin extends GenericPlugin implements HasTaskScheduler
     }
 
     /**
-     * Insert a menu entry before or after another one (or at the end).
+     * Insert a menu entry before or after another one (the first of several that exists), or at the end.
+     * @param string|string[] $anchors
      */
-    protected static function insertMenuEntry(array $menu, string $key, array $entry, string $anchor, bool $after): array
+    protected static function insertMenuEntry(array $menu, string $key, array $entry, string|array $anchors, bool $after): array
     {
-        $pos = array_search($anchor, array_keys($menu), true);
+        $pos = false;
+        foreach ((array) $anchors as $anchor) {
+            if (($pos = array_search($anchor, array_keys($menu), true)) !== false) {
+                break;
+            }
+        }
         if ($pos === false) {
             return $menu + [$key => $entry];
         }

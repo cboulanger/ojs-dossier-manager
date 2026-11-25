@@ -37,6 +37,9 @@ msgstr "Forum"
 msgid "plugins.generic.dossierManager.menu.dossiers"
 msgstr "Dossiers"
 
+msgid "plugins.generic.dossierManager.menu.plannedDossiers"
+msgstr "Planned dossiers"
+
 msgid "plugins.generic.dossierManager.menu.myDossiers"
 msgstr "My dossiers"
 
@@ -46,20 +49,11 @@ msgstr "Create new dossier"
 msgid "plugins.generic.dossierManager.menu.settings"
 msgstr "Configuration"
 
-msgid "plugins.generic.dossierManager.allDossiers"
-msgstr "All dossiers"
-
-msgid "plugins.generic.dossierManager.showAll"
-msgstr "Show all dossiers of the journal"
-
-msgid "plugins.generic.dossierManager.showMine"
-msgstr "Show only my dossiers"
-
 msgid "plugins.generic.dossierManager.noDossiers"
 msgstr "There are no dossiers yet."
 
 msgid "plugins.generic.dossierManager.noOwnDossiers"
-msgstr "You are not responsible for any dossier."
+msgstr "You are not an editor or guest editor of any dossier."
 
 msgid "plugins.generic.dossierManager.dossier"
 msgstr "Dossier"
@@ -494,7 +488,7 @@ msgid "plugins.generic.dossierManager.settings.emailsHint"
 msgstr "The texts of the emails can be edited under Settings › Emails."
 
 msgid "plugins.generic.dossierManager.myContributions.title"
-msgstr "My contributions"
+msgstr "My dossier contributions"
 
 msgid "plugins.generic.dossierManager.myContributions.empty"
 msgstr "You have no planned contributions."

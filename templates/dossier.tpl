@@ -16,7 +16,11 @@
 
 <div class="app__contentPanel dmPanel" v-pre>
 	<div class="dmToolbar">
-		<a href="{url page=$dmPage}">← {translate key="plugins.generic.dossierManager.menu.myDossiers"}</a>
+		{if $isMine}
+			<a href="{url page=$dmPage op="mine"}">← {translate key="plugins.generic.dossierManager.menu.myDossiers"}</a>
+		{else}
+			<a href="{url page=$dmPage}">← {translate key="plugins.generic.dossierManager.menu.plannedDossiers"}</a>
+		{/if}
 		{if $canEdit}
 			<a class="pkp_button" href="{url page=$dmPage op="edit" path=$dossier->id}">{translate key="common.edit"}</a>
 			{if !$invitationBlocker && $uninvited}
